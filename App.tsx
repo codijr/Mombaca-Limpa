@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import MapView from "react-native-maps";
 import SplashScreen from "react-native-splash-screen";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
@@ -12,8 +13,12 @@ export default function App() {
 
   return (
     <View>
-      <Text style={{ fontFamily: "LeagueSpartan-Bold" }}>Hello World</Text>
-      <Icon name="alarm" size={20} color="#000000" />
+      <MapView
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+      />
     </View>
   );
 }
