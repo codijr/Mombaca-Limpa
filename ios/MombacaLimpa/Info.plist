@@ -53,5 +53,12 @@
 	<string>UIStatusBarStyleLightContent</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>LeagueSpartan-Bold.ttf</string>
+		<string>LeagueSpartan-Medium.ttf</string>
+		<string>LeagueSpartan-Regular.ttf</string>
+		<string>Poppins-SemiBold.ttf</string>
+	</array>
 </dict>
 </plist>

@@ -9,7 +9,7 @@ export default function App() {
 
   return (
     <View>
-      <Text>Hello World</Text>
+      <Text style={{ fontFamily: "LeagueSpartan-Bold" }}>Hello World</Text>
     </View>
   );
 }
