@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { ButtonSubmit } from "../../../components/ButtonSubmit";
 import { Input } from "../../../components/Input";
@@ -17,6 +18,8 @@ import {
 } from "./styles";
 
 export function Login() {
+  const { navigate } = useNavigation();
+
   return (
     <ContainerLogin>
       <IconBackground />
@@ -32,7 +35,9 @@ export function Login() {
             <Input title="Email" placeholder="Ex: pedroaugusto@gmail.com" />
             <Input title="Senha" placeholder="************" isPassword />
             <ForgotPasswordWrapper>
-              <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
+              <ForgotPasswordText onPress={() => navigate("ForgetPassword")}>
+                Esqueci minha senha
+              </ForgotPasswordText>
             </ForgotPasswordWrapper>
 
             <CentralizeView>
@@ -46,7 +51,10 @@ export function Login() {
             }}
           >
             <SignUpText>
-              Não tem uma conta? <SignUpTextBold>Cadastre-se</SignUpTextBold>
+              Não tem uma conta?{" "}
+              <SignUpTextBold onPress={() => navigate("SignUp")}>
+                Cadastre-se
+              </SignUpTextBold>
             </SignUpText>
           </CentralizeView>
         </Content>
