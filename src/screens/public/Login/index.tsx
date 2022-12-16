@@ -18,7 +18,7 @@ import {
 } from "./styles";
 
 export function Login() {
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation<any>();
 
   return (
     <ContainerLogin>
