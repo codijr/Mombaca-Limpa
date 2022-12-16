@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useCallback } from "react";
 import { ButtonSubmit } from "../../../components/ButtonSubmit";
 import { Input } from "../../../components/Input";
 import { CentralizeView } from "../../../global/styles/theme";
@@ -18,7 +18,11 @@ import {
 } from "./styles";
 
 export function Login() {
-  const { navigate } = useNavigation<any>();
+  const { navigate } = useNavigation();
+
+  const handleLogin = useCallback(() => {
+    // add auth rule
+  }, []);
 
   return (
     <ContainerLogin>
@@ -35,13 +39,15 @@ export function Login() {
             <Input title="Email" placeholder="Ex: pedroaugusto@gmail.com" />
             <Input title="Senha" placeholder="************" isPassword />
             <ForgotPasswordWrapper>
-              <ForgotPasswordText onPress={() => navigate("ForgetPassword")}>
+              <ForgotPasswordText
+                onPress={() => navigate("ForgetPassword" as never)}
+              >
                 Esqueci minha senha
               </ForgotPasswordText>
             </ForgotPasswordWrapper>
 
             <CentralizeView>
-              <ButtonSubmit title="Fazer Login" />
+              <ButtonSubmit title="Fazer Login" onPress={handleLogin} />
             </CentralizeView>
           </TopContent>
 
@@ -52,7 +58,7 @@ export function Login() {
           >
             <SignUpText>
               Não tem uma conta?{" "}
-              <SignUpTextBold onPress={() => navigate("SignUp")}>
+              <SignUpTextBold onPress={() => navigate("SignUp" as never)}>
                 Cadastre-se
               </SignUpTextBold>
             </SignUpText>

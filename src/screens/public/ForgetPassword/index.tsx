@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useCallback } from "react";
 import { ButtonSubmit } from "../../../components/ButtonSubmit";
 import { Input } from "../../../components/Input";
 import { CentralizeView } from "../../../global/styles/theme";
@@ -13,7 +13,11 @@ import {
 } from "./styles";
 
 export function ForgetPassword() {
-  const { navigate } = useNavigation<any>();
+  const { navigate } = useNavigation();
+
+  const handleForgetPassword = useCallback(() => {
+    // add forget password rule
+  }, []);
 
   return (
     <ContainerForgetPassword>
@@ -30,7 +34,7 @@ export function ForgetPassword() {
           <Input title="Email" placeholder="Ex: pedroaugusto@gmail.com" />
 
           <CentralizeView>
-            <ButtonSubmit title="Enviar Email" />
+            <ButtonSubmit title="Enviar Email" onPress={handleForgetPassword} />
           </CentralizeView>
         </Content>
       </ForgotPasswordContainer>
