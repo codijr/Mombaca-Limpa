@@ -1,10 +1,14 @@
 import React from "react";
-import { ModalProps, StatusBar } from "react-native";
+import {
+  GestureResponderEvent,
+  ModalProps,
+  StatusBar,
+  Modal,
+} from "react-native";
 import {
   ButtonConfirmModal,
   CorrectIcon,
   ModalBackground,
-  ModalContainer,
   ModalContent,
   TextModal,
   TitleModal,
@@ -15,13 +19,23 @@ import {
 interface ModalAlertProps extends ModalProps {
   title: string;
   text: string;
+  isVisible: boolean;
+  onConfirm?: ((event: GestureResponderEvent) => void) | undefined;
 }
 
-export function Modal({ title, text, ...rest }: ModalAlertProps) {
+export function ModalAlert({
+  title,
+  text,
+  isVisible,
+  onConfirm,
+  ...rest
+}: ModalAlertProps) {
   return (
     <>
-      <StatusBar backgroundColor="rgba(0, 0, 0, 0.5)" />
-      <ModalContainer {...rest}>
+      <StatusBar
+        backgroundColor={isVisible ? "rgba(0, 0, 0, 0.7)" : "#1BB471"}
+      />
+      <Modal visible={isVisible} {...rest}>
         <ModalBackground>
           <ModalContent>
             <ContentContainer>
@@ -29,12 +43,12 @@ export function Modal({ title, text, ...rest }: ModalAlertProps) {
               <TitleModal>{title}</TitleModal>
               <TextModal>{text}</TextModal>
             </ContentContainer>
-            <ButtonConfirmModal>
+            <ButtonConfirmModal onPress={onConfirm}>
               <ButtonText>Ok</ButtonText>
             </ButtonConfirmModal>
           </ModalContent>
         </ModalBackground>
-      </ModalContainer>
+      </Modal>
     </>
   );
 }

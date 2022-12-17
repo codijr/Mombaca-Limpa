@@ -1,12 +1,10 @@
-import { Modal, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components";
 import Icon from "react-native-vector-icons/Feather";
 import { RFValue } from "react-native-responsive-fontsize";
 import { ms } from "react-native-size-matters";
 
 Icon.loadFont();
-
-export const ModalContainer = styled(Modal)``;
 
 export const ModalBackground = styled(View)`
   flex: 1;
@@ -36,7 +34,7 @@ export const CorrectIcon = styled(Icon).attrs({
 `;
 
 export const TitleModal = styled(Text)`
-  font-size: ${RFValue(24)}px;
+  font-size: ${RFValue(22)}px;
   font-family: ${({ theme }) => theme.fonts.title600};
   color: ${({ theme }) => theme.colors.primaryDark};
   text-align: center;
