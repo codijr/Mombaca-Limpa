@@ -4,6 +4,8 @@ import {
   createStackNavigator,
   TransitionPresets,
 } from "@react-navigation/stack";
+import Icon from "react-native-vector-icons/Feather";
+import { useNavigation } from "@react-navigation/native";
 import { Login } from "../screens/public/Login";
 import { SignUp } from "../screens/public/SignUp";
 import { ForgetPassword } from "../screens/public/ForgetPassword";
@@ -13,9 +15,11 @@ import { theme } from "../global/styles/theme";
 const Stack = createStackNavigator();
 
 export function PublicRoutes() {
+  Icon.loadFont();
+
   return (
     <Stack.Navigator
-      initialRouteName="SignUp"
+      initialRouteName="Login"
       screenOptions={{
         ...TransitionPresets.SlideFromRightIOS,
       }}
@@ -23,25 +27,12 @@ export function PublicRoutes() {
       <Stack.Group
         screenOptions={{
           headerShown: false,
-          ...TransitionPresets.ModalFadeTransition,
+          ...TransitionPresets.FadeFromBottomAndroid,
         }}
       >
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SignUp" component={SignUp} />
       </Stack.Group>
-      <Stack.Screen name="ChangeEmail" component={ChangeEmail} 
-        options={{
-          title: 'Alterar email',
-          headerStyle: {
-            backgroundColor: theme.colors.primary
-          },
-          headerTintColor: theme.colors.textWhite,
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontFamily: theme.fonts.title600
-          }
-        }}
-      />
       <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
     </Stack.Navigator>
   );

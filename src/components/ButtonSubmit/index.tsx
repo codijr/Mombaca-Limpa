@@ -1,12 +1,13 @@
 import React, { useState } from "react";
+import { TouchableHighlightProps } from "react-native";
 import { theme } from "../../global/styles/theme";
 import { Container, ButtonText } from "./styles";
 
-interface ButtonSubmitProps {
+interface ButtonSubmitProps extends TouchableHighlightProps {
   title: string;
 }
 
-export function ButtonSubmit({ title }: ButtonSubmitProps) {
+export function ButtonSubmit({ title, ...rest }: ButtonSubmitProps) {
   const [click, setClick] = useState(false);
 
   return (
@@ -16,6 +17,7 @@ export function ButtonSubmit({ title }: ButtonSubmitProps) {
       style={{
         backgroundColor: click ? "#5FE7A0" : theme.colors.primaryExtraDark,
       }}
+      {...rest}
     >
       <ButtonText>{title}</ButtonText>
     </Container>
