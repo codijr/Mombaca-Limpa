@@ -7,10 +7,12 @@ import { Map } from "../screens/private/TabMap/Map";
 import { Profile } from "../screens/private/TabProfile/Profile";
 import { Statistics } from "../screens/private/TabStatistics/Statistics";
 import { theme } from "../global/styles/theme";
-import Icon from "react-native-vector-icons/Feather";
-import { Image, Text, View } from "react-native";
-import { ms } from "react-native-size-matters";
-import { TitleProfile, Container, SubtitleProfile } from "./styles";
+import {
+  TitleProfile,
+  Container,
+  SubtitleProfile,
+  ImageProfile,
+} from "./styles";
 
 const Stack = createStackNavigator();
 
@@ -37,22 +39,19 @@ function ProfileTab() {
             height: 70,
           },
           headerTintColor: theme.colors.textWhite,
+          // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
-            <Image
+            <ImageProfile
               source={{
                 uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFtPdoUstm8sKQH99usU7SCKcyqHNwhcJ7WonkIE9Rr-r0b-O3b0iATAP66sVtdH1NEow&usqp=CAU",
-              }}
-              style={{
-                width: 50,
-                height: 50,
-                borderRadius: 50,
               }}
             />
           ),
           headerLeftContainerStyle: {
-            marginLeft: parseInt(`${ms(20)}px`),
+            marginLeft: 20,
           },
           title: "",
+          // eslint-disable-next-line react/no-unstable-nested-components
           headerTitle: () => (
             <Container>
               <TitleProfile>Igaaoo</TitleProfile>
