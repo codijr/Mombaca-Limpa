@@ -51,7 +51,7 @@ export function SignUp() {
           >
             <SignUpText>
               Já possui uma conta?{" "}
-              <SignUpTextBold onPress={() => navigate("Login")}>
+              <SignUpTextBold onPress={() => navigate("Login" as never)}>
                 Faça Login
               </SignUpTextBold>
             </SignUpText>

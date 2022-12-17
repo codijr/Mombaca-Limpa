@@ -6,6 +6,8 @@ import { Complaint } from "../screens/private/TabMap/Complaint";
 import { Map } from "../screens/private/TabMap/Map";
 import { Profile } from "../screens/private/TabProfile/Profile";
 import { Statistics } from "../screens/private/TabStatistics/Statistics";
+import { ChangeEmail } from "../screens/private/TabProfile/ChangeEmail";
+import { theme } from "../global/styles/theme"; 
 
 const Stack = createStackNavigator();
 
@@ -22,6 +24,19 @@ function ProfileTab() {
   return (
     <Stack.Navigator initialRouteName="Profile">
       <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="ChangeEmail" component={ChangeEmail} 
+      options={{
+        title: 'Alterar email',
+        headerStyle: {
+          backgroundColor: theme.colors.primary
+        },
+        headerTintColor: theme.colors.textWhite,
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontFamily: theme.fonts.title600
+        }
+      }}
+      />
     </Stack.Navigator>
   );
 }

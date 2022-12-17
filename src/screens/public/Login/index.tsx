@@ -35,7 +35,7 @@ export function Login() {
             <Input title="Email" placeholder="Ex: pedroaugusto@gmail.com" />
             <Input title="Senha" placeholder="************" isPassword />
             <ForgotPasswordWrapper>
-              <ForgotPasswordText onPress={() => navigate("ForgetPassword")}>
+              <ForgotPasswordText onPress={() => navigate("ChangeEmail" as never)}>
                 Esqueci minha senha
               </ForgotPasswordText>
             </ForgotPasswordWrapper>
@@ -52,7 +52,7 @@ export function Login() {
           >
             <SignUpText>
               Não tem uma conta?{" "}
-              <SignUpTextBold onPress={() => navigate("SignUp")}>
+              <SignUpTextBold onPress={() => navigate("SignUp" as never)}>
                 Cadastre-se
               </SignUpTextBold>
             </SignUpText>
