@@ -5,6 +5,7 @@ import {
   TransitionPresets,
   createStackNavigator,
 } from "@react-navigation/stack";
+import { StatusBar } from "react-native";
 import { Complaint } from "../screens/private/TabMap/Complaint";
 import { Map } from "../screens/private/TabMap/Map";
 import { Profile } from "../screens/private/TabProfile/Profile";
@@ -23,7 +24,13 @@ const Stack = createStackNavigator();
 function MapTab() {
   return (
     <Stack.Navigator initialRouteName="Map">
-      <Stack.Screen name="Map" component={Map} />
+      <Stack.Screen
+        name="Map"
+        component={Map}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen name="Complaint" component={Complaint} />
     </Stack.Navigator>
   );
@@ -93,16 +100,16 @@ const Tab = createBottomTabNavigator();
 
 export function PrivateRoutes() {
   return (
-    <Tab.Navigator initialRouteName="MapTab">
+    <Tab.Navigator
+      initialRouteName="MapTab"
+      screenOptions={{
+        headerShown: false,
+        tabBarHideOnKeyboard: true,
+      }}
+    >
       <Tab.Screen name="StatisticsTab" component={StatisticsTab} />
       <Tab.Screen name="MapTab" component={MapTab} />
-      <Tab.Screen
-        name="ProfileTab"
-        component={ProfileTab}
-        options={{
-          headerShown: false,
-        }}
-      />
+      <Tab.Screen name="ProfileTab" component={ProfileTab} />
     </Tab.Navigator>
   );
 }

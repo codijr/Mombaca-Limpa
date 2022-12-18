@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   GestureResponderEvent,
   ModalProps,
@@ -30,25 +30,24 @@ export function ModalAlert({
   onConfirm,
   ...rest
 }: ModalAlertProps) {
+  useEffect(() => {
+    StatusBar.setBackgroundColor(isVisible ? "rgba(0, 0, 0, 0.7)" : "#1BB471");
+  }, [isVisible]);
+
   return (
-    <>
-      <StatusBar
-        backgroundColor={isVisible ? "rgba(0, 0, 0, 0.7)" : "#1BB471"}
-      />
-      <Modal visible={isVisible} {...rest}>
-        <ModalBackground>
-          <ModalContent>
-            <ContentContainer>
-              <CorrectIcon />
-              <TitleModal>{title}</TitleModal>
-              <TextModal>{text}</TextModal>
-            </ContentContainer>
-            <ButtonConfirmModal onPress={onConfirm}>
-              <ButtonText>Ok</ButtonText>
-            </ButtonConfirmModal>
-          </ModalContent>
-        </ModalBackground>
-      </Modal>
-    </>
+    <Modal visible={isVisible} {...rest}>
+      <ModalBackground>
+        <ModalContent>
+          <ContentContainer>
+            <CorrectIcon />
+            <TitleModal>{title}</TitleModal>
+            <TextModal>{text}</TextModal>
+          </ContentContainer>
+          <ButtonConfirmModal onPress={onConfirm}>
+            <ButtonText>Ok</ButtonText>
+          </ButtonConfirmModal>
+        </ModalContent>
+      </ModalBackground>
+    </Modal>
   );
 }
