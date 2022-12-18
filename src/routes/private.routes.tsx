@@ -5,7 +5,10 @@ import {
   TransitionPresets,
   createStackNavigator,
 } from "@react-navigation/stack";
-import { StatusBar } from "react-native";
+import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import FeatherIcons from "react-native-vector-icons/Feather";
+import { RFValue } from "react-native-responsive-fontsize";
+import { ms } from "react-native-size-matters";
 import { Complaint } from "../screens/private/TabMap/Complaint";
 import { Map } from "../screens/private/TabMap/Map";
 import { Profile } from "../screens/private/TabProfile/Profile";
@@ -16,6 +19,7 @@ import {
   Container,
   SubtitleProfile,
   ImageProfile,
+  StatisticsIcon,
 } from "./styles";
 import { ChangeEmail } from "../screens/private/TabProfile/ChangeEmail";
 
@@ -23,7 +27,14 @@ const Stack = createStackNavigator();
 
 function MapTab() {
   return (
-    <Stack.Navigator initialRouteName="Map">
+    <Stack.Navigator
+      initialRouteName="Map"
+      screenOptions={{
+        headerStyle: {
+          height: ms(70),
+        },
+      }}
+    >
       <Stack.Screen
         name="Map"
         component={Map}
@@ -45,7 +56,7 @@ function ProfileTab() {
           backgroundColor: theme.colors.backgroundPrimary,
           elevation: 0,
           shadowOpacity: 0,
-          height: 70,
+          height: ms(70),
         },
         headerTintColor: theme.colors.textWhite,
         ...TransitionPresets.SlideFromRightIOS,
@@ -90,7 +101,14 @@ function ProfileTab() {
 
 function StatisticsTab() {
   return (
-    <Stack.Navigator initialRouteName="Statistics">
+    <Stack.Navigator
+      initialRouteName="Statistics"
+      screenOptions={{
+        headerStyle: {
+          height: ms(70),
+        },
+      }}
+    >
       <Stack.Screen name="Statistics" component={Statistics} />
     </Stack.Navigator>
   );
@@ -105,11 +123,51 @@ export function PrivateRoutes() {
       screenOptions={{
         headerShown: false,
         tabBarHideOnKeyboard: true,
+        tabBarStyle: {
+          backgroundColor: theme.colors.backgroundPrimary,
+        },
+        tabBarActiveTintColor: theme.colors.textWhite,
+        tabBarInactiveTintColor: "rgba(255, 255, 255, 0.36)",
+        tabBarLabelStyle: {
+          fontSize: RFValue(10),
+          fontFamily: theme.fonts.text300,
+          bottom: ms(5),
+        },
       }}
     >
-      <Tab.Screen name="StatisticsTab" component={StatisticsTab} />
-      <Tab.Screen name="MapTab" component={MapTab} />
-      <Tab.Screen name="ProfileTab" component={ProfileTab} />
+      <Tab.Screen
+        name="StatisticsTab"
+        component={StatisticsTab}
+        options={{
+          tabBarLabel: "Métricas",
+          // eslint-disable-next-line react/no-unstable-nested-components
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="chart-box-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="MapTab"
+        component={MapTab}
+        options={{
+          tabBarLabel: "Mapa",
+          // eslint-disable-next-line react/no-unstable-nested-components
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="map-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="ProfileTab"
+        component={ProfileTab}
+        options={{
+          tabBarLabel: "Perfil",
+          // eslint-disable-next-line react/no-unstable-nested-components
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="account-outline" color={color} size={size} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
