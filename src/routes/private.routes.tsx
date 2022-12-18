@@ -6,8 +6,13 @@ import { Complaint } from "../screens/private/TabMap/Complaint";
 import { Map } from "../screens/private/TabMap/Map";
 import { Profile } from "../screens/private/TabProfile/Profile";
 import { Statistics } from "../screens/private/TabStatistics/Statistics";
-import { ChangeEmail } from "../screens/private/TabProfile/ChangeEmail";
-import { theme } from "../global/styles/theme"; 
+import { theme } from "../global/styles/theme";
+import {
+  TitleProfile,
+  Container,
+  SubtitleProfile,
+  ImageProfile,
+} from "./styles";
 
 const Stack = createStackNavigator();
 
@@ -22,20 +27,42 @@ function MapTab() {
 
 function ProfileTab() {
   return (
-    <Stack.Navigator initialRouteName="Profile">
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="ChangeEmail" component={ChangeEmail} 
-      options={{
-        title: 'Alterar email',
+    <Stack.Navigator
+      initialRouteName="Profile"
+      screenOptions={{
         headerStyle: {
-          backgroundColor: theme.colors.primary
+          backgroundColor: theme.colors.backgroundPrimary,
+          elevation: 0,
+          shadowOpacity: 0,
+          height: 70,
         },
         headerTintColor: theme.colors.textWhite,
-        headerTitleAlign: 'center',
-        headerTitleStyle: {
-          fontFamily: theme.fonts.title600
-        }
       }}
+    >
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerLeft: () => (
+            <ImageProfile
+              source={{
+                uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFtPdoUstm8sKQH99usU7SCKcyqHNwhcJ7WonkIE9Rr-r0b-O3b0iATAP66sVtdH1NEow&usqp=CAU",
+              }}
+            />
+          ),
+          headerLeftContainerStyle: {
+            marginLeft: 20,
+          },
+          title: "",
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerTitle: () => (
+            <Container>
+              <TitleProfile>Igaaoo</TitleProfile>
+              <SubtitleProfile>igaaoo@gmail.com</SubtitleProfile>
+            </Container>
+          ),
+        }}
       />
     </Stack.Navigator>
   );
@@ -56,7 +83,13 @@ export function PrivateRoutes() {
     <Tab.Navigator initialRouteName="MapTab">
       <Tab.Screen name="StatisticsTab" component={StatisticsTab} />
       <Tab.Screen name="MapTab" component={MapTab} />
-      <Tab.Screen name="ProfileTab" component={ProfileTab} />
+      <Tab.Screen
+        name="ProfileTab"
+        component={ProfileTab}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Tab.Navigator>
   );
 }
