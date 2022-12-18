@@ -18,25 +18,23 @@ export function ChangeEmail() {
       <ContainerChangeEmail>
         <ChangeEmailContent>
           <Content>
-            <TopContent>
-              <Input
-                title="Novo email"
-                placeholder="Ex: pedroaugusto@gmail.com"
-                type="green"
+            <Input
+              title="Novo email"
+              placeholder="Ex: pedroaugusto@gmail.com"
+              type="green"
+            />
+            <Input
+              title="Senha"
+              placeholder="************"
+              isPassword
+              type="green"
+            />
+            <CentralizeView>
+              <ButtonSubmit
+                onPress={() => setModalVisible(!modalVisible)}
+                title="Confirmar novo email"
               />
-              <Input
-                title="Senha"
-                placeholder="************"
-                isPassword
-                type="green"
-              />
-              <CentralizeView>
-                <ButtonSubmit
-                  onPress={() => setModalVisible(!modalVisible)}
-                  title="Confirmar novo email"
-                />
-              </CentralizeView>
-            </TopContent>
+            </CentralizeView>
           </Content>
         </ChangeEmailContent>
       </ContainerChangeEmail>
