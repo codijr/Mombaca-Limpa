@@ -1,7 +1,6 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { ButtonSubmit } from "../../../../components/ButtonSubmit";
-import { InputGreen } from "../../../../components/InputGreen";
+import { Input } from "../../../../components/Input";
 import { CentralizeView } from "../../../../global/styles/theme";
 import { ModalAlert } from "../../../../components/Modal";
 import {
@@ -12,7 +11,6 @@ import {
 } from "./styles";
 
 export function ChangeEmail() {
-  const { navigate } = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -21,11 +19,17 @@ export function ChangeEmail() {
         <ChangeEmailContent>
           <Content>
             <TopContent>
-              <InputGreen
+              <Input
                 title="Novo email"
                 placeholder="Ex: pedroaugusto@gmail.com"
+                type="green"
               />
-              <InputGreen title="Senha" placeholder="************" isPassword />
+              <Input
+                title="Senha"
+                placeholder="************"
+                isPassword
+                type="green"
+              />
               <CentralizeView>
                 <ButtonSubmit
                   onPress={() => setModalVisible(!modalVisible)}
