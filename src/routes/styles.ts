@@ -1,7 +1,6 @@
 import { View, Text, Image } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components";
-import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export const Container = styled(View)`
   flex-direction: column;
@@ -25,7 +24,3 @@ export const ImageProfile = styled(Image)`
   height: ${RFValue(45)}px;
   border-radius: ${RFValue(25)}px;
 `;
-
-export const StatisticsIcon = styled(MaterialIcon).attrs({
-  name: "chart-donut",
-});

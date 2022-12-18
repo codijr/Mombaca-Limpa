@@ -6,7 +6,6 @@ import {
   createStackNavigator,
 } from "@react-navigation/stack";
 import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import FeatherIcons from "react-native-vector-icons/Feather";
 import { RFValue } from "react-native-responsive-fontsize";
 import { ms } from "react-native-size-matters";
 import { Complaint } from "../screens/private/TabMap/Complaint";
@@ -19,7 +18,6 @@ import {
   Container,
   SubtitleProfile,
   ImageProfile,
-  StatisticsIcon,
 } from "./styles";
 import { ChangeEmail } from "../screens/private/TabProfile/ChangeEmail";
 
