@@ -15,6 +15,7 @@ interface InputProps extends TextInputProps {
   title: string;
   placeholder: string;
   isPassword?: boolean;
+  type?: "green" | "white";
   error?: string;
 }
 
@@ -22,6 +23,7 @@ export function Input({
   title,
   placeholder,
   isPassword,
+  type,
   error,
   ...rest
 }: InputProps) {
@@ -30,7 +32,14 @@ export function Input({
 
   return (
     <Container>
-      <InputTitle>{title}</InputTitle>
+      <InputTitle
+        style={{
+          color:
+            type === "green" ? theme.colors.primary : theme.colors.textWhite,
+        }}
+      >
+        {title}
+      </InputTitle>
       <InputWrapper
         style={{
           borderWidth: error ? 2 : 0,

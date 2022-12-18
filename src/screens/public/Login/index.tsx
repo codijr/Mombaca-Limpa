@@ -39,9 +39,7 @@ export function Login() {
             <Input title="Email" placeholder="Ex: pedroaugusto@gmail.com" />
             <Input title="Senha" placeholder="************" isPassword />
             <ForgotPasswordWrapper>
-              <ForgotPasswordText
-                onPress={() => navigate("ForgetPassword" as never)}
-              >
+              <ForgotPasswordText onPress={() => navigate("ForgetPassword" as never)}>
                 Esqueci minha senha
               </ForgotPasswordText>
             </ForgotPasswordWrapper>

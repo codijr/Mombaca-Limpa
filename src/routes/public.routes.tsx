@@ -9,6 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Login } from "../screens/public/Login";
 import { SignUp } from "../screens/public/SignUp";
 import { ForgetPassword } from "../screens/public/ForgetPassword";
+import { ChangeEmail } from "../screens/private/TabProfile/ChangeEmail";
 import { theme } from "../global/styles/theme";
 
 const Stack = createStackNavigator();
@@ -32,19 +33,7 @@ export function PublicRoutes() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SignUp" component={SignUp} />
       </Stack.Group>
-      <Stack.Screen
-        name="ForgetPassword"
-        component={ForgetPassword}
-        options={{
-          headerStyle: {
-            backgroundColor: theme.colors.backgroundPrimary,
-            elevation: 0,
-            shadowOpacity: 0,
-          },
-          title: "",
-          headerTintColor: theme.colors.textWhite,
-        }}
-      />
+      <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
     </Stack.Navigator>
   );
 }

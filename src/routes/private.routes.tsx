@@ -1,7 +1,10 @@
 import React from "react";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  TransitionPresets,
+  createStackNavigator,
+} from "@react-navigation/stack";
 import { Complaint } from "../screens/private/TabMap/Complaint";
 import { Map } from "../screens/private/TabMap/Map";
 import { Profile } from "../screens/private/TabProfile/Profile";
@@ -13,6 +16,7 @@ import {
   SubtitleProfile,
   ImageProfile,
 } from "./styles";
+import { ChangeEmail } from "../screens/private/TabProfile/ChangeEmail";
 
 const Stack = createStackNavigator();
 
@@ -27,18 +31,23 @@ function MapTab() {
 
 function ProfileTab() {
   return (
-    <Stack.Navigator initialRouteName="Profile">
+    <Stack.Navigator
+      initialRouteName="Profile"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: theme.colors.backgroundPrimary,
+          elevation: 0,
+          shadowOpacity: 0,
+          height: 70,
+        },
+        headerTintColor: theme.colors.textWhite,
+        ...TransitionPresets.SlideFromRightIOS,
+      }}
+    >
       <Stack.Screen
         name="Profile"
         component={Profile}
         options={{
-          headerStyle: {
-            backgroundColor: theme.colors.backgroundPrimary,
-            elevation: 0,
-            shadowOpacity: 0,
-            height: 70,
-          },
-          headerTintColor: theme.colors.textWhite,
           // eslint-disable-next-line react/no-unstable-nested-components
           headerLeft: () => (
             <ImageProfile
@@ -58,6 +67,14 @@ function ProfileTab() {
               <SubtitleProfile>igaaoo@gmail.com</SubtitleProfile>
             </Container>
           ),
+        }}
+      />
+      <Stack.Screen
+        name="ChangeEmail"
+        component={ChangeEmail}
+        options={{
+          title: "Alterar email",
+          headerTitleAlign: "center",
         }}
       />
     </Stack.Navigator>
