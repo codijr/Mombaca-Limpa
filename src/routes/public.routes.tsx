@@ -5,11 +5,9 @@ import {
   TransitionPresets,
 } from "@react-navigation/stack";
 import Icon from "react-native-vector-icons/Feather";
-import { useNavigation } from "@react-navigation/native";
 import { Login } from "../screens/public/Login";
 import { SignUp } from "../screens/public/SignUp";
 import { ForgetPassword } from "../screens/public/ForgetPassword";
-import { ChangeEmail } from "../screens/private/TabProfile/ChangeEmail";
 import { theme } from "../global/styles/theme";
 
 const Stack = createStackNavigator();
@@ -22,6 +20,12 @@ export function PublicRoutes() {
       initialRouteName="Login"
       screenOptions={{
         ...TransitionPresets.SlideFromRightIOS,
+        headerTintColor: theme.colors.textWhite,
+        headerStyle: {
+          backgroundColor: theme.colors.primary,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
       }}
     >
       <Stack.Group
@@ -33,7 +37,13 @@ export function PublicRoutes() {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SignUp" component={SignUp} />
       </Stack.Group>
-      <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
+      <Stack.Screen
+        name="ForgetPassword"
+        component={ForgetPassword}
+        options={{
+          title: "",
+        }}
+      />
     </Stack.Navigator>
   );
 }

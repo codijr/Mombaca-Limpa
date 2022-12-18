@@ -8,11 +8,13 @@ import { Routes } from "./routes";
 export default function App() {
   useEffect(() => {
     SplashScreen.hide();
+    StatusBar.setBarStyle("dark-content");
+    StatusBar.setBackgroundColor("transparent");
+    StatusBar.setTranslucent(false);
   });
 
   return (
     <ThemeProvider theme={theme}>
-      <StatusBar backgroundColor="#1BB471" />
       <Routes />
     </ThemeProvider>
   );
