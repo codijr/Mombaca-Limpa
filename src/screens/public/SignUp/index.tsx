@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
+import { ms } from "react-native-size-matters";
 import { ButtonSubmit } from "../../../components/ButtonSubmit";
 import { Input } from "../../../components/Input";
 import { CentralizeView } from "../../../global/styles/theme";
@@ -46,7 +48,7 @@ export function SignUp() {
 
           <CentralizeView
             style={{
-              bottom: 0,
+              bottom: getStatusBarHeight() + ms(20),
             }}
           >
             <SignUpText>

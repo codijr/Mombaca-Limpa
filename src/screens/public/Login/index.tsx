@@ -1,5 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useCallback } from "react";
+import { ms } from "react-native-size-matters";
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { ButtonSubmit } from "../../../components/ButtonSubmit";
 import { Input } from "../../../components/Input";
 import { CentralizeView } from "../../../global/styles/theme";
@@ -39,7 +41,9 @@ export function Login() {
             <Input title="Email" placeholder="Ex: pedroaugusto@gmail.com" />
             <Input title="Senha" placeholder="************" isPassword />
             <ForgotPasswordWrapper>
-              <ForgotPasswordText onPress={() => navigate("ForgetPassword" as never)}>
+              <ForgotPasswordText
+                onPress={() => navigate("ForgetPassword" as never)}
+              >
                 Esqueci minha senha
               </ForgotPasswordText>
             </ForgotPasswordWrapper>
@@ -51,7 +55,7 @@ export function Login() {
 
           <CentralizeView
             style={{
-              bottom: 0,
+              bottom: getStatusBarHeight() + ms(20),
             }}
           >
             <SignUpText>

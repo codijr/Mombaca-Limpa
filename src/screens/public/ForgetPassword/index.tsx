@@ -10,6 +10,7 @@ import {
   Title,
   TextDescription,
   Content,
+  PasswordIconWrapper,
 } from "./styles";
 import { ModalAlert } from "../../../components/Modal";
 
@@ -32,7 +33,9 @@ export function ForgetPassword() {
         <ForgotPasswordContainer>
           <Content>
             <CentralizeView>
-              <PasswordIcon />
+              <PasswordIconWrapper>
+                <PasswordIcon />
+              </PasswordIconWrapper>
               <Title>Esqueci minha senha</Title>
               <TextDescription>
                 Digite seu email e enviaremos um código para redefinir sua senha
