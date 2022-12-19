@@ -13,6 +13,7 @@ import {
   PasswordIconWrapper,
 } from "./styles";
 import { ModalAlert } from "../../../components/Modal";
+import { Header } from "../../../components/Header";
 
 export function ForgetPassword() {
   const { navigate } = useNavigation();
@@ -29,6 +30,7 @@ export function ForgetPassword() {
 
   return (
     <>
+      <Header type="goback" />
       <ContainerForgetPassword>
         <ForgotPasswordContainer>
           <Content>
