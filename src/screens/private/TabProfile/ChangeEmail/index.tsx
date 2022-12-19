@@ -3,18 +3,15 @@ import { ButtonSubmit } from "../../../../components/ButtonSubmit";
 import { Input } from "../../../../components/Input";
 import { CentralizeView } from "../../../../global/styles/theme";
 import { ModalAlert } from "../../../../components/Modal";
-import {
-  ContainerChangeEmail,
-  ChangeEmailContent,
-  TopContent,
-  Content,
-} from "./styles";
+import { ContainerChangeEmail, ChangeEmailContent, Content } from "./styles";
+import { Header } from "../../../../components/Header";
 
 export function ChangeEmail() {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <>
+      <Header title="Alterar email" type="goback" />
       <ContainerChangeEmail>
         <ChangeEmailContent>
           <Content>
