@@ -4,6 +4,7 @@ import SplashScreen from "react-native-splash-screen";
 import { Platform, StatusBar } from "react-native";
 import { theme } from "./global/styles/theme";
 import { Routes } from "./routes";
+import { AuthContextProvider } from "./contexts/AuthContext";
 
 export default function App() {
   useEffect(() => {
@@ -17,7 +18,9 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Routes />
+      <AuthContextProvider>
+        <Routes />
+      </AuthContextProvider>
     </ThemeProvider>
   );
 }

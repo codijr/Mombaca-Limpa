@@ -19,13 +19,15 @@ import {
   SignUpTextBold,
   Content,
 } from "./styles";
+import { useAuth } from "../../../contexts/AuthContext";
 
 export function Login() {
   const { navigate } = useNavigation();
+  const { setIsAuth } = useAuth();
 
   const handleLogin = useCallback(() => {
-    // add auth rule
-  }, []);
+    setIsAuth(true);
+  }, [setIsAuth]);
 
   return (
     <ContainerLogin>

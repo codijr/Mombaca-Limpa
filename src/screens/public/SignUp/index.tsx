@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { ms } from "react-native-size-matters";
@@ -17,9 +17,15 @@ import {
   SignUpTextBold,
   Content,
 } from "./styles";
+import { useAuth } from "../../../contexts/AuthContext";
 
 export function SignUp() {
   const { navigate } = useNavigation();
+  const { setIsAuth } = useAuth();
+
+  const handleSignUp = useCallback(() => {
+    setIsAuth(true);
+  }, [setIsAuth]);
 
   return (
     <ContainerLogin>
@@ -43,7 +49,7 @@ export function SignUp() {
             />
 
             <CentralizeView>
-              <ButtonSubmit title="Fazer Cadastro" />
+              <ButtonSubmit title="Fazer Cadastro" onPress={handleSignUp} />
             </CentralizeView>
           </TopContent>
 

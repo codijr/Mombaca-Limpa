@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { ProfileButton } from "./components/ProfileButton";
 import {
@@ -9,9 +9,15 @@ import {
   TitleProfile,
 } from "./style";
 import { Header } from "../../../../components/Header";
+import { useAuth } from "../../../../contexts/AuthContext";
 
 export function Profile() {
   const { navigate } = useNavigation();
+  const { setIsAuth } = useAuth();
+
+  const handleSignOut = useCallback(() => {
+    setIsAuth(false);
+  }, [setIsAuth]);
 
   return (
     <>
@@ -43,7 +49,7 @@ export function Profile() {
 
         <ProfileButton title="Sobre" icon="info" />
 
-        <ProfileButton title="Sair" icon="log-out" />
+        <ProfileButton title="Sair" icon="log-out" onPress={handleSignOut} />
       </Container>
     </>
   );
