@@ -1,4 +1,4 @@
-import { Dimensions, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import styled from "styled-components";
 import { ms } from "react-native-size-matters";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -21,16 +21,20 @@ export const ForgotPasswordContainer = styled(ScrollView)`
   flex: 1;
 `;
 
-export const PasswordIcon = styled(Icon).attrs({
-  name: "lock-outline",
-  size: ms(50),
-  color: "#1BB471",
-})`
+export const PasswordIconWrapper = styled(View)`
+  align-items: center;
+  justify-content: center;
   background-color: ${({ theme }) => theme.colors.backgroundWhite};
   border-radius: 50px;
   padding: ${ms(10)}px;
   margin-bottom: ${ms(30)}px;
 `;
+
+export const PasswordIcon = styled(Icon).attrs({
+  name: "lock-outline",
+  size: ms(50),
+  color: "#1BB471",
+})``;
 
 export const Title = styled(Text)`
   font-size: ${RFValue(24)}px;

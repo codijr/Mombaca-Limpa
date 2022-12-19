@@ -25,7 +25,7 @@ export const SearchView = styled(View)`
   justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.backgroundWhite};
   border-radius: ${ms(40)}px;
-  padding: ${ms(5)}px ${ms(15)}px;
+  padding: ${ms(10)}px ${ms(15)}px;
   elevation: 7;
   shadow-opacity: 0.2;
 `;
