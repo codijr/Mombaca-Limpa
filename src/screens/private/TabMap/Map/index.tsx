@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StatusBar } from "react-native";
+import { Platform, StatusBar } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
   ComplaintIcon,
@@ -23,14 +23,18 @@ export function Map() {
   useEffect(() => {
     navigation.addListener("focus", () => {
       StatusBar.setBarStyle("dark-content");
-      StatusBar.setBackgroundColor("transparent");
-      StatusBar.setTranslucent(true);
+      if (Platform.OS === "android") {
+        StatusBar.setBackgroundColor("transparent");
+        StatusBar.setTranslucent(true);
+      }
     });
 
     navigation.addListener("blur", () => {
       StatusBar.setBarStyle("light-content");
-      StatusBar.setBackgroundColor("#1BB471");
-      StatusBar.setTranslucent(false);
+      if (Platform.OS === "android") {
+        StatusBar.setBackgroundColor("#1BB471");
+        StatusBar.setTranslucent(false);
+      }
     });
   }, [navigation]);
 
