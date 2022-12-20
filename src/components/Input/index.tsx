@@ -42,10 +42,8 @@ export function Input({
       </InputTitle>
       <InputWrapper
         style={{
-          borderWidth: error ? 2 : 0,
-          borderColor: error
-            ? `${theme.colors.alert}`
-            : `${theme.colors.backgroundWhite}`,
+          borderWidth: 2,
+          borderColor: error ? `${theme.colors.alert}` : "transparent",
         }}
       >
         <InputText
