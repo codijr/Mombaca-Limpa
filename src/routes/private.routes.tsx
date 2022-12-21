@@ -1,6 +1,9 @@
 import React from "react";
 
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+  BottomTabBar,
+  createBottomTabNavigator,
+} from "@react-navigation/bottom-tabs";
 import {
   TransitionPresets,
   createStackNavigator,
@@ -14,6 +17,7 @@ import { Profile } from "../screens/private/TabProfile/Profile";
 import { Statistics } from "../screens/private/TabStatistics/Statistics";
 import { theme } from "../global/styles/theme";
 import { ChangeEmail } from "../screens/private/TabProfile/ChangeEmail";
+import { About } from "../screens/private/TabProfile/About";
 
 const Stack = createStackNavigator();
 
@@ -42,6 +46,7 @@ function ProfileTab() {
     >
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="ChangeEmail" component={ChangeEmail} />
+      <Stack.Screen name="About" component={About} />
     </Stack.Navigator>
   );
 }

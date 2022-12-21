@@ -47,7 +47,11 @@ export function Profile() {
 
         <ProfileButton title="Alterar senha" icon="lock" />
 
-        <ProfileButton title="Sobre" icon="info" />
+        <ProfileButton
+          title="Sobre"
+          icon="info"
+          onPress={() => navigate("About" as never)}
+        />
 
         <ProfileButton title="Sair" icon="log-out" onPress={handleSignOut} />
       </Container>
