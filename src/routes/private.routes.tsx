@@ -14,6 +14,7 @@ import { Profile } from "../screens/private/TabProfile/Profile";
 import { Statistics } from "../screens/private/TabStatistics/Statistics";
 import { theme } from "../global/styles/theme";
 import { ChangeEmail } from "../screens/private/TabProfile/ChangeEmail";
+import { AddMetrics } from "../screens/private/TabStatistics/AddMetrics";
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,7 @@ function StatisticsTab() {
   return (
     <Stack.Navigator initialRouteName="Statistics">
       <Stack.Screen name="Statistics" component={Statistics} />
+      <Stack.Screen name="AddMetrics" component={AddMetrics} options={{headerShown: false}}/>
     </Stack.Navigator>
   );
 }
