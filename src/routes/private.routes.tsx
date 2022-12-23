@@ -1,6 +1,9 @@
 import React from "react";
 
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+  BottomTabBar,
+  createBottomTabNavigator,
+} from "@react-navigation/bottom-tabs";
 import {
   TransitionPresets,
   createStackNavigator,
@@ -8,12 +11,14 @@ import {
 import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { RFValue } from "react-native-responsive-fontsize";
 import { ms } from "react-native-size-matters";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { Complaint } from "../screens/private/TabMap/Complaint";
 import { Map } from "../screens/private/TabMap/Map";
 import { Profile } from "../screens/private/TabProfile/Profile";
 import { Statistics } from "../screens/private/TabStatistics/Statistics";
 import { theme } from "../global/styles/theme";
 import { ChangeEmail } from "../screens/private/TabProfile/ChangeEmail";
+import { About } from "../screens/private/TabProfile/About";
 
 const Stack = createStackNavigator();
 
@@ -42,6 +47,7 @@ function ProfileTab() {
     >
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="ChangeEmail" component={ChangeEmail} />
+      <Stack.Screen name="About" component={About} />
     </Stack.Navigator>
   );
 }
@@ -57,6 +63,11 @@ function StatisticsTab() {
 const Tab = createBottomTabNavigator();
 
 export function PrivateRoutes() {
+  const getTabBarVisibility = (route: any) => {
+    const routeName = getFocusedRouteNameFromRoute(route);
+    return routeName !== "About";
+  };
+
   return (
     <Tab.Navigator
       initialRouteName="MapTab"
@@ -100,13 +111,17 @@ export function PrivateRoutes() {
       <Tab.Screen
         name="ProfileTab"
         component={ProfileTab}
-        options={{
+        options={({ route }) => ({
           tabBarLabel: "Perfil",
           // eslint-disable-next-line react/no-unstable-nested-components
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="account-outline" color={color} size={size} />
           ),
-        }}
+          tabBarStyle: {
+            backgroundColor: theme.colors.backgroundPrimary,
+            display: getTabBarVisibility(route) ? "flex" : "none",
+          },
+        })}
       />
     </Tab.Navigator>
   );
