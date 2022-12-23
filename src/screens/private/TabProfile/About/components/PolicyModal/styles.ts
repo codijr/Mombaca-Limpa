@@ -52,4 +52,5 @@ export const TextModal = styled(Text)`
 
 export const SubtitleText = styled(Text)`
   color: ${({ theme }) => theme.colors.primary};
+  font-family: ${({ theme }) => theme.fonts.text700};
 `;

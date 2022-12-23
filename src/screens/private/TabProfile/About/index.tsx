@@ -8,10 +8,12 @@ import {
   LogoVertical,
   PrivacyPolicyText,
   VersionText,
+  CompaniesLogo,
 } from "./styles";
-import Codi from "../../../../assets/icons/logo-codi.svg";
-import Mombaça from "../../../../assets/icons/logo-mombaça.svg";
 import { PolicyModal } from "./components/PolicyModal";
+
+import MombacaLogo from "../../../../assets/icons/mombaca-logo.png";
+import CodiLogo from "../../../../assets/icons/codi-logo.png";
 
 export function About() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -27,8 +29,8 @@ export function About() {
             <PrivacyPolicyText>Política de privacidade</PrivacyPolicyText>
           </PrivacyPoliceButton>
           <Companies>
-            <Mombaça />
-            <Codi />
+            <CompaniesLogo source={MombacaLogo} />
+            <CompaniesLogo source={CodiLogo} />
           </Companies>
         </BottomView>
       </Container>

@@ -1,10 +1,4 @@
-import {
-  Dimensions,
-  Text,
-  Touchable,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Dimensions, Image, Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components";
 import { ms } from "react-native-size-matters";
 import Logo from "../../../../assets/icons/logo-vertical.svg";
@@ -34,20 +28,21 @@ export const VersionText = styled(Text)`
 `;
 
 export const BottomView = styled(View)`
-  flex: 1;
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.backgroundWhite};
-  border-top-left-radius: ${ms(widthDimensions)}px;
-  border-top-right-radius: ${ms(widthDimensions)}px;
-  width: ${ms(widthDimensions * 0.95)}px;
-  height: ${ms(heightDimensions * 0.3)}px;
+  border-top-left-radius: ${widthDimensions / 2}px;
+  border-top-right-radius: ${widthDimensions / 2}px;
+  width: ${widthDimensions};
+  height: ${widthDimensions}px;
   position: absolute;
-  bottom: -50;
+  bottom: ${-(widthDimensions / 2)}px;
   padding: ${ms(40)}px ${ms(10)}px;
   align-items: center;
 `;
 
-export const PrivacyPoliceButton = styled(TouchableOpacity)``;
+export const PrivacyPoliceButton = styled(TouchableOpacity)`
+  margin-bottom: ${ms(20)}px;
+`;
 
 export const PrivacyPolicyText = styled(Text)`
   font-size: ${ms(18)}px;
@@ -58,6 +53,13 @@ export const PrivacyPolicyText = styled(Text)`
 
 export const Companies = styled(View)`
   flex-direction: row;
-  margin-top: ${ms(30)}px;
   align-items: center;
+  justify-content: space-between;
+  width: 85%;
+`;
+
+export const CompaniesLogo = styled(Image)`
+  width: ${ms(140)}px;
+  height: ${ms(80)}px;
+  resize-mode: contain;
 `;
