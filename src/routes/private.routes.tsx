@@ -11,6 +11,7 @@ import {
 import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { RFValue } from "react-native-responsive-fontsize";
 import { ms } from "react-native-size-matters";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { Complaint } from "../screens/private/TabMap/Complaint";
 import { Map } from "../screens/private/TabMap/Map";
 import { Profile } from "../screens/private/TabProfile/Profile";
@@ -62,6 +63,11 @@ function StatisticsTab() {
 const Tab = createBottomTabNavigator();
 
 export function PrivateRoutes() {
+  const getTabBarVisibility = (route: any) => {
+    const routeName = getFocusedRouteNameFromRoute(route);
+    return routeName !== "About";
+  };
+
   return (
     <Tab.Navigator
       initialRouteName="MapTab"
@@ -105,13 +111,17 @@ export function PrivateRoutes() {
       <Tab.Screen
         name="ProfileTab"
         component={ProfileTab}
-        options={{
+        options={({ route }) => ({
           tabBarLabel: "Perfil",
           // eslint-disable-next-line react/no-unstable-nested-components
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="account-outline" color={color} size={size} />
           ),
-        }}
+          tabBarStyle: {
+            backgroundColor: theme.colors.backgroundPrimary,
+            display: getTabBarVisibility(route) ? "flex" : "none",
+          },
+        })}
       />
     </Tab.Navigator>
   );

@@ -32,7 +32,7 @@ export const BottomView = styled(View)`
   background-color: ${({ theme }) => theme.colors.backgroundWhite};
   border-top-left-radius: ${widthDimensions / 2}px;
   border-top-right-radius: ${widthDimensions / 2}px;
-  width: ${widthDimensions};
+  width: ${widthDimensions}px;
   height: ${widthDimensions}px;
   position: absolute;
   bottom: ${-(widthDimensions / 2)}px;
