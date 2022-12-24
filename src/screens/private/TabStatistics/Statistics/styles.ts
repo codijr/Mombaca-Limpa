@@ -1,8 +1,10 @@
-import { ScrollView, Text, View } from "react-native";
+import { Dimensions, ScrollView, Text, View } from "react-native";
 import styled from "styled-components";
 import { RFValue } from "react-native-responsive-fontsize";
 import { ms } from "react-native-size-matters";
 import { Container } from "../../../../global/styles/theme";
+
+const { width } = Dimensions.get("window");
 
 export const ContainerStatistics = styled(Container)`
   flex: 1;
@@ -23,6 +25,11 @@ export const StatisticsSectionTitle = styled(Text)`
   margin-bottom: ${ms(10)}px;
 `;
 
+export const GeneralStatistics = styled(View)`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
 export const GeneralStatisticsWrapper = styled(View)`
   flex-direction: row;
   justify-content: space-between;
@@ -37,7 +44,14 @@ export const BackgroundStats = styled(View)`
 
 export const BackgroundStatsChart = styled(BackgroundStats)`
   width: 100%;
-  height: ${ms(200)}px;
+  padding: 0;
+  height: 220px;
+  flex-direction: row;
+`;
+
+export const LegendStats = styled(View)`
+  flex: 1;
+  justify-content: center;
 `;
 
 export const TitleStats = styled(Text)`
