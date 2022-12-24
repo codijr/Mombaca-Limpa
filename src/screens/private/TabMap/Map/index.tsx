@@ -42,11 +42,11 @@ export function Map() {
 
   return (
     <>
-      <StatusBar
+      {/* <StatusBar
         barStyle="dark-content"
         backgroundColor="transparent"
         translucent
-      />
+      /> */}
       <MapContainer initialRegion={region} />
       <SearchBar />
       <IconsView>

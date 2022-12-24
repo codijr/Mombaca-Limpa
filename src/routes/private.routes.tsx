@@ -54,7 +54,13 @@ function ProfileTab() {
 
 function StatisticsTab() {
   return (
-    <Stack.Navigator initialRouteName="Statistics">
+    <Stack.Navigator
+      initialRouteName="Statistics"
+      screenOptions={{
+        headerShown: false,
+        ...TransitionPresets.SlideFromRightIOS,
+      }}
+    >
       <Stack.Screen name="Statistics" component={Statistics} />
     </Stack.Navigator>
   );
