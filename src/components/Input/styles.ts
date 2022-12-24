@@ -28,9 +28,7 @@ export const InputTitle = styled(Text)`
   color: ${({ theme }) => theme.colors.textWhite};
 `;
 
-export const InputText = styled(TextInput).attrs({
-  placeholderTextColor: "#8c8c8c",
-})`
+export const InputText = styled(TextInput)`
   padding: ${ms(15)}px ${ms(15)}px;
   font-size: ${RFValue(13)}px;
   font-family: ${({ theme }) => theme.fonts.text300};

@@ -3,8 +3,13 @@ import { ButtonSubmit } from "../../../../components/ButtonSubmit";
 import { CentralizeView } from "../../../../global/styles/theme";
 import { ModalAlert } from "../../../../components/Modal";
 import { Header } from "../../../../components/Header";
-import { ContainerComplaint, ComplaintContent, Content, ComplaintLocation, ComplaintDescription } from "./styles";
-import { theme } from "../../../../global/styles/theme";
+import {
+  ContainerComplaint,
+  ComplaintContent,
+  Content,
+  ComplaintLocation,
+  ComplaintDescription,
+} from "./styles";
 
 export function Complaint() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -15,16 +20,8 @@ export function Complaint() {
       <ContainerComplaint>
         <ComplaintContent>
           <Content>
-            <ComplaintLocation 
-            placeholder={"Digite o local da denúncia"}
-            placeholderTextColor={theme.colors.textGray} 
-            />
-            <ComplaintDescription 
-            placeholder={"Insira uma descrição da denúncia"}
-            placeholderTextColor={theme.colors.textGray}
-            multiline={true}
-            style={{ textAlignVertical: 'top',}} 
-            /> 
+            <ComplaintLocation />
+            <ComplaintDescription />
             <CentralizeView>
               <ButtonSubmit
                 onPress={() => setModalVisible(!modalVisible)}
@@ -44,5 +41,3 @@ export function Complaint() {
     </>
   );
 }
-
-

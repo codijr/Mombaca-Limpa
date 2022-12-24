@@ -1,13 +1,14 @@
-import { View, TextInput } from "react-native";
+import { View, TextInput, ScrollView } from "react-native";
 import styled from "styled-components";
 import { ms } from "react-native-size-matters";
 import { Container } from "../../../../global/styles/theme";
+import { Input } from "../../../../components/Input";
 
 export const ContainerComplaint = styled(Container)`
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
-export const ComplaintContent = styled(View)`
+export const ComplaintContent = styled(ScrollView)`
   flex: 1;
 `;
 
@@ -16,24 +17,19 @@ export const Content = styled(View)`
   flex-direction: column;
 `;
 
-export const ComplaintLocation = styled(TextInput)`
-height: 45px;
-padding: 10px;
-border-radius: 7px;
-font-size: 15px;
-font-family: ${({ theme }) => theme.fonts.text300};
-color: ${({ theme }) => theme.colors.text};
-background-color: ${({ theme }) => theme.colors.backgroundWhite}; 
-`;
+export const ComplaintLocation = styled(Input).attrs({
+  title: "Localização",
+  placeholder: "Informe o local do ocorrido",
+  type: "green",
+})``;
 
-export const ComplaintDescription = styled(TextInput)`
-height: 230px;
-margin-top: 22px;
-margin-bottom: 30px;
-padding: 10px;
-border-radius: 7px;
-font-size: 15px;
-font-family: ${({ theme }) => theme.fonts.text300};
-color: ${({ theme }) => theme.colors.text};
-background-color: ${({ theme }) => theme.colors.backgroundWhite};
+export const ComplaintDescription = styled(Input).attrs({
+  title: "Descrição",
+  placeholder: "Descreva o ocorrido",
+  type: "green",
+  multiline: true,
+  numberOfLines: 8,
+})`
+  text-align-vertical: top;
+  word-wrap: break-word;
 `;
