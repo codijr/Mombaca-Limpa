@@ -18,6 +18,7 @@ import { Profile } from "../screens/private/TabProfile/Profile";
 import { Statistics } from "../screens/private/TabStatistics/Statistics";
 import { theme } from "../global/styles/theme";
 import { ChangeEmail } from "../screens/private/TabProfile/ChangeEmail";
+import { AddMetrics } from "../screens/private/TabStatistics/AddMetrics";
 import { About } from "../screens/private/TabProfile/About";
 
 const Stack = createStackNavigator();
@@ -62,6 +63,11 @@ function StatisticsTab() {
       }}
     >
       <Stack.Screen name="Statistics" component={Statistics} />
+      <Stack.Screen
+        name="AddMetrics"
+        component={AddMetrics}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
