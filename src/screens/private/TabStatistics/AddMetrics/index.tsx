@@ -23,7 +23,12 @@ export function AddMetrics() {
       <ContainerAddMetrics>
         <AddMetricsContent>
           <Content>
-            <Input title="Data" placeholder="DD/MM/AAAA" type="green" />
+            <Input
+              title="Data"
+              placeholder="DD/MM/AAAA"
+              type="green"
+              keyboardType="numeric"
+            />
             <Input
               title="Quantidade de resíduos"
               placeholder="0"
@@ -40,7 +45,9 @@ export function AddMetrics() {
             >
               <MetricPicker
                 selectedValue={metric}
-                onValueChange={(itemValue, itemIndex) => setMetric(itemValue)}
+                onValueChange={(itemValue, itemIndex) =>
+                  setMetric(itemValue as string)
+                }
                 dropdownIconColor={theme.colors.text}
               >
                 <MetricPicker.Item
