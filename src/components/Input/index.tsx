@@ -54,6 +54,7 @@ export function Input({
           style={{
             width: isPassword ? "80%" : "100%",
           }}
+          {...rest}
         />
 
         {isPassword && (
