@@ -48,10 +48,12 @@ export function Input({
       >
         <InputText
           placeholder={placeholder}
+          placeholderTextColor="#A0A0B2"
           secureTextEntry={isPassword && !visiblePassword}
           style={{
             width: isPassword ? "80%" : "100%",
           }}
+          {...rest}
         />
 
         {isPassword && (
