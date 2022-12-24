@@ -1,9 +1,9 @@
 import { ScrollView, View, Text } from "react-native";
 import styled from "styled-components";
 import { ms } from "react-native-size-matters";
-import { Container } from "../../../../global/styles/theme";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Picker } from "@react-native-picker/picker";
+import { Container } from "../../../../global/styles/theme";
 
 export const ContainerAddMetrics = styled(Container)`
   background-color: ${({ theme }) => theme.colors.background};
@@ -27,7 +27,7 @@ export const InputTitleGreen = styled(Text)`
 `;
 
 export const MetricPicker = styled(Picker)`
-border-radius: 10px;
-color: ${({ theme }) => theme.colors.text};
-height: 60px;
+  border-radius: 10px;
+  color: ${({ theme }) => theme.colors.text};
+  height: 60px;
 `;
