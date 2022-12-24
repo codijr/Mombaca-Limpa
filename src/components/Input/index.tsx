@@ -42,18 +42,18 @@ export function Input({
       </InputTitle>
       <InputWrapper
         style={{
-          borderWidth: error ? 2 : 0,
-          borderColor: error
-            ? `${theme.colors.alert}`
-            : `${theme.colors.backgroundWhite}`,
+          borderWidth: 2,
+          borderColor: error ? `${theme.colors.alert}` : "transparent",
         }}
       >
         <InputText
           placeholder={placeholder}
+          placeholderTextColor="#A0A0B2"
           secureTextEntry={isPassword && !visiblePassword}
           style={{
             width: isPassword ? "80%" : "100%",
           }}
+          {...rest}
         />
 
         {isPassword && (
