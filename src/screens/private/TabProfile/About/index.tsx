@@ -12,8 +12,8 @@ import {
 } from "./styles";
 import { PolicyModal } from "./components/PolicyModal";
 
-import MombacaLogo from "../../../../assets/icons/mombaca-logo.png";
-import CodiLogo from "../../../../assets/icons/codi-logo.png";
+import MombacaLogo from "../../../../assets/images/mombaca-logo.png";
+import CodiLogo from "../../../../assets/images/codi-logo.png";
 
 export function About() {
   const [modalVisible, setModalVisible] = useState(false);
