@@ -45,7 +45,11 @@ export function Profile() {
           onPress={() => navigate("ChangeEmail" as never)}
         />
 
-        <ProfileButton title="Alterar senha" icon="lock" />
+        <ProfileButton 
+          title="Alterar senha" 
+          icon="lock"
+          onPress={() => navigate("ChangePassword" as never)} 
+        />
 
         <ProfileButton
           title="Sobre"

@@ -18,6 +18,7 @@ import { Profile } from "../screens/private/TabProfile/Profile";
 import { Statistics } from "../screens/private/TabStatistics/Statistics";
 import { theme } from "../global/styles/theme";
 import { ChangeEmail } from "../screens/private/TabProfile/ChangeEmail";
+import { ChangePassword } from "../screens/private/TabProfile/ChangePassword";
 import { AddMetrics } from "../screens/private/TabStatistics/AddMetrics";
 import { About } from "../screens/private/TabProfile/About";
 
@@ -48,6 +49,7 @@ function ProfileTab() {
     >
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="ChangeEmail" component={ChangeEmail} />
+      <Stack.Screen name="ChangePassword" component={ChangePassword} />
       <Stack.Screen name="About" component={About} />
     </Stack.Navigator>
   );
