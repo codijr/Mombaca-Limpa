@@ -13,7 +13,8 @@ export const Container = styled(TouchableOpacity)`
 `;
 
 export const ButtonText = styled(Text)`
-  font-size: ${RFValue(16)}px;
+  font-size: ${RFValue(13)}px;
   font-family: ${({ theme }) => theme.fonts.title600};
   color: ${({ theme }) => theme.colors.textWhite};
+  text-align: center;
 `;
