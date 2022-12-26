@@ -11,6 +11,7 @@
     "apk": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && cd android && ./gradlew assembleRelease"
   },
   "dependencies": {
+    "@react-native-firebase/app": "^16.5.0",
     "@react-native-masked-view/masked-view": "^0.2.8",
     "@react-native-picker/picker": "^2.4.8",
     "@react-navigation/bottom-tabs": "^6.4.1",
