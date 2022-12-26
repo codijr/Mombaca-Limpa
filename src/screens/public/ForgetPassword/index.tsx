@@ -1,7 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
-import { ButtonSubmit } from "../../../components/ButtonSubmit";
-import { Input } from "../../../components/Input";
 import { CentralizeView } from "../../../global/styles/theme";
 import {
   ContainerForgetPassword,
@@ -12,8 +10,7 @@ import {
   Content,
   PasswordIconWrapper,
 } from "./styles";
-import { ModalAlert } from "../../../components/Modal";
-import { Header } from "../../../components/Header";
+import { ButtonSubmit, Header, Input, ModalAlert } from "../../../components";
 
 export function ForgetPassword() {
   const { navigate } = useNavigation();

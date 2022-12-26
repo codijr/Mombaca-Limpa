@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import { ButtonSubmit } from "../../../../components/ButtonSubmit";
-import { Input } from "../../../../components/Input";
 import { CentralizeView, theme } from "../../../../global/styles/theme";
-import { ModalAlert } from "../../../../components/Modal";
 import {
   ContainerAddMetrics,
   AddMetricsContent,
@@ -11,7 +8,12 @@ import {
   InputTitleGreen,
   MetricPicker,
 } from "./styles";
-import { Header } from "../../../../components/Header";
+import {
+  ButtonSubmit,
+  Header,
+  Input,
+  ModalAlert,
+} from "../../../../components";
 
 export function AddMetrics() {
   const [modalVisible, setModalVisible] = useState(false);

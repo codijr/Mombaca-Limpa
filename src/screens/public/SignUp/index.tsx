@@ -3,8 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { ms } from "react-native-size-matters";
 import { Platform } from "react-native";
-import { ButtonSubmit } from "../../../components/ButtonSubmit";
-import { Input } from "../../../components/Input";
 import { CentralizeView } from "../../../global/styles/theme";
 import {
   ContainerLogin,
@@ -18,6 +16,7 @@ import {
   Content,
 } from "./styles";
 import { useAuth } from "../../../contexts/AuthContext";
+import { ButtonSubmit, Input } from "../../../components";
 
 export function SignUp() {
   const { navigate } = useNavigation();

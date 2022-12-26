@@ -1,15 +1,21 @@
 import React, { useState } from "react";
-import { ButtonSubmit } from "../../../../components/ButtonSubmit";
-import { Input } from "../../../../components/Input";
 import { CentralizeView } from "../../../../global/styles/theme";
-import { ModalAlert } from "../../../../components/Modal";
-import { ContainerChangePassword, ChangePasswordContent, Content } from "./styles";
-import { Header } from "../../../../components/Header";
+import {
+  ContainerChangePassword,
+  ChangePasswordContent,
+  Content,
+} from "./styles";
+import {
+  ButtonSubmit,
+  Header,
+  Input,
+  ModalAlert,
+} from "../../../../components";
 
 export function ChangePassword() {
   const [modalVisible, setModalVisible] = useState(false);
   // const [passwordHasBeenChanged, setPasswordHasBeenChanged] = useState(true);
-  
+
   return (
     <>
       <Header title="Alterar senha" type="goback" />

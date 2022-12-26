@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import { ButtonSubmit } from "../../../../components/ButtonSubmit";
 import { CentralizeView } from "../../../../global/styles/theme";
-import { ModalAlert } from "../../../../components/Modal";
-import { Header } from "../../../../components/Header";
 import {
   ContainerComplaint,
   ComplaintContent,
@@ -10,6 +7,7 @@ import {
   ComplaintLocation,
   ComplaintDescription,
 } from "./styles";
+import { ButtonSubmit, Header, ModalAlert } from "../../../../components";
 
 export function Complaint() {
   const [modalVisible, setModalVisible] = useState(false);

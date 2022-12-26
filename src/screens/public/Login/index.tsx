@@ -3,8 +3,7 @@ import React, { useCallback } from "react";
 import { ms } from "react-native-size-matters";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { Platform } from "react-native";
-import { ButtonSubmit } from "../../../components/ButtonSubmit";
-import { Input } from "../../../components/Input";
+import { ButtonSubmit, Input } from "../../../components";
 import { CentralizeView } from "../../../global/styles/theme";
 import {
   ContainerLogin,
