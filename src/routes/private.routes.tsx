@@ -1,26 +1,28 @@
 import React from "react";
 
-import {
-  BottomTabBar,
-  createBottomTabNavigator,
-} from "@react-navigation/bottom-tabs";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   TransitionPresets,
   createStackNavigator,
 } from "@react-navigation/stack";
+
 import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { RFValue } from "react-native-responsive-fontsize";
 import { ms } from "react-native-size-matters";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
-import { Complaint } from "../screens/private/TabMap/Complaint";
-import { Map } from "../screens/private/TabMap/Map";
-import { Profile } from "../screens/private/TabProfile/Profile";
-import { Statistics } from "../screens/private/TabStatistics/Statistics";
+
+import {
+  About,
+  AddMetrics,
+  ChangeEmail,
+  ChangePassword,
+  Complaint,
+  Map,
+  Profile,
+  Statistics,
+} from "../screens";
+
 import { theme } from "../global/styles/theme";
-import { ChangeEmail } from "../screens/private/TabProfile/ChangeEmail";
-import { ChangePassword } from "../screens/private/TabProfile/ChangePassword";
-import { AddMetrics } from "../screens/private/TabStatistics/AddMetrics";
-import { About } from "../screens/private/TabProfile/About";
 
 const Stack = createStackNavigator();
 
@@ -65,11 +67,7 @@ function StatisticsTab() {
       }}
     >
       <Stack.Screen name="Statistics" component={Statistics} />
-      <Stack.Screen
-        name="AddMetrics"
-        component={AddMetrics}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="AddMetrics" component={AddMetrics} />
     </Stack.Navigator>
   );
 }

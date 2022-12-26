@@ -4,10 +4,10 @@ import {
   createStackNavigator,
   TransitionPresets,
 } from "@react-navigation/stack";
+
 import Icon from "react-native-vector-icons/Feather";
-import { Login } from "../screens/public/Login";
-import { SignUp } from "../screens/public/SignUp";
-import { ForgetPassword } from "../screens/public/ForgetPassword";
+
+import { ForgetPassword, Login, SignUp } from "../screens";
 
 const Stack = createStackNavigator();
 
