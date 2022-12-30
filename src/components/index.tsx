@@ -1,4 +1,5 @@
 export * from "./ButtonSubmit";
 export * from "./Header";
 export * from "./Input";
-export * from "./Modal";
+export * from "./ModalAlert";
+export * from "./ModalError";

@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
+import auth from "@react-native-firebase/auth";
 import { ProfileButton } from "./components/ProfileButton";
 import {
   Container,
@@ -10,13 +11,17 @@ import {
 } from "./style";
 import { Header } from "../../../../components/Header";
 import { useAuth } from "../../../../contexts/AuthContext";
+import { removeStorage } from "../../../../utils";
 
 export function Profile() {
   const { navigate } = useNavigation();
   const { setIsAuth } = useAuth();
 
   const handleSignOut = useCallback(() => {
-    setIsAuth(false);
+    removeStorage("@user").then(() => {
+      setIsAuth(false);
+      auth().signOut();
+    });
   }, [setIsAuth]);
 
   return (
@@ -45,10 +50,10 @@ export function Profile() {
           onPress={() => navigate("ChangeEmail" as never)}
         />
 
-        <ProfileButton 
-          title="Alterar senha" 
+        <ProfileButton
+          title="Alterar senha"
           icon="lock"
-          onPress={() => navigate("ChangePassword" as never)} 
+          onPress={() => navigate("ChangePassword" as never)}
         />
 
         <ProfileButton

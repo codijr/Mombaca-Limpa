@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { TouchableHighlightProps } from "react-native";
+import { ActivityIndicator, TouchableHighlightProps } from "react-native";
 import { theme } from "../../global/styles/theme";
 import { Container, ButtonText } from "./styles";
 
 interface ButtonSubmitProps extends TouchableHighlightProps {
   title: string;
+  loading?: boolean;
 }
 
-export function ButtonSubmit({ title, ...rest }: ButtonSubmitProps) {
+export function ButtonSubmit({ title, loading, ...rest }: ButtonSubmitProps) {
   const [click, setClick] = useState(false);
 
   return (
@@ -19,7 +20,11 @@ export function ButtonSubmit({ title, ...rest }: ButtonSubmitProps) {
       }}
       {...rest}
     >
-      <ButtonText>{title}</ButtonText>
+      {loading ? (
+        <ActivityIndicator color={theme.colors.textWhite} />
+      ) : (
+        <ButtonText>{title}</ButtonText>
+      )}
     </Container>
   );
 }

@@ -17,10 +17,10 @@ export default function App() {
   });
 
   return (
-    <ThemeProvider theme={theme}>
-      <Context>
+    <Context>
+      <ThemeProvider theme={theme}>
         <Routes />
-      </Context>
-    </ThemeProvider>
+      </ThemeProvider>
+    </Context>
   );
 }
