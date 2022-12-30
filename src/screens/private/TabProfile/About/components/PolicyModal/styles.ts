@@ -42,7 +42,6 @@ export const TitleModal = styled(Text)`
 `;
 
 export const TextModal = styled(Text)`
-  margin-top: ${ms(5)}px;
   font-size: ${RFValue(15)}px;
   font-family: ${({ theme }) => theme.fonts.text300};
   color: ${({ theme }) => theme.colors.text};
@@ -51,6 +50,8 @@ export const TextModal = styled(Text)`
 `;
 
 export const SubtitleText = styled(Text)`
+  font-size: ${RFValue(16)}px;
   color: ${({ theme }) => theme.colors.primary};
   font-family: ${({ theme }) => theme.fonts.text700};
+  margin-bottom: ${ms(5)}px;
 `;

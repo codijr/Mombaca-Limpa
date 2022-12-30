@@ -45,19 +45,22 @@ export function PolicyModal({
             </TouchableOpacity>
           </HeaderContainer>
           <ContentContainer>
+            <SubtitleText>
+              SOBRE NÓS E ESTA POLÍTICA DE PRIVACIDADE
+            </SubtitleText>
+
             <TextModal>
-              <SubtitleText>
-                SOBRE NÓS E ESTA POLÍTICA DE PRIVACIDADE {"\n"} {"\n"}
-              </SubtitleText>
               Sua privacidade é muito importante para nós da Secretaria do Meio
               Ambiente de Mombaça, sempre usaremos suas informações pessoais
               apenas para os fins descritos nesta Política de Privacidade. Esta
               política também permitirá que você saiba quais informações são
               coletadas por nossos provedores de serviços terceirizados e
               fornece um link para como você pode descobrir como eles as usam.
-              <SubtitleText>
-                {"\n"} {"\n"}INFORMAÇÕES QUE COLETAMOS DE VOCÊ {"\n"} {"\n"}
-              </SubtitleText>
+            </TextModal>
+
+            <SubtitleText>INFORMAÇÕES QUE COLETAMOS DE VOCÊ</SubtitleText>
+
+            <TextModal>
               Sua privacidade é muito importante para nós da Secretaria do Meio
               Ambiente de Mombaça, sempre usaremos suas informações pessoais
               apenas para os fins descritos nesta Política de Privacidade. Esta
