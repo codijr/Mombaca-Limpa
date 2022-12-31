@@ -1,12 +1,14 @@
-import { Text, View } from "react-native";
+import { Platform, Text, View } from "react-native";
 import { ms } from "react-native-size-matters";
 import styled from "styled-components";
 import Icon from "react-native-vector-icons/Feather";
 import { RFValue } from "react-native-responsive-fontsize";
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
 export const HeaderContainer = styled(View)`
   width: 100%;
-  height: ${ms(65)}px;
+  height: ${ms(90)}px;
+  padding-top: ${Platform.OS === "ios" ? getStatusBarHeight() : 0};
   background-color: ${({ theme }) => theme.colors.backgroundPrimary};
   flex-direction: row;
 `;

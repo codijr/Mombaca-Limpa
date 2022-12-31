@@ -21,11 +21,10 @@ export const TitleProfile = styled(Text)`
   font-family: ${({ theme }) => theme.fonts.title600};
   font-size: ${RFValue(16)}px;
   color: ${({ theme }) => theme.colors.textWhite};
-  margin-bottom: -10px;
 `;
 
 export const SubtitleProfile = styled(Text)`
   font-family: ${({ theme }) => theme.fonts.text300};
-  font-size: ${RFValue(10)}px;
+  font-size: ${RFValue(13)}px;
   color: ${({ theme }) => theme.colors.disabled};
 `;
