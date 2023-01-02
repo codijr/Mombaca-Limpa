@@ -1318,6 +1318,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-masked-view/masked-view/-/masked-view-0.2.8.tgz#34405a4361882dae7c81b1b771fe9f5fbd545a97"
   integrity sha512-+1holBPDF1yi/y0uc1WB6lA5tSNHhM7PpTMapT3ypvSnKQ9+C6sy/zfjxNxRA/llBQ1Ci6f94EaK56UCKs5lTA==
 
+"@react-native-picker/picker@^2.4.8":
+  version "2.4.8"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.4.8.tgz#a1a21f3d6ecadedbc3f0b691a444ddd7baa081f8"
+  integrity sha512-5NQ5XPo1B03YNqKFrV6h9L3CQaHlB80wd4ETHUEABRP2iLh7FHLVObX2GfziD+K/VJb8G4KZcZ23NFBFP1f7bg==
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.npmjs.org/@react-native/assets/-/assets-1.0.0.tgz"
@@ -1654,6 +1659,13 @@
   version "15.7.5"
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.5.tgz"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
+
+"@types/react-native-maps@^0.24.2":
+  version "0.24.2"
+  resolved "https://registry.yarnpkg.com/@types/react-native-maps/-/react-native-maps-0.24.2.tgz#f88aa0b30a470066c749a2786c52aca356bd4f38"
+  integrity sha512-4nunEtRw4DoER/oagEofZkwdOVmHV2p3FvMrs6aVjVV+WlXnQWs5fIosqdeWI3OJI5SLsAL+6/HRZxGuQ0ts0Q==
+  dependencies:
+    react-native-maps "*"
 
 "@types/react-native-vector-icons@^6.4.12":
   version "6.4.12"
@@ -2352,6 +2364,11 @@ balanced-match@^1.0.0:
   version "1.0.2"
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
+
+base-64@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/base-64/-/base-64-0.1.0.tgz#780a99c84e7d600260361511c4877613bf24f6bb"
+  integrity sha512-Y5gU45svrR5tI2Vt/X9GPd3L0HNIKzGu202EjxrXMpuc2V2CiKgemAbUUsqYmZJvPtCXoUKjNZwBJzsNScUbXA==
 
 base64-js@^1.1.2, base64-js@^1.3.1:
   version "1.5.1"
@@ -5370,7 +5387,7 @@ lodash.truncate@^4.4.2:
   resolved "https://registry.npmjs.org/lodash.truncate/-/lodash.truncate-4.4.2.tgz"
   integrity sha512-jttmRe7bRse52OsWIMDLaXxWqRAmtIUccAQ3garviCqJjafXOfNMO0yMfNpdD6zbGaTU0P5Nz7e7gAT6cKmJRw==
 
-lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.15, lodash@^4.17.21, lodash@^4.7.0:
+lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.15, lodash@^4.17.21, lodash@^4.7.0:
   version "4.17.21"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -6308,6 +6325,11 @@ path-type@^4.0.0:
   resolved "https://registry.npmjs.org/path-type/-/path-type-4.0.0.tgz"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
+paths-js@^0.4.10:
+  version "0.4.11"
+  resolved "https://registry.yarnpkg.com/paths-js/-/paths-js-0.4.11.tgz#b2a9d5f94ee9949aa8fee945f78a12abff44599e"
+  integrity sha512-3mqcLomDBXOo7Fo+UlaenG6f71bk1ZezPQy2JCmYHy2W2k5VKpP+Jbin9H0bjXynelTbglCqdFhSEkeIkKTYUA==
+
 picocolors@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/picocolors/-/picocolors-1.0.0.tgz"
@@ -6341,6 +6363,11 @@ pkg-dir@^4.2.0:
   integrity sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==
   dependencies:
     find-up "^4.0.0"
+
+point-in-polygon@^1.0.1:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/point-in-polygon/-/point-in-polygon-1.1.0.tgz#b0af2616c01bdee341cbf2894df643387ca03357"
+  integrity sha512-3ojrFwjnnw8Q9242TzgXuTD+eKiutbzyslcq1ydfu82Db2y+Ogbmyrkpv0Hgj31qwT3lbS9+QAAO/pIQM35XRw==
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
@@ -6499,6 +6526,15 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-chart-kit@^6.12.0:
+  version "6.12.0"
+  resolved "https://registry.yarnpkg.com/react-native-chart-kit/-/react-native-chart-kit-6.12.0.tgz#187a4987a668a85b7e93588c248ed2c33b3a06f6"
+  integrity sha512-nZLGyCFzZ7zmX0KjYeeSV1HKuPhl1wOMlTAqa0JhlyW62qV/1ZPXHgT8o9s8mkFaGxdqbspOeuaa6I9jUQDgnA==
+  dependencies:
+    lodash "^4.17.13"
+    paths-js "^0.4.10"
+    point-in-polygon "^1.0.1"
+
 react-native-codegen@^0.70.6:
   version "0.70.6"
   resolved "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.70.6.tgz"
@@ -6513,6 +6549,19 @@ react-native-config@^1.4.11:
   version "1.4.11"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.4.11.tgz#f9ea08a8dffbe3fd4f2187d80d2594756526dee8"
   integrity sha512-PdBFnfR3pljUNrJu4B2wiJ9TbAiz1J1WcG5KP8AFBqZi8ve5MV/CTCDnANaGrqhOxkBDJV73D/SrMENHe7TKBg==
+
+react-native-encrypted-storage@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-encrypted-storage/-/react-native-encrypted-storage-4.0.3.tgz#2a4d65459870511e8f4ccd22f02433dab7fa5e91"
+  integrity sha512-0pJA4Aj2S1PIJEbU7pN/Qvf7JIJx3hFywx+i+bLHtgK0/6Zryf1V2xVsWcrD50dfiu3jY1eN2gesQ5osGxE7jA==
+
+react-native-fs@^2.20.0:
+  version "2.20.0"
+  resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.20.0.tgz#05a9362b473bfc0910772c0acbb73a78dbc810f6"
+  integrity sha512-VkTBzs7fIDUiy/XajOSNk0XazFE9l+QlMAce7lGuebZcag5CnjszB+u4BdqzwaQOdcYb5wsJIsqq4kxInIRpJQ==
+  dependencies:
+    base-64 "^0.1.0"
+    utf8 "^3.0.0"
 
 react-native-gesture-handler@^2.8.0:
   version "2.8.0"
@@ -6535,17 +6584,12 @@ react-native-iphone-x-helper@^1.2.1, react-native-iphone-x-helper@^1.3.1:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
-react-native-maps@^1.3.2:
+react-native-maps@*, react-native-maps@^1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-1.3.2.tgz#8e30bfd9d934de02827253e5cde6c08a04f6356c"
   integrity sha512-NB7HGRZOgxxXCWzrhIVucx/bsrEWANvk3DLci1ov4P9MQnEVQYQCCkTxsnaEvO191GeBOCRDyYn6jckqbfMtmg==
   dependencies:
     "@types/geojson" "^7946.0.8"
-
-react-native-permissions@^3.6.1:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-3.6.1.tgz#73adcc1cef8cd57a9ef167b4507405f4ff5749c4"
-  integrity sha512-fzPpPQXeD34inUccqtoResSwYubfrwUguP4qrVUUv8+KSMjYSaHGoS5HaIJLZHlN9gO+TvLJZ2L5ZljTsb6qnQ==
 
 react-native-responsive-fontsize@^0.5.1:
   version "0.5.1"
@@ -7866,6 +7910,11 @@ use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.npmjs.org/use/-/use-3.1.1.tgz"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
+
+utf8@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/utf8/-/utf8-3.0.0.tgz#f052eed1364d696e769ef058b183df88c87f69d1"
+  integrity sha512-E8VjFIQ/TyQgp+TZfS6l8yp/xWppSAHzidGiRrqe4bK4XP9pTRyKFgGJpO3SN7zdX4DeomTrwaseCHovfpFcqQ==
 
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"

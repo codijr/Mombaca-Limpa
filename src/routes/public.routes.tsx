@@ -4,24 +4,27 @@ import {
   createStackNavigator,
   TransitionPresets,
 } from "@react-navigation/stack";
-import { Login } from "../screens/public/Login";
-import { SignUp } from "../screens/public/SignUp";
-import { ForgetPassword } from "../screens/public/ForgetPassword";
+
+import Icon from "react-native-vector-icons/Feather";
+
+import { ForgetPassword, Login, SignUp } from "../screens";
 
 const Stack = createStackNavigator();
 
 export function PublicRoutes() {
+  Icon.loadFont();
+
   return (
     <Stack.Navigator
-      initialRouteName="SignUp"
+      initialRouteName="Login"
       screenOptions={{
+        headerShown: false,
         ...TransitionPresets.SlideFromRightIOS,
       }}
     >
       <Stack.Group
         screenOptions={{
-          headerShown: false,
-          ...TransitionPresets.ModalFadeTransition,
+          ...TransitionPresets.FadeFromBottomAndroid,
         }}
       >
         <Stack.Screen name="Login" component={Login} />

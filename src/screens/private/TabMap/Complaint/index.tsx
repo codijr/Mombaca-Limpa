@@ -1,6 +1,41 @@
-import React from "react";
-import { Text } from "react-native";
+import React, { useState } from "react";
+import { CentralizeView } from "../../../../global/styles/theme";
+import {
+  ContainerComplaint,
+  ComplaintContent,
+  Content,
+  ComplaintLocation,
+  ComplaintDescription,
+} from "./styles";
+import { ButtonSubmit, Header, ModalAlert } from "../../../../components";
 
 export function Complaint() {
-  return <Text>Complaint</Text>;
+  const [modalVisible, setModalVisible] = useState(false);
+
+  return (
+    <>
+      <Header title="Fazer denúncia" type="goback" />
+      <ContainerComplaint>
+        <ComplaintContent>
+          <Content>
+            <ComplaintLocation />
+            <ComplaintDescription />
+            <CentralizeView>
+              <ButtonSubmit
+                onPress={() => setModalVisible(!modalVisible)}
+                title="Enviar Denúncia"
+              />
+            </CentralizeView>
+          </Content>
+        </ComplaintContent>
+      </ContainerComplaint>
+      <ModalAlert
+        title="Denúncia enviada!"
+        text="Sua denúncia foi enviada com sucesso para a nossa ouvidoria, muito obrigado!"
+        isVisible={modalVisible}
+        transparent
+        onConfirm={() => setModalVisible(false)}
+      />
+    </>
+  );
 }

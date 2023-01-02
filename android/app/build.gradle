@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply plugin: "com.google.gms.google-services"
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 project.ext.vectoricons = [
     iconFontNames: [ 'MaterialIcons.ttf', 'MaterialCommunityIcons.ttf', 'Feather.ttf' ]
@@ -165,6 +166,7 @@ android {
                 }
             }
         }
+        multiDexEnabled true
     }
 
     if (isNewArchitectureEnabled()) {
@@ -255,6 +257,7 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.multidex:multidex:2.0.1'
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     //noinspection GradleDynamicVersion

@@ -1,7 +1,8 @@
-import { Dimensions, ScrollView, Text, View } from "react-native";
+import { Dimensions, Platform, ScrollView, Text, View } from "react-native";
 import styled from "styled-components";
 import { ms } from "react-native-size-matters";
 import { RFValue } from "react-native-responsive-fontsize";
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import Icon from "../../../assets/icons/icon.svg";
 import Logo from "../../../assets/icons/logo-negative.svg";
 import { Container } from "../../../global/styles/theme";
@@ -11,6 +12,7 @@ const heightDimensions = Dimensions.get("window").height;
 
 export const ContainerLogin = styled(Container)`
   background-color: ${({ theme }) => theme.colors.backgroundPrimary};
+  padding-top: ${Platform.OS === "ios" ? getStatusBarHeight() : 0};
   height: ${heightDimensions}px;
 `;
 
