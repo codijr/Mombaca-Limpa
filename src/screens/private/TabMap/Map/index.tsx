@@ -9,11 +9,10 @@ import {
 } from "./styles";
 import { SearchBar } from "./components/SearchBar";
 import { Button } from "./components/Button";
-import { Complaint } from "../Complaint";
 
 export function Map() {
   const navigation = useNavigation();
-  const {navigate} = useNavigation();
+  const { navigate } = useNavigation();
 
   const [region, setRegion] = useState({
     latitude: -23.5505,
@@ -42,16 +41,11 @@ export function Map() {
 
   return (
     <>
-      {/* <StatusBar
-        barStyle="dark-content"
-        backgroundColor="transparent"
-        translucent
-      /> */}
       <MapContainer initialRegion={region} />
       <SearchBar />
       <IconsView>
-        <Button >
-          <ComplaintIcon onPress={() => navigate("Complaint" as never)} />
+        <Button onPress={() => navigate("Complaint" as never)}>
+          <ComplaintIcon />
         </Button>
 
         <Button>

@@ -23,7 +23,7 @@ export const ModalContent = styled(View)`
 `;
 
 export const ContentContainer = styled(ScrollView)`
-  padding: 0 ${ms(15)}px;
+  padding: ${ms(15)}px ${ms(15)}px;
 `;
 
 export const HeaderContainer = styled(View)`
@@ -53,5 +53,5 @@ export const SubtitleText = styled(Text)`
   font-size: ${RFValue(16)}px;
   color: ${({ theme }) => theme.colors.primary};
   font-family: ${({ theme }) => theme.fonts.text700};
-  margin-bottom: ${ms(5)}px;
+  margin-bottom: ${ms(15)}px;
 `;

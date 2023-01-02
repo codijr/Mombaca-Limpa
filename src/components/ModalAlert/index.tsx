@@ -4,6 +4,7 @@ import {
   ModalProps,
   StatusBar,
   Modal,
+  Platform,
 } from "react-native";
 import {
   ButtonConfirmModal,
@@ -31,7 +32,10 @@ export function ModalAlert({
   ...rest
 }: ModalAlertProps) {
   useEffect(() => {
-    StatusBar.setBackgroundColor(isVisible ? "rgba(0, 0, 0, 0.7)" : "#1BB471");
+    if (Platform.OS === "android")
+      StatusBar.setBackgroundColor(
+        isVisible ? "rgba(0, 0, 0, 0.7)" : "#1BB471"
+      );
   }, [isVisible]);
 
   return (

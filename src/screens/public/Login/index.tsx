@@ -53,7 +53,7 @@ export function Login() {
 
   const handleLogin = useCallback(() => {
     if (!checkErrors()) return;
-
+    setIsAuth(true);
     // modalErrorVisible ? setLoadingModal(true) : setLoading(true);
 
     // auth()
