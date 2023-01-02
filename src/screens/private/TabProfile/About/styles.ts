@@ -18,13 +18,13 @@ export const LogoVertical = styled(Logo).attrs({
   width: `${ms(widthDimensions * 0.55)}px`,
 })`
   margin-top: ${ms(heightDimensions * 0.15)}px;
-  margin-bottom: ${ms(2)}px;
+  margin-bottom: ${ms(10)}px;
 `;
 
 export const VersionText = styled(Text)`
   font-size: ${ms(17)}px;
   font-family: ${({ theme }) => theme.fonts.text300};
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.textWhite};
 `;
 
 export const BottomView = styled(View)`
@@ -49,6 +49,7 @@ export const PrivacyPolicyText = styled(Text)`
   font-family: ${({ theme }) => theme.fonts.text300};
   color: ${({ theme }) => theme.colors.primary};
   text-decoration: underline;
+  text-decoration-color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const Companies = styled(View)`

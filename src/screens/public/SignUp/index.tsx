@@ -3,8 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { ms } from "react-native-size-matters";
 import { Platform } from "react-native";
-import auth from "@react-native-firebase/auth";
-import firestore from "@react-native-firebase/firestore";
+// import auth from "@react-native-firebase/auth";
+// import firestore from "@react-native-firebase/firestore";
 import { CentralizeView } from "../../../global/styles/theme";
 import {
   ContainerLogin,
@@ -64,40 +64,40 @@ export function SignUp() {
 
   const handleSignUp = useCallback(() => {
     if (!checkErrors()) return;
+    setIsAuth(true);
+    // modalErrorVisible ? setLoadingModal(true) : setLoading(true);
 
-    modalErrorVisible ? setLoadingModal(true) : setLoading(true);
+    // auth()
+    //   .createUserWithEmailAndPassword(email, password)
+    //   .then((value) => {
+    //     const user = {
+    //       userId: value.user?.uid,
+    //       name,
+    //       email,
+    //       password,
+    //       avatar: Base64.encode("../../../assets/images/profile-default.jpg"),
+    //       role: "user",
+    //     };
 
-    auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((value) => {
-        const user = {
-          userId: value.user?.uid,
-          name,
-          email,
-          password,
-          avatar: Base64.encode("../../../assets/images/profile-default.jpg"),
-          role: "user",
-        };
+    //     setStorage("@user", user);
+    //     firestore().collection("Users").doc(user.userId).set(user);
 
-        setStorage("@user", user);
-        firestore().collection("Users").doc(user.userId).set(user);
-
-        setModalAlertVisible(true);
-      })
-      .catch((err) => {
-        err.code === "auth/email-already-in-use"
-          ? setError([
-              "",
-              "O email informado já se encontra cadastrado.",
-              "",
-              "",
-            ])
-          : setModalErrorVisible(true);
-      })
-      .finally(() => {
-        setLoadingModal(false);
-        setLoading(false);
-      });
+    //     setModalAlertVisible(true);
+    //   })
+    //   .catch((err) => {
+    //     err.code === "auth/email-already-in-use"
+    //       ? setError([
+    //           "",
+    //           "O email informado já se encontra cadastrado.",
+    //           "",
+    //           "",
+    //         ])
+    //       : setModalErrorVisible(true);
+    //   })
+    //   .finally(() => {
+    //     setLoadingModal(false);
+    //     setLoading(false);
+    //   });
   }, [checkErrors, modalErrorVisible, email, password, name]);
 
   return (

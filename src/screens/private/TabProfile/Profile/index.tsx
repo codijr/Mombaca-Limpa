@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
-import auth from "@react-native-firebase/auth";
+// import auth from "@react-native-firebase/auth";
 import { ProfileButton } from "./components/ProfileButton";
 import {
   Container,
@@ -20,7 +20,7 @@ export function Profile() {
   const handleSignOut = useCallback(() => {
     removeStorage("@user").then(() => {
       setIsAuth(false);
-      auth().signOut();
+      // auth().signOut();
     });
   }, [setIsAuth]);
 

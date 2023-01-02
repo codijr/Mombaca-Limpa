@@ -5,6 +5,7 @@ import {
   StatusBar,
   Modal,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import Close from "../../../../../../assets/icons/icon-close.svg";
 import {
@@ -31,7 +32,10 @@ export function PolicyModal({
   ...rest
 }: ModalAlertProps) {
   useEffect(() => {
-    StatusBar.setBackgroundColor(isVisible ? "rgba(0, 0, 0, 0.7)" : "#1BB471");
+    if (Platform.OS === "android")
+      StatusBar.setBackgroundColor(
+        isVisible ? "rgba(0, 0, 0, 0.7)" : "#1BB471"
+      );
   }, [isVisible]);
 
   return (

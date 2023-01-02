@@ -55,13 +55,13 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Feather.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>MaterialIcons.ttf</string>
 		<string>LeagueSpartan-Bold.ttf</string>
 		<string>LeagueSpartan-Medium.ttf</string>
 		<string>LeagueSpartan-Regular.ttf</string>
 		<string>Poppins-SemiBold.ttf</string>
-		<string>Feather.ttf</string>
-		<string>MaterialCommunityIcons.ttf</string>
-		<string>MaterialIcons.ttf</string>
 	</array>
 </dict>
 </plist>
