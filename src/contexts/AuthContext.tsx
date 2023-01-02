@@ -1,4 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { getStorage } from "../utils";
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  avatar?: string;
+  role?: string;
+};
 
 type AuthContextData = {
   isAuth: boolean;
@@ -13,6 +23,15 @@ export const AuthContext = React.createContext({} as AuthContextData);
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [isAuth, setIsAuth] = React.useState(false);
+
+  useEffect(() => {
+    const value = getStorage("@user");
+    if (value) {
+      console.log(value);
+
+      setIsAuth(true);
+    }
+  }, []);
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values

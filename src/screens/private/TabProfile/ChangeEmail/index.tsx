@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { ButtonSubmit } from "../../../../components/ButtonSubmit";
-import { Input } from "../../../../components/Input";
 import { CentralizeView } from "../../../../global/styles/theme";
-import { ModalAlert } from "../../../../components/Modal";
 import { ContainerChangeEmail, ChangeEmailContent, Content } from "./styles";
-import { Header } from "../../../../components/Header";
+import {
+  ButtonSubmit,
+  Header,
+  Input,
+  ModalAlert,
+} from "../../../../components";
 
 export function ChangeEmail() {
   const [modalVisible, setModalVisible] = useState(false);

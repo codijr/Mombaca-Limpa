@@ -5,7 +5,6 @@ import {
   HeaderContainer,
   HeaderIcon,
   HeaderLeft,
-  HeaderRight,
   HeaderTitle,
 } from "./styles";
 
