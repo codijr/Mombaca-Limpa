@@ -12,7 +12,7 @@ const heightDimensions = Dimensions.get("window").height;
 
 export const ContainerLogin = styled(Container)`
   background-color: ${({ theme }) => theme.colors.backgroundPrimary};
-  padding-top: ${Platform.OS === "ios" ? getStatusBarHeight() : 0};
+  padding-top: ${Platform.OS === "ios" ? getStatusBarHeight() : 0}px;
   height: ${heightDimensions}px;
 `;
 
