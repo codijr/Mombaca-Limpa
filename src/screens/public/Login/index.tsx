@@ -3,8 +3,8 @@ import React, { useCallback } from "react";
 import { ms } from "react-native-size-matters";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { Platform } from "react-native";
-import auth from "@react-native-firebase/auth";
-import firestore from "@react-native-firebase/firestore";
+// import auth from "@react-native-firebase/auth";
+// import firestore from "@react-native-firebase/firestore";
 import { ButtonSubmit, Input, ModalError } from "../../../components";
 import { CentralizeView } from "../../../global/styles/theme";
 import {
@@ -54,32 +54,32 @@ export function Login() {
   const handleLogin = useCallback(() => {
     if (!checkErrors()) return;
 
-    modalErrorVisible ? setLoadingModal(true) : setLoading(true);
+    // modalErrorVisible ? setLoadingModal(true) : setLoading(true);
 
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((value) => {
-        console.log(value);
+    // auth()
+    //   .signInWithEmailAndPassword(email, password)
+    //   .then((value) => {
+    //     console.log(value);
 
-        firestore()
-          .collection("Users")
-          .doc(value.user?.uid)
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              const user: User = doc.data() as User;
-              setStorage("@user", user);
-              setIsAuth(true);
-            }
-          });
-      })
-      .catch(() => {
-        setModalErrorVisible(true);
-      })
-      .finally(() => {
-        setLoadingModal(false);
-        setLoading(false);
-      });
+    //     firestore()
+    //       .collection("Users")
+    //       .doc(value.user?.uid)
+    //       .get()
+    //       .then((doc) => {
+    //         if (doc.exists) {
+    //           const user: User = doc.data() as User;
+    //           setStorage("@user", user);
+    //           setIsAuth(true);
+    //         }
+    //       });
+    //   })
+    //   .catch(() => {
+    //     setModalErrorVisible(true);
+    //   })
+    //   .finally(() => {
+    //     setLoadingModal(false);
+    //     setLoading(false);
+    //   });
   }, [checkErrors, email, modalErrorVisible, password]);
 
   return (

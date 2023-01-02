@@ -24,14 +24,14 @@ export const AuthContext = React.createContext({} as AuthContextData);
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [isAuth, setIsAuth] = React.useState(false);
 
-  useEffect(() => {
-    const value = getStorage("@user");
-    if (value) {
-      console.log(value);
+  // useEffect(() => {
+  //   const value = getStorage("@user");
+  //   if (value) {
+  //     console.log(value);
 
-      setIsAuth(true);
-    }
-  }, []);
+  //     setIsAuth(true);
+  //   }
+  // }, []);
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
