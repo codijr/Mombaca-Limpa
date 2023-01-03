@@ -1,5 +1,6 @@
 #import "AppDelegate.h"
 #import "RNSplashScreen.h"
+#import <Firebase.h>
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -40,6 +41,7 @@ NSString *googleMapsApiKey = [ReactNativeConfig envFor:@"GOOGLE_MAPS_API_KEY"];
 {
   [GMSServices provideAPIKey:googleMapsApiKey];
   RCTAppSetupPrepareApp(application);
+  [FIRApp configure];
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
 

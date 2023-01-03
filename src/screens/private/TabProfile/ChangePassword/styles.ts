@@ -4,11 +4,11 @@ import { ms } from "react-native-size-matters";
 import { Container } from "../../../../global/styles/theme";
 
 export const ContainerChangePassword = styled(Container)`
-    background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.background};
 `;
 
 export const ChangePasswordContent = styled(ScrollView)`
-    flex: 1;
+  flex: 1;
 `;
 
 export const Content = styled(View)`
