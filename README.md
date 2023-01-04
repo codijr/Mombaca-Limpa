@@ -25,34 +25,18 @@ Project architected and developed by:
 
 <h2>🕹️ HOW RUN </h2>
 
-<ol>
-  <li>Firstly, you will need to set up the React Native CLI development environment, clicking <a href="https://reactnative.dev/docs/environment-setup">here</a></li>
 
-  <li>With the project configured, using <b>yarn</b>, open de project folder and install the dependencies
+  Firstly, you will need to set up the React Native CLI development environment, clicking <a href="https://reactnative.dev/docs/environment-setup">here</a>
 
-  <code>
+<p>With the project configured, using <b>yarn</b>, open de project folder and install the dependencies with 
+<code>yarn install</code></p>
 
-    yarn install
-  </code>
-  </li>
+With the dependencies installed, open two terminals, in the first one to run the execute scripts with 
+<code>yarn start</code>
 
-  <li>With the dependencies installed, open two terminals, in the first one to run the execute scripts
-
-  <code>
-
-    yarn start
-  </code>
-  </li>
-
-  <li>And the second to install the app bundle on the emulator or smartphone
-
-  <code>
-
-    yarn android
-  </code>
-  </li>
-  Note: Every time you download new dependencies, re-install the app bundle!
-</ol>
+And the second to install the app bundle on the emulator or smartphone with 
+<code>yarn android</code><br>
+Note: Every time you download new dependencies, re-install the app bundle!
 
 <h2>👾️ TECHNOLOGIES </h2>
 
