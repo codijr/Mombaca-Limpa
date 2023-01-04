@@ -78,6 +78,13 @@
             ReferencedContainer = "container:MombacaLimpa.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "FIREBASE_API_KEY"
+            value = "AIzaSyBEBVIDDjflfoOsUKje5O4TvI-lgE7bBCM"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

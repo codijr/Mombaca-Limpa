@@ -5,6 +5,10 @@ platform :ios, '13.0'
 install! 'cocoapods', :deterministic_uuids => false
 
 target 'MombacaLimpa' do
+
+  # React Native FS dependencies
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
   # React Native Maps dependencies
   rn_maps_path = '../node_modules/react-native-maps'
   pod 'react-native-google-maps', :path => rn_maps_path

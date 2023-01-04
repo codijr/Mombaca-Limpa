@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { TouchableOpacityProps } from "react-native";
-import {
-  ProfileButtonContainer,
-  ButtonContent,
-  ButtonText,
-  ButtonIcon,
-} from "./styles";
+import Icon from "react-native-vector-icons/Feather";
+import { RFValue } from "react-native-responsive-fontsize";
+import { ProfileButtonContainer, ButtonContent, ButtonText } from "./styles";
 
 interface ProfileButtonProps extends TouchableOpacityProps {
   title: string;
@@ -25,7 +22,12 @@ export function ProfileButton({ title, icon, ...rest }: ProfileButtonProps) {
       {...rest}
     >
       <ButtonContent>
-        <ButtonIcon name={icon} />
+        <Icon
+          name={icon}
+          size={RFValue(20)}
+          color="#747070"
+          style={{ marginRight: 20 }}
+        />
         <ButtonText>{title}</ButtonText>
       </ButtonContent>
     </ProfileButtonContainer>
