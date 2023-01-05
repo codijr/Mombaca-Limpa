@@ -11,8 +11,8 @@ export type User = {
 };
 
 type AuthContextData = {
-  isAuth: boolean;
-  setIsAuth: (isSigned: boolean) => void;
+  user: User | null | void;
+  setUser: (user: User | null | void) => void;
 };
 
 type AuthContextProviderProps = {
@@ -22,20 +22,11 @@ type AuthContextProviderProps = {
 export const AuthContext = React.createContext({} as AuthContextData);
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
-  const [isAuth, setIsAuth] = React.useState(false);
-
-  // useEffect(() => {
-  //   const value = getStorage("@user");
-  //   if (value) {
-  //     console.log(value);
-
-  //     setIsAuth(true);
-  //   }
-  // }, []);
+  const [user, setUser] = React.useState<User | null | void>(null);
 
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <AuthContext.Provider value={{ isAuth, setIsAuth }}>
+    <AuthContext.Provider value={{ user, setUser }}>
       {children}
     </AuthContext.Provider>
   );

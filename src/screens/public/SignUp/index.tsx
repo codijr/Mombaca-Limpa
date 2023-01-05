@@ -31,6 +31,7 @@ import {
   validateInputText,
 } from "../../../utils";
 import Base64 from "../../../utils/ cryptography";
+import { profileTemplate } from "../../../assets/icons/profile-template";
 
 export function SignUp() {
   const { navigate } = useNavigation();
@@ -75,7 +76,7 @@ export function SignUp() {
           name,
           email,
           password,
-          avatar: Base64.encode("../../../assets/images/profile-default.jpg"),
+          avatar: profileTemplate,
           role: "user",
         };
 

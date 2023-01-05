@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import auth from "@react-native-firebase/auth";
 import RNFS from "react-native-fs";
@@ -13,57 +13,44 @@ import {
   TitleProfile,
 } from "./style";
 import { Header } from "../../../../components/Header";
-import { useAuth } from "../../../../contexts/AuthContext";
+import { User, useAuth } from "../../../../contexts/AuthContext";
 import { removeStorage } from "../../../../utils";
 
 export function Profile() {
-  LogBox.ignoreLogs(["Warning: ..."]);
-
   const { navigate } = useNavigation();
-  const { setIsAuth } = useAuth();
+  const { user, setUser } = useAuth();
 
   const handleGallery = useCallback(async () => {
-    await launchCamera({
+    await launchImageLibrary({
       maxHeight: 200,
       maxWidth: 200,
       quality: 1,
+      selectionLimit: 1,
       includeBase64: false,
       mediaType: "photo",
-    }).then((result) => {
-      console.log(result);
-
-      // if (result?.assets && result?.assets[0]?.uri) {
-      //   RNFS.readFile(result.assets[0]?.uri, "base64").then((data) => {
-      //     console.log(`data:image/png;base64,${data}`);
-      //   });
-      // }
-    });
-    // await launchImageLibrary({
-    //   maxHeight: 200,
-    //   maxWidth: 200,
-    //   quality: 1,
-    //   selectionLimit: 1,
-    //   includeBase64: false,
-    //   mediaType: "photo",
-    // })
-    //   .then(async (result) => {
-    //     if (result?.assets && result?.assets[0]?.uri) {
-    //       await RNFS.readFile(result.assets[0]?.uri, "base64").then((data) => {
-    //         console.log(`data:image/png;base64,${data}`);
-    //       });
-    //     }
-    //   })
-    //   .catch(() => {
-    //     console.log("Não foi possivel selecionar a imagem");
-    //   });
-  }, []);
+    })
+      .then(async (result) => {
+        if (result?.assets && result?.assets[0]?.uri) {
+          await RNFS.readFile(result.assets[0]?.uri, "base64").then((data) => {
+            const userUpdate = {
+              ...user,
+              avatar: `data:image/png;base64,${data}`,
+            } as User;
+            setUser(userUpdate);
+          });
+        }
+      })
+      .catch(() => {
+        console.log("Não foi possivel selecionar a imagem");
+      });
+  }, [setUser, user]);
 
   const handleSignOut = useCallback(() => {
     removeStorage("@user").then(() => {
-      setIsAuth(false);
+      setUser(null);
       auth().signOut();
     });
-  }, [setIsAuth]);
+  }, [setUser]);
 
   return (
     <>
@@ -73,7 +60,7 @@ export function Profile() {
           <TouchableOpacity onPress={handleGallery}>
             <ImageProfile
               source={{
-                uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFtPdoUstm8sKQH99usU7SCKcyqHNwhcJ7WonkIE9Rr-r0b-O3b0iATAP66sVtdH1NEow&usqp=CAU",
+                uri: user?.avatar,
               }}
             />
           </TouchableOpacity>
@@ -81,8 +68,8 @@ export function Profile() {
         // eslint-disable-next-line react/no-unstable-nested-components
         headerCenter={() => (
           <ContainerTitle>
-            <TitleProfile>Igaaoo</TitleProfile>
-            <SubtitleProfile>igaaoo@gmail.com</SubtitleProfile>
+            <TitleProfile>{user?.name}</TitleProfile>
+            <SubtitleProfile>{user?.email}</SubtitleProfile>
           </ContainerTitle>
         )}
       />
