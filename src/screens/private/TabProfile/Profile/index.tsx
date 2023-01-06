@@ -1,11 +1,15 @@
 import React, { useCallback } from "react";
+import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import auth from "@react-native-firebase/auth";
-import firestore from "@react-native-firebase/firestore";
+
 import RNFS from "react-native-fs";
 import { launchImageLibrary } from "react-native-image-picker";
-import { TouchableOpacity } from "react-native";
+
+import { User, useAuth } from "../../../../contexts";
+
+import { Header, ModalError } from "../../../../components";
 import { ProfileButton } from "./components/ProfileButton";
+
 import {
   Container,
   ContainerTitle,
@@ -13,10 +17,9 @@ import {
   SubtitleProfile,
   TitleProfile,
 } from "./style";
-import { Header } from "../../../../components/Header";
-import { User, useAuth } from "../../../../contexts/AuthContext";
+
 import { removeStorage } from "../../../../utils";
-import { ModalError } from "../../../../components";
+import { signOut, updateFirebaseData } from "../../../../services";
 
 export function Profile() {
   const { navigate } = useNavigation();
@@ -43,10 +46,9 @@ export function Profile() {
 
           modalErrorVisible && setLoadingModal(true);
 
-          firestore()
-            .collection("Users")
-            .doc(user?.userId)
-            .update({ avatar: userUpdate.avatar })
+          updateFirebaseData("Users", user?.userId, {
+            avatar: userUpdate.avatar,
+          })
             .then(() => {
               setUser(userUpdate);
             })
@@ -62,17 +64,15 @@ export function Profile() {
   }, [modalErrorVisible, setUser, user]);
 
   const handleSignOut = useCallback(() => {
-    removeStorage("@user").then(() => {
-      setUser(null);
-      auth()
-        .signOut()
-        .then(() => {
-          console.log("Deslogado com sucesso");
-        })
-        .catch(() => {
-          console.log("Não foi possivel deslogar");
-        });
-    });
+    signOut()
+      .then(() => {
+        console.log("Deslogado com sucesso");
+        setUser(null);
+        removeStorage("@user");
+      })
+      .catch(() => {
+        console.log("Não foi possivel deslogar");
+      });
   }, [setUser]);
 
   return (

@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { getStorage } from "../utils";
+import React from "react";
 
 export type User = {
   userId: string;
@@ -12,7 +11,7 @@ export type User = {
 
 type AuthContextData = {
   user: User | null | void;
-  setUser: (user: User | null | void) => void;
+  setUser: (user: User | null | void | undefined) => void;
 };
 
 type AuthContextProviderProps = {

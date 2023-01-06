@@ -1,30 +1,35 @@
-/* eslint-disable prettier/prettier */
 import React, { useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
-import auth from "@react-native-firebase/auth";
-import firestore from "@react-native-firebase/firestore";
-import { CentralizeView } from "../../../../global/styles/theme";
-import {
-  ContainerChangeEmail,
-  ChangeEmailContent,
-  Content
-} from "./styles";
+
 import {
   ButtonSubmit,
   Header,
   Input,
   ModalError,
-  ModalAlert
+  ModalAlert,
 } from "../../../../components";
-import { User } from "../../../../contexts/AuthContext";
+
+import { ContainerChangeEmail, ChangeEmailContent, Content } from "./styles";
+
+import { User, useAuth } from "../../../../contexts";
+
 import {
-  setStorage,
+  updateStorage,
   validateInputEmail,
   validateInputPassword,
 } from "../../../../utils";
 
+import {
+  changeEmail,
+  reauthenticateWithCredential,
+  updateFirebaseData,
+} from "../../../../services";
+
+import { CentralizeView } from "../../../../global/styles/theme";
 
 export function ChangeEmail() {
+  const { user, setUser } = useAuth();
+
   const [newEmail, setNewEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string[]>([]);
@@ -32,7 +37,8 @@ export function ChangeEmail() {
   const [loading, setLoading] = useState(false);
   const [loadingModal, setLoadingModal] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalConfirmationVisible, setModalConfirmationVisible] = useState(false);
+  const [modalConfirmationVisible, setModalConfirmationVisible] =
+    useState(false);
   const [modalTitleError, setModalTitleError] = useState("");
   const [modalTextError, setModalTextError] = useState("");
   const { navigate } = useNavigation();
@@ -45,51 +51,53 @@ export function ChangeEmail() {
       return true;
     setError([
       validateInputEmail(newEmail),
-      validateInputPassword(password, password)
+      validateInputPassword(password, password),
     ]);
   }, [newEmail, password]);
 
-
   const handleChangeEmail = useCallback(() => {
     if (!checkErrors()) return;
+
     modalVisible ? setLoadingModal(true) : setLoading(true);
 
-    const actualUser = auth().currentUser;
-    if (actualUser && (actualUser.email !== undefined)) {
-      const currentEmail = actualUser.email || '';
-      const credential = auth.EmailAuthProvider.credential(currentEmail.toString(), password);
-      actualUser.reauthenticateWithCredential(credential)
-        .then(() => {
-          actualUser.updateEmail(newEmail)
-            .then(() => {
-              firestore().collection("Users").doc(actualUser.uid).update({ "email": newEmail })
-              firestore().collection("Users").doc(actualUser.uid).get()
-                .then((doc) => {
-                  if (doc.exists) {
-                    const user: User = doc.data() as User;
-                    setStorage("@user", user);
-                  }
-                });
-              setModalConfirmationVisible(true);
-              setLoading(false);
-            }).catch((err) => {
-              setModalTitleError("Erro na alteração!")
-              err.code === "auth/invalid-email"
-                ? setModalTextError("Email inválido, digite um email válido.") : setModalTextError(err.toString());
-              setModalVisible(true);
-              setLoading(false);
-            })
-        }).catch((err) => {
-          setModalTitleError("Erro de autenticação!")
-          err.code === "auth/wrong-password"
-            ? setModalTextError("Senha incorreta, tente novamente.") : setModalTextError(err.toString());
-          setModalVisible(true);
-          setLoading(false);
-        }).finally(() => {
-          setLoadingModal(false);
-        });
-    }
-  }, [checkErrors, newEmail, modalVisible, password]);
+    reauthenticateWithCredential(password)
+      .then(() => {
+        changeEmail(newEmail, password)
+          .then(() => {
+            updateFirebaseData("Users", user?.userId, { email: newEmail })
+              .then(() => {
+                const newUser = { ...user, email: newEmail } as User;
+                updateStorage("@user", { email: newEmail });
+                setUser(newUser);
+                setModalConfirmationVisible(true);
+              })
+              .catch(() => {
+                setModalTitleError("Erro ao alterar email");
+                setModalTextError(
+                  "Ocorreu um erro ao alterar o email, tente novamente mais tarde"
+                );
+                setModalVisible(true);
+              });
+          })
+          .catch((err) => {
+            if (err.code === "auth/invalid-email") {
+              setError([
+                "Email inválido, por favor digite um email válido",
+                "",
+              ]);
+            }
+          });
+      })
+      .catch((err) => {
+        if (err.code === "auth/wrong-password") {
+          setError(["", "Senha incorreta, por favor digite a senha correta"]);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+        setLoadingModal(false);
+      });
+  }, [checkErrors, modalVisible, password, newEmail, user, setUser]);
 
   return (
     <>
@@ -139,7 +147,7 @@ export function ChangeEmail() {
         text="Seu email foi alterado com sucesso"
         isVisible={modalConfirmationVisible}
         transparent
-        onConfirm={() => [setModalConfirmationVisible(false), navigate("Profile" as never)]}
+        onConfirm={() => navigate("Profile" as never)}
       />
     </>
   );
