@@ -18,24 +18,18 @@ import {
   Content,
 } from "./styles";
 import { useAuth } from "../../../contexts/AuthContext";
-import {
-  ButtonSubmit,
-  Input,
-  ModalAlert,
-  ModalError,
-} from "../../../components";
+import { ButtonSubmit, Input, ModalError } from "../../../components";
 import {
   setStorage,
   validateInputEmail,
   validateInputPassword,
   validateInputText,
 } from "../../../utils";
-import Base64 from "../../../utils/ cryptography";
 import { profileTemplate } from "../../../assets/icons/profile-template";
 
 export function SignUp() {
   const { navigate } = useNavigation();
-  const { setIsAuth } = useAuth();
+  const { setUser } = useAuth();
 
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -44,7 +38,6 @@ export function SignUp() {
   const [error, setError] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [loadingModal, setLoadingModal] = React.useState(false);
-  const [modalAlertVisible, setModalAlertVisible] = React.useState(false);
   const [modalErrorVisible, setModalErrorVisible] = React.useState(false);
 
   const checkErrors = useCallback(() => {
@@ -80,10 +73,14 @@ export function SignUp() {
           role: "user",
         };
 
-        setStorage("@user", user);
-        firestore().collection("Users").doc(user.userId).set(user);
-
-        setModalAlertVisible(true);
+        firestore()
+          .collection("Users")
+          .doc(user.userId)
+          .set(user)
+          .then(() => {
+            setStorage("@user", user);
+            setUser(user);
+          });
       })
       .catch((err) => {
         err.code === "auth/email-already-in-use"
@@ -99,7 +96,7 @@ export function SignUp() {
         setLoadingModal(false);
         setLoading(false);
       });
-  }, [checkErrors, modalErrorVisible, email, password, name]);
+  }, [checkErrors, modalErrorVisible, email, password, name, setUser]);
 
   return (
     <ContainerLogin>
@@ -169,13 +166,6 @@ export function SignUp() {
           </CentralizeView>
         </Content>
       </LoginContent>
-      <ModalAlert
-        title="Conta criada!"
-        text="Você já pode fazer login na sua conta"
-        isVisible={modalAlertVisible}
-        transparent
-        onConfirm={() => setIsAuth(true)}
-      />
       <ModalError
         title="Erro ao criar conta"
         text="Ocorreu um erro ao criar sua conta, tente novamente mais tarde"

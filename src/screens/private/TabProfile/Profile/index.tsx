@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import auth from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
 import RNFS from "react-native-fs";
-import { launchCamera, launchImageLibrary } from "react-native-image-picker";
-import { LogBox, TouchableOpacity, View } from "react-native";
+import { launchImageLibrary } from "react-native-image-picker";
+import { TouchableOpacity } from "react-native";
 import { ProfileButton } from "./components/ProfileButton";
 import {
   Container,
@@ -15,10 +16,14 @@ import {
 import { Header } from "../../../../components/Header";
 import { User, useAuth } from "../../../../contexts/AuthContext";
 import { removeStorage } from "../../../../utils";
+import { ModalError } from "../../../../components";
 
 export function Profile() {
   const { navigate } = useNavigation();
   const { user, setUser } = useAuth();
+
+  const [modalErrorVisible, setModalErrorVisible] = React.useState(false);
+  const [loadingModal, setLoadingModal] = React.useState(false);
 
   const handleGallery = useCallback(async () => {
     await launchImageLibrary({
@@ -28,27 +33,45 @@ export function Profile() {
       selectionLimit: 1,
       includeBase64: false,
       mediaType: "photo",
-    })
-      .then(async (result) => {
-        if (result?.assets && result?.assets[0]?.uri) {
-          await RNFS.readFile(result.assets[0]?.uri, "base64").then((data) => {
-            const userUpdate = {
-              ...user,
-              avatar: `data:image/png;base64,${data}`,
-            } as User;
-            setUser(userUpdate);
-          });
-        }
-      })
-      .catch(() => {
-        console.log("Não foi possivel selecionar a imagem");
-      });
-  }, [setUser, user]);
+    }).then(async (result) => {
+      if (result?.assets && result?.assets[0]?.uri) {
+        await RNFS.readFile(result.assets[0]?.uri, "base64").then((data) => {
+          const userUpdate = {
+            ...user,
+            avatar: `data:image/png;base64,${data}`,
+          } as User;
+
+          modalErrorVisible && setLoadingModal(true);
+
+          firestore()
+            .collection("Users")
+            .doc(user?.userId)
+            .update({ avatar: userUpdate.avatar })
+            .then(() => {
+              setUser(userUpdate);
+            })
+            .catch(() => {
+              setModalErrorVisible(true);
+            })
+            .finally(() => {
+              setLoadingModal(false);
+            });
+        });
+      }
+    });
+  }, [modalErrorVisible, setUser, user]);
 
   const handleSignOut = useCallback(() => {
     removeStorage("@user").then(() => {
       setUser(null);
-      auth().signOut();
+      auth()
+        .signOut()
+        .then(() => {
+          console.log("Deslogado com sucesso");
+        })
+        .catch(() => {
+          console.log("Não foi possivel deslogar");
+        });
     });
   }, [setUser]);
 
@@ -94,6 +117,15 @@ export function Profile() {
 
         <ProfileButton title="Sair" icon="log-out" onPress={handleSignOut} />
       </Container>
+      <ModalError
+        title="Falha ao alterar imagem"
+        text="Não foi possível enviar a imagem, tente novamente mais tarde."
+        isVisible={modalErrorVisible}
+        isLoading={loadingModal}
+        onClose={() => setModalErrorVisible(false)}
+        transparent
+        onConfirm={handleGallery}
+      />
     </>
   );
 }

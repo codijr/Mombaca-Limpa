@@ -78,7 +78,7 @@ export function Login() {
         setLoadingModal(false);
         setLoading(false);
       });
-  }, [checkErrors, email, modalErrorVisible, password]);
+  }, [checkErrors, email, modalErrorVisible, password, setUser]);
 
   return (
     <ContainerLogin>

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { getStorage } from "../utils";
 
 export type User = {
-  id: string;
+  userId: string;
   name: string;
   email: string;
   password: string;
