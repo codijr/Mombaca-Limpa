@@ -29,7 +29,7 @@ import {
 
 export function Login() {
   const { navigate } = useNavigation();
-  const { setIsAuth } = useAuth();
+  const { setUser } = useAuth();
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -59,8 +59,6 @@ export function Login() {
     auth()
       .signInWithEmailAndPassword(email, password)
       .then((value) => {
-        console.log(value);
-
         firestore()
           .collection("Users")
           .doc(value.user?.uid)
@@ -69,7 +67,7 @@ export function Login() {
             if (doc.exists) {
               const user: User = doc.data() as User;
               setStorage("@user", user);
-              setIsAuth(true);
+              setUser(user);
             }
           });
       })
@@ -80,7 +78,7 @@ export function Login() {
         setLoadingModal(false);
         setLoading(false);
       });
-  }, [checkErrors, email, modalErrorVisible, password]);
+  }, [checkErrors, email, modalErrorVisible, password, setUser]);
 
   return (
     <ContainerLogin>

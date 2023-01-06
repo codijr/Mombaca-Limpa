@@ -11,14 +11,15 @@ export async function setStorage(name: string, value: object) {
 }
 
 export async function getStorage(name: string) {
-  await EncryptedStorage.getItem(name)
+  const item = await EncryptedStorage.getItem(name)
     .then((value) => {
-      console.log(`Storage get: ${value}`);
       return value === null ? "" : JSON.parse(value);
     })
     .catch((error) => {
       console.log(`Storage get error: ${error}`);
     });
+
+  return item;
 }
 
 export async function removeStorage(name: string) {
