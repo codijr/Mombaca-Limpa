@@ -1,40 +1,41 @@
 import React, { useCallback } from "react";
+import { Platform } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { ms } from "react-native-size-matters";
-import { Platform } from "react-native";
-// import auth from "@react-native-firebase/auth";
-// import firestore from "@react-native-firebase/firestore";
-import { CentralizeView } from "../../../global/styles/theme";
+
+import { useAuth } from "../../../contexts";
+
+import { ButtonSubmit, Input, ModalError } from "../../../components";
+
 import {
-  ContainerLogin,
   IconBackground,
   LogoIcon,
   Title,
-  LoginContent,
   TopContent,
   SignUpText,
   SignUpTextBold,
   Content,
+  ContainerSignUp,
+  SignUpContent,
 } from "./styles";
-import { useAuth } from "../../../contexts/AuthContext";
-import {
-  ButtonSubmit,
-  Input,
-  ModalAlert,
-  ModalError,
-} from "../../../components";
+
 import {
   setStorage,
   validateInputEmail,
   validateInputPassword,
   validateInputText,
 } from "../../../utils";
-import Base64 from "../../../utils/ cryptography";
+
+import { setFirebaseData, signUp } from "../../../services";
+
+import { profileTemplate } from "../../../assets/icons/profile-template";
+import { CentralizeView } from "../../../global/styles/theme";
 
 export function SignUp() {
   const { navigate } = useNavigation();
-  const { setIsAuth } = useAuth();
+  const { setUser } = useAuth();
 
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -43,7 +44,6 @@ export function SignUp() {
   const [error, setError] = React.useState<string[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [loadingModal, setLoadingModal] = React.useState(false);
-  const [modalAlertVisible, setModalAlertVisible] = React.useState(false);
   const [modalErrorVisible, setModalErrorVisible] = React.useState(false);
 
   const checkErrors = useCallback(() => {
@@ -64,47 +64,46 @@ export function SignUp() {
 
   const handleSignUp = useCallback(() => {
     if (!checkErrors()) return;
-    setIsAuth(true);
-    // modalErrorVisible ? setLoadingModal(true) : setLoading(true);
 
-    // auth()
-    //   .createUserWithEmailAndPassword(email, password)
-    //   .then((value) => {
-    //     const user = {
-    //       userId: value.user?.uid,
-    //       name,
-    //       email,
-    //       password,
-    //       avatar: Base64.encode("../../../assets/images/profile-default.jpg"),
-    //       role: "user",
-    //     };
+    modalErrorVisible ? setLoadingModal(true) : setLoading(true);
 
-    //     setStorage("@user", user);
-    //     firestore().collection("Users").doc(user.userId).set(user);
+    signUp(email, password)
+      .then((value) => {
+        const user = {
+          userId: value.user?.uid,
+          name,
+          email,
+          password,
+          avatar: profileTemplate,
+          role: "user",
+        };
 
-    //     setModalAlertVisible(true);
-    //   })
-    //   .catch((err) => {
-    //     err.code === "auth/email-already-in-use"
-    //       ? setError([
-    //           "",
-    //           "O email informado já se encontra cadastrado.",
-    //           "",
-    //           "",
-    //         ])
-    //       : setModalErrorVisible(true);
-    //   })
-    //   .finally(() => {
-    //     setLoadingModal(false);
-    //     setLoading(false);
-    //   });
-  }, [checkErrors, modalErrorVisible, email, password, name]);
+        setFirebaseData("Users", user.userId, user).then(() => {
+          setStorage("@user", user);
+          setUser(user);
+        });
+      })
+      .catch((err) => {
+        err.code === "auth/email-already-in-use"
+          ? setError([
+              "",
+              "O email informado já se encontra cadastrado.",
+              "",
+              "",
+            ])
+          : setModalErrorVisible(true);
+      })
+      .finally(() => {
+        setLoadingModal(false);
+        setLoading(false);
+      });
+  }, [checkErrors, modalErrorVisible, email, password, name, setUser]);
 
   return (
-    <ContainerLogin>
+    <ContainerSignUp>
       <IconBackground />
 
-      <LoginContent>
+      <SignUpContent>
         <Content>
           <TopContent>
             <CentralizeView>
@@ -167,14 +166,7 @@ export function SignUp() {
             </SignUpText>
           </CentralizeView>
         </Content>
-      </LoginContent>
-      <ModalAlert
-        title="Conta criada!"
-        text="Você já pode fazer login na sua conta"
-        isVisible={modalAlertVisible}
-        transparent
-        onConfirm={() => setIsAuth(true)}
-      />
+      </SignUpContent>
       <ModalError
         title="Erro ao criar conta"
         text="Ocorreu um erro ao criar sua conta, tente novamente mais tarde"
@@ -184,6 +176,6 @@ export function SignUp() {
         transparent
         onConfirm={handleSignUp}
       />
-    </ContainerLogin>
+    </ContainerSignUp>
   );
 }

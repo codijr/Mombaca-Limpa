@@ -20,57 +20,57 @@ export function AddMetrics() {
   const [metric, setMetric] = useState("");
 
   return (
-    <>
+    <ContainerAddMetrics>
       <Header title="Adicionar Métricas" type="goback" />
-      <ContainerAddMetrics>
-        <AddMetricsContent>
-          <Content>
-            <Input
-              title="Data"
-              placeholder="DD/MM/AAAA"
-              type="green"
-              keyboardType="numeric"
-            />
-            <Input
-              title="Quantidade de resíduos"
-              placeholder="0"
-              type="green"
-              keyboardType="numeric"
-            />
-            <InputTitleGreen>Tipo de resíduo</InputTitleGreen>
-            <View
-              style={{
-                backgroundColor: theme.colors.backgroundWhite,
-                borderRadius: 10,
-                marginBottom: 30,
-              }}
+
+      <AddMetricsContent>
+        <Content>
+          <Input
+            title="Data"
+            placeholder="DD/MM/AAAA"
+            type="green"
+            keyboardType="numeric"
+          />
+          <Input
+            title="Quantidade de resíduos"
+            placeholder="0"
+            type="green"
+            keyboardType="numeric"
+          />
+          <InputTitleGreen>Tipo de resíduo</InputTitleGreen>
+          <View
+            style={{
+              backgroundColor: theme.colors.backgroundWhite,
+              borderRadius: 10,
+              marginBottom: 30,
+            }}
+          >
+            <MetricPicker
+              selectedValue={metric}
+              onValueChange={(itemValue, itemIndex) =>
+                setMetric(itemValue as string)
+              }
+              dropdownIconColor={theme.colors.text}
             >
-              <MetricPicker
-                selectedValue={metric}
-                onValueChange={(itemValue, itemIndex) =>
-                  setMetric(itemValue as string)
-                }
-                dropdownIconColor={theme.colors.text}
-              >
-                <MetricPicker.Item
-                  label="Resíduos Sólidos Urbanos"
-                  value="Resíduos Sólidos Urbanos"
-                />
-                <MetricPicker.Item label="Poda" value="Poda" />
-                <MetricPicker.Item label="Entulho " value="Entulho " />
-                <MetricPicker.Item label="Varrição" value="Varrição" />
-                <MetricPicker.Item label="Catação" value="Catação" />
-              </MetricPicker>
-            </View>
-            <CentralizeView>
-              <ButtonSubmit
-                onPress={() => setModalVisible(!modalVisible)}
-                title="Adicionar métrica"
+              <MetricPicker.Item
+                label="Resíduos Sólidos Urbanos"
+                value="Resíduos Sólidos Urbanos"
               />
-            </CentralizeView>
-          </Content>
-        </AddMetricsContent>
-      </ContainerAddMetrics>
+              <MetricPicker.Item label="Poda" value="Poda" />
+              <MetricPicker.Item label="Entulho " value="Entulho " />
+              <MetricPicker.Item label="Varrição" value="Varrição" />
+              <MetricPicker.Item label="Catação" value="Catação" />
+            </MetricPicker>
+          </View>
+          <CentralizeView>
+            <ButtonSubmit
+              onPress={() => setModalVisible(!modalVisible)}
+              title="Adicionar métrica"
+            />
+          </CentralizeView>
+        </Content>
+      </AddMetricsContent>
+
       <ModalAlert
         title="Métrica adicionada!"
         text="Sua métrica foi adicionada com sucesso"
@@ -78,6 +78,6 @@ export function AddMetrics() {
         transparent
         onConfirm={() => setModalVisible(false)}
       />
-    </>
+    </ContainerAddMetrics>
   );
 }

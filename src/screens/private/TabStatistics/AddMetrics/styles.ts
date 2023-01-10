@@ -5,15 +5,16 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { Picker } from "@react-native-picker/picker";
 import { Container } from "../../../../global/styles/theme";
 
-export const ContainerAddMetrics = styled(Container)`
+export const ContainerAddMetrics = styled(View)`
   background-color: ${({ theme }) => theme.colors.background};
+  flex: 1;
 `;
 
 export const AddMetricsContent = styled(ScrollView)`
   flex: 1;
 `;
 
-export const Content = styled(View)`
+export const Content = styled(Container)`
   padding-top: ${ms(20)}px;
   padding-bottom: ${ms(20)}px;
   flex-direction: column;

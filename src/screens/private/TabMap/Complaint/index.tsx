@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { CentralizeView } from "../../../../global/styles/theme";
 import {
-  ContainerComplaint,
+  ComplaintContainer,
   ComplaintContent,
   Content,
   ComplaintLocation,
@@ -13,22 +13,22 @@ export function Complaint() {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
-    <>
+    <ComplaintContainer>
       <Header title="Fazer denúncia" type="goback" />
-      <ContainerComplaint>
-        <ComplaintContent>
-          <Content>
-            <ComplaintLocation />
-            <ComplaintDescription />
-            <CentralizeView>
-              <ButtonSubmit
-                onPress={() => setModalVisible(!modalVisible)}
-                title="Enviar Denúncia"
-              />
-            </CentralizeView>
-          </Content>
-        </ComplaintContent>
-      </ContainerComplaint>
+
+      <ComplaintContent>
+        <Content>
+          <ComplaintLocation />
+          <ComplaintDescription />
+          <CentralizeView>
+            <ButtonSubmit
+              onPress={() => setModalVisible(!modalVisible)}
+              title="Enviar Denúncia"
+            />
+          </CentralizeView>
+        </Content>
+      </ComplaintContent>
+
       <ModalAlert
         title="Denúncia enviada!"
         text="Sua denúncia foi enviada com sucesso para a nossa ouvidoria, muito obrigado!"
@@ -36,6 +36,6 @@ export function Complaint() {
         transparent
         onConfirm={() => setModalVisible(false)}
       />
-    </>
+    </ComplaintContainer>
   );
 }

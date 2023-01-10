@@ -7,8 +7,8 @@ import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
 export const HeaderContainer = styled(View)`
   width: 100%;
-  height: ${ms(90)}px;
-  padding-top: ${Platform.OS === "ios" ? getStatusBarHeight() : 0};
+  height: ${Platform.OS === "ios" ? 90 : 70}px;
+  padding-top: ${Platform.OS === "ios" ? getStatusBarHeight() : 0}px;
   background-color: ${({ theme }) => theme.colors.backgroundPrimary};
   flex-direction: row;
 `;

@@ -19,7 +19,7 @@ import {
 
 interface ModalAlertProps extends ModalProps {
   title: string;
-  text: string;
+  text?: string;
   isVisible: boolean;
   onConfirm?: ((event: GestureResponderEvent) => void) | undefined;
 }

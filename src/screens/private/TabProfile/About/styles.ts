@@ -6,7 +6,7 @@ import Logo from "../../../../assets/icons/logo-vertical.svg";
 const widthDimensions = Dimensions.get("window").width;
 const heightDimensions = Dimensions.get("window").height;
 
-export const Container = styled(View)`
+export const AboutContainer = styled(View)`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.primary};
   flex-direction: column;

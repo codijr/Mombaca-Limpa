@@ -4,15 +4,16 @@ import { ms } from "react-native-size-matters";
 import { Container } from "../../../../global/styles/theme";
 import { Input } from "../../../../components/Input";
 
-export const ContainerComplaint = styled(Container)`
+export const ComplaintContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.background};
+  flex: 1;
 `;
 
 export const ComplaintContent = styled(ScrollView)`
   flex: 1;
 `;
 
-export const Content = styled(View)`
+export const Content = styled(Container)`
   padding-top: ${ms(20)}px;
   flex-direction: column;
 `;

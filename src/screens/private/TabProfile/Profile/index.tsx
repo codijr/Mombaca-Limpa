@@ -1,69 +1,122 @@
 import React, { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
-// import auth from "@react-native-firebase/auth";
+
+import RNFS from "react-native-fs";
+import { launchImageLibrary } from "react-native-image-picker";
+
+import { User, useAuth } from "../../../../contexts";
+
+import { Header, ModalError } from "../../../../components";
 import { ProfileButton } from "./components/ProfileButton";
+
 import {
-  Container,
   ContainerTitle,
-  ImageProfile,
+  ProfileContainer,
   SubtitleProfile,
   TitleProfile,
 } from "./style";
-import { Header } from "../../../../components/Header";
-import { useAuth } from "../../../../contexts/AuthContext";
+
 import { removeStorage } from "../../../../utils";
+import { signOut, updateFirebaseData } from "../../../../services";
+import { ProfileAvatar } from "./components/ProfileAvatar";
 
 export function Profile() {
   const { navigate } = useNavigation();
-  const { setIsAuth } = useAuth();
+  const { user, setUser } = useAuth();
+
+  const [modalErrorVisible, setModalErrorVisible] = React.useState(false);
+  const [loadingModal, setLoadingModal] = React.useState(false);
+
+  const handleGallery = useCallback(async () => {
+    await launchImageLibrary({
+      maxHeight: 200,
+      maxWidth: 200,
+      quality: 1,
+      selectionLimit: 1,
+      includeBase64: false,
+      mediaType: "photo",
+    }).then(async (result) => {
+      if (result?.assets && result?.assets[0]?.uri) {
+        await RNFS.readFile(result.assets[0]?.uri, "base64").then((data) => {
+          const userUpdate = {
+            ...user,
+            avatar: `data:image/png;base64,${data}`,
+          } as User;
+
+          modalErrorVisible && setLoadingModal(true);
+
+          updateFirebaseData("Users", user?.userId, {
+            avatar: userUpdate.avatar,
+          })
+            .then(() => {
+              setUser(userUpdate);
+            })
+            .catch(() => {
+              setModalErrorVisible(true);
+            })
+            .finally(() => {
+              setLoadingModal(false);
+            });
+        });
+      }
+    });
+  }, [modalErrorVisible, setUser, user]);
 
   const handleSignOut = useCallback(() => {
-    removeStorage("@user").then(() => {
-      setIsAuth(false);
-      // auth().signOut();
-    });
-  }, [setIsAuth]);
+    signOut()
+      .then(() => {
+        console.log("Deslogado com sucesso");
+        setUser(null);
+        removeStorage("@user");
+      })
+      .catch(() => {
+        console.log("Não foi possivel deslogar");
+      });
+  }, [setUser]);
 
   return (
-    <>
+    <ProfileContainer>
       <Header
-        // eslint-disable-next-line react/no-unstable-nested-components
-        headerLeft={() => (
-          <ImageProfile
-            source={{
-              uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFtPdoUstm8sKQH99usU7SCKcyqHNwhcJ7WonkIE9Rr-r0b-O3b0iATAP66sVtdH1NEow&usqp=CAU",
-            }}
-          />
-        )}
-        // eslint-disable-next-line react/no-unstable-nested-components
-        headerCenter={() => (
+        headerLeft={
+          <ProfileAvatar onPress={handleGallery} src={user?.avatar} />
+        }
+        headerCenter={
           <ContainerTitle>
-            <TitleProfile>Igaaoo</TitleProfile>
-            <SubtitleProfile>igaaoo@gmail.com</SubtitleProfile>
+            <TitleProfile>{user?.name}</TitleProfile>
+            <SubtitleProfile>{user?.email}</SubtitleProfile>
           </ContainerTitle>
-        )}
+        }
       />
-      <Container>
-        <ProfileButton
-          title="Alterar email"
-          icon="mail"
-          onPress={() => navigate("ChangeEmail" as never)}
-        />
 
-        <ProfileButton
-          title="Alterar senha"
-          icon="lock"
-          onPress={() => navigate("ChangePassword" as never)}
-        />
+      <ProfileButton
+        title="Alterar email"
+        icon="mail"
+        onPress={() => navigate("ChangeEmail" as never)}
+      />
 
-        <ProfileButton
-          title="Sobre"
-          icon="info"
-          onPress={() => navigate("About" as never)}
-        />
+      <ProfileButton
+        title="Alterar senha"
+        icon="lock"
+        onPress={() => navigate("ChangePassword" as never)}
+      />
 
-        <ProfileButton title="Sair" icon="log-out" onPress={handleSignOut} />
-      </Container>
-    </>
+      <ProfileButton
+        title="Sobre"
+        icon="info"
+        onPress={() => navigate("About" as never)}
+      />
+
+      <ProfileButton title="Sair" icon="log-out" onPress={handleSignOut} />
+
+      <ModalError
+        title="Falha ao alterar imagem"
+        text="Não foi possível enviar a imagem, tente novamente mais tarde."
+        isVisible={modalErrorVisible}
+        isLoading={loadingModal}
+        onClose={() => setModalErrorVisible(false)}
+        transparent
+        onConfirm={handleGallery}
+      />
+    </ProfileContainer>
   );
 }

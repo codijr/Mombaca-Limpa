@@ -4,7 +4,7 @@ import {
   PrivacyPoliceButton,
   BottomView,
   Companies,
-  Container,
+  AboutContainer,
   LogoVertical,
   PrivacyPolicyText,
   VersionText,
@@ -19,27 +19,27 @@ export function About() {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
-    <>
+    <AboutContainer>
       <Header title="Sobre" type="goback" />
-      <Container>
-        <LogoVertical />
-        <VersionText>Versão 1.0.0</VersionText>
-        <BottomView>
-          <PrivacyPoliceButton onPress={() => setModalVisible(!modalVisible)}>
-            <PrivacyPolicyText>Política de privacidade</PrivacyPolicyText>
-          </PrivacyPoliceButton>
-          <Companies>
-            <CompaniesLogo source={MombacaLogo} />
-            <CompaniesLogo source={CodiLogo} />
-          </Companies>
-        </BottomView>
-      </Container>
+
+      <LogoVertical />
+      <VersionText>Versão 1.0.0</VersionText>
+      <BottomView>
+        <PrivacyPoliceButton onPress={() => setModalVisible(!modalVisible)}>
+          <PrivacyPolicyText>Política de privacidade</PrivacyPolicyText>
+        </PrivacyPoliceButton>
+        <Companies>
+          <CompaniesLogo source={MombacaLogo} />
+          <CompaniesLogo source={CodiLogo} />
+        </Companies>
+      </BottomView>
+
       <PolicyModal
         title="Política de privacidade"
         isVisible={modalVisible}
         transparent
         onConfirm={() => setModalVisible(false)}
       />
-    </>
+    </AboutContainer>
   );
 }

@@ -11,8 +11,8 @@ import {
 type HeaderProps = {
   title?: string;
   type?: "goback";
-  headerCenter?: () => ReactNode;
-  headerLeft?: () => ReactNode;
+  headerCenter?: ReactNode;
+  headerLeft?: ReactNode;
 };
 
 export function Header({ title, type, headerCenter, headerLeft }: HeaderProps) {
@@ -21,15 +21,14 @@ export function Header({ title, type, headerCenter, headerLeft }: HeaderProps) {
   return (
     <HeaderContainer>
       <HeaderLeft>
-        {headerLeft
-          ? headerLeft()
-          : type === "goback" && (
-              <HeaderIcon name="arrow-left" onPress={goBack} />
-            )}
+        {headerLeft ||
+          (type === "goback" && (
+            <HeaderIcon name="arrow-left" onPress={goBack} />
+          ))}
       </HeaderLeft>
 
       <HeaderCenter>
-        {headerCenter ? headerCenter() : <HeaderTitle>{title}</HeaderTitle>}
+        {headerCenter || <HeaderTitle>{title}</HeaderTitle>}
       </HeaderCenter>
     </HeaderContainer>
   );

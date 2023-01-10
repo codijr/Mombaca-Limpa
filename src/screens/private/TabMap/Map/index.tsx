@@ -6,6 +6,7 @@ import {
   GeolocationIcon,
   IconsView,
   MapContainer,
+  MapContent,
 } from "./styles";
 import { SearchBar } from "./components/SearchBar";
 import { Button } from "./components/Button";
@@ -40,8 +41,8 @@ export function Map() {
   }, [navigation]);
 
   return (
-    <>
-      <MapContainer initialRegion={region} />
+    <MapContainer>
+      <MapContent initialRegion={region} />
       <SearchBar />
       <IconsView>
         <Button onPress={() => navigate("Complaint" as never)}>
@@ -52,6 +53,6 @@ export function Map() {
           <GeolocationIcon />
         </Button>
       </IconsView>
-    </>
+    </MapContainer>
   );
 }
