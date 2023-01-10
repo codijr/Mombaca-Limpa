@@ -1,31 +1,37 @@
 import React, { useCallback } from "react";
+import { Platform } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { ms } from "react-native-size-matters";
-import { Platform } from "react-native";
-import auth from "@react-native-firebase/auth";
-import firestore from "@react-native-firebase/firestore";
-import { CentralizeView } from "../../../global/styles/theme";
+
+import { useAuth } from "../../../contexts";
+
+import { ButtonSubmit, Input, ModalError } from "../../../components";
+
 import {
-  ContainerLogin,
   IconBackground,
   LogoIcon,
   Title,
-  LoginContent,
   TopContent,
   SignUpText,
   SignUpTextBold,
   Content,
+  ContainerSignUp,
+  SignUpContent,
 } from "./styles";
-import { useAuth } from "../../../contexts/AuthContext";
-import { ButtonSubmit, Input, ModalError } from "../../../components";
+
 import {
   setStorage,
   validateInputEmail,
   validateInputPassword,
   validateInputText,
 } from "../../../utils";
+
+import { setFirebaseData, signUp } from "../../../services";
+
 import { profileTemplate } from "../../../assets/icons/profile-template";
+import { CentralizeView } from "../../../global/styles/theme";
 
 export function SignUp() {
   const { navigate } = useNavigation();
@@ -61,8 +67,7 @@ export function SignUp() {
 
     modalErrorVisible ? setLoadingModal(true) : setLoading(true);
 
-    auth()
-      .createUserWithEmailAndPassword(email, password)
+    signUp(email, password)
       .then((value) => {
         const user = {
           userId: value.user?.uid,
@@ -73,14 +78,10 @@ export function SignUp() {
           role: "user",
         };
 
-        firestore()
-          .collection("Users")
-          .doc(user.userId)
-          .set(user)
-          .then(() => {
-            setStorage("@user", user);
-            setUser(user);
-          });
+        setFirebaseData("Users", user.userId, user).then(() => {
+          setStorage("@user", user);
+          setUser(user);
+        });
       })
       .catch((err) => {
         err.code === "auth/email-already-in-use"
@@ -99,10 +100,10 @@ export function SignUp() {
   }, [checkErrors, modalErrorVisible, email, password, name, setUser]);
 
   return (
-    <ContainerLogin>
+    <ContainerSignUp>
       <IconBackground />
 
-      <LoginContent>
+      <SignUpContent>
         <Content>
           <TopContent>
             <CentralizeView>
@@ -165,7 +166,7 @@ export function SignUp() {
             </SignUpText>
           </CentralizeView>
         </Content>
-      </LoginContent>
+      </SignUpContent>
       <ModalError
         title="Erro ao criar conta"
         text="Ocorreu um erro ao criar sua conta, tente novamente mais tarde"
@@ -175,6 +176,6 @@ export function SignUp() {
         transparent
         onConfirm={handleSignUp}
       />
-    </ContainerLogin>
+    </ContainerSignUp>
   );
 }

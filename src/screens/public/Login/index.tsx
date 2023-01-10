@@ -1,12 +1,14 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useCallback } from "react";
+import { Platform } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
 import { ms } from "react-native-size-matters";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
-import { Platform } from "react-native";
-import auth from "@react-native-firebase/auth";
-import firestore from "@react-native-firebase/firestore";
+
+import { User, useAuth } from "../../../contexts";
+
 import { ButtonSubmit, Input, ModalError } from "../../../components";
-import { CentralizeView } from "../../../global/styles/theme";
+
 import {
   ContainerLogin,
   IconBackground,
@@ -20,12 +22,16 @@ import {
   SignUpTextBold,
   Content,
 } from "./styles";
-import { User, useAuth } from "../../../contexts/AuthContext";
+
 import {
   setStorage,
   validateInputEmail,
   validateInputPassword,
 } from "../../../utils";
+
+import { getFirebaseData, login } from "../../../services";
+
+import { CentralizeView } from "../../../global/styles/theme";
 
 export function Login() {
   const { navigate } = useNavigation();
@@ -56,20 +62,15 @@ export function Login() {
 
     modalErrorVisible ? setLoadingModal(true) : setLoading(true);
 
-    auth()
-      .signInWithEmailAndPassword(email, password)
+    login(email, password)
       .then((value) => {
-        firestore()
-          .collection("Users")
-          .doc(value.user?.uid)
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              const user: User = doc.data() as User;
-              setStorage("@user", user);
-              setUser(user);
-            }
-          });
+        getFirebaseData("Users", value.user.uid).then((doc) => {
+          if (doc.exists) {
+            const user: User = doc.data() as User;
+            setStorage("@user", user);
+            setUser(user);
+          }
+        });
       })
       .catch(() => {
         setModalErrorVisible(true);

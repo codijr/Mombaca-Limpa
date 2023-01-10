@@ -1,15 +1,5 @@
 import EncryptedStorage from "react-native-encrypted-storage";
 
-export async function setStorage(name: string, value: object) {
-  await EncryptedStorage.setItem(name, JSON.stringify(value))
-    .then(() => {
-      console.log("Storage set");
-    })
-    .catch((error) => {
-      console.log(`Storage set error: ${error}`);
-    });
-}
-
 export async function getStorage(name: string) {
   const item = await EncryptedStorage.getItem(name)
     .then((value) => {
@@ -22,6 +12,16 @@ export async function getStorage(name: string) {
   return item;
 }
 
+export async function setStorage(name: string, value: object) {
+  await EncryptedStorage.setItem(name, JSON.stringify(value))
+    .then(() => {
+      console.log("Storage set");
+    })
+    .catch((error) => {
+      console.log(`Storage set error: ${error}`);
+    });
+}
+
 export async function removeStorage(name: string) {
   await EncryptedStorage.removeItem(name)
     .then(() => {
@@ -30,4 +30,16 @@ export async function removeStorage(name: string) {
     .catch((error) => {
       console.log(`Storage remove error: ${error}`);
     });
+}
+
+export async function updateStorage(name: string, value: any) {
+  const item = await getStorage(name);
+  Object.keys(item).forEach((key) => {
+    if (value[key]) {
+      item[key] = value[key];
+    }
+  });
+  await removeStorage(name).then(() => {
+    setStorage(name, item);
+  });
 }

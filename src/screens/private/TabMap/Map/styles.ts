@@ -7,7 +7,11 @@ import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const { height } = Dimensions.get("screen");
 
-export const MapContainer = styled(MapView)`
+export const MapContainer = styled(View)`
+  flex: 1;
+`;
+
+export const MapContent = styled(MapView)`
   height: ${height}px;
 `;
 

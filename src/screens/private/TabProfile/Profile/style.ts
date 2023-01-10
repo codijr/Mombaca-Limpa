@@ -2,15 +2,8 @@ import { Image, Text, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components";
 
-export const Container = styled(View)`
+export const ProfileContainer = styled(View)`
   flex: 1;
-`;
-
-export const ImageProfile = styled(Image)`
-  width: ${RFValue(45)}px;
-  height: ${RFValue(45)}px;
-  border-radius: ${RFValue(25)}px;
-  margin-right: ${RFValue(10)}px;
 `;
 
 export const ContainerTitle = styled(View)`

@@ -9,7 +9,7 @@ import {
   ContainerStatistics,
   GeneralStatisticsWrapper,
   SectionWrapper,
-  StatisticsScroll,
+  StatisticsContent,
   StatisticsSectionTitle,
   TitleStats,
   ValueStats,
@@ -84,81 +84,78 @@ export function Statistics() {
   ];
 
   return (
-    <>
+    <ContainerStatistics>
       <Header title="Estatísticas" />
-      <ContainerStatistics>
-        <StatisticsScroll>
-          <SectionWrapper>
-            <GeneralStatistics>
-              <StatisticsSectionTitle>Visão Geral</StatisticsSectionTitle>
-              <AddMetricButton />
-            </GeneralStatistics>
 
-            <GeneralStatisticsWrapper>
-              <BackgroundStats>
-                <TitleStats>Lixo coletado hoje</TitleStats>
-                <ValueStats>50 T</ValueStats>
-              </BackgroundStats>
+      <StatisticsContent>
+        <SectionWrapper>
+          <GeneralStatistics>
+            <StatisticsSectionTitle>Visão Geral</StatisticsSectionTitle>
+            <AddMetricButton />
+          </GeneralStatistics>
 
-              <BackgroundStats>
-                <TitleStats>Varrição</TitleStats>
-                <ValueStats>350 Km</ValueStats>
-              </BackgroundStats>
-            </GeneralStatisticsWrapper>
-          </SectionWrapper>
+          <GeneralStatisticsWrapper>
+            <BackgroundStats>
+              <TitleStats>Lixo coletado hoje</TitleStats>
+              <ValueStats>50 T</ValueStats>
+            </BackgroundStats>
 
-          <SectionWrapper>
-            <StatisticsSectionTitle>Histórico de coleta</StatisticsSectionTitle>
+            <BackgroundStats>
+              <TitleStats>Varrição</TitleStats>
+              <ValueStats>350 Km</ValueStats>
+            </BackgroundStats>
+          </GeneralStatisticsWrapper>
+        </SectionWrapper>
 
-            <BarChart
-              data={data}
-              width={width - ms(40)}
-              height={width - ms(200)}
-              yAxisLabel=""
-              yAxisSuffix=" T"
-              chartConfig={chartConfig}
-              withInnerLines
-              fromZero
-              showBarTops={false}
+        <SectionWrapper>
+          <StatisticsSectionTitle>Histórico de coleta</StatisticsSectionTitle>
+
+          <BarChart
+            data={data}
+            width={width - ms(40)}
+            height={width - ms(200)}
+            yAxisLabel=""
+            yAxisSuffix=" T"
+            chartConfig={chartConfig}
+            withInnerLines
+            fromZero
+            showBarTops={false}
+            style={{
+              borderRadius: ms(10),
+              paddingVertical: ms(10),
+              backgroundColor: `${theme.colors.backgroundWhite}`,
+            }}
+          />
+        </SectionWrapper>
+
+        <SectionWrapper>
+          <StatisticsSectionTitle>Coleta por categoria</StatisticsSectionTitle>
+
+          <BackgroundStatsChart>
+            <PieChart
+              data={dataPie}
+              width={width - width / 2}
+              height={220}
+              chartConfig={chartConfigPie}
+              accessor="qtd"
+              backgroundColor="transparent"
+              hasLegend={false}
+              paddingLeft="0"
+              center={[50, 0]}
               style={{
                 borderRadius: ms(10),
-                paddingVertical: ms(10),
                 backgroundColor: `${theme.colors.backgroundWhite}`,
               }}
             />
-          </SectionWrapper>
-
-          <SectionWrapper>
-            <StatisticsSectionTitle>
-              Coleta por categoria
-            </StatisticsSectionTitle>
-
-            <BackgroundStatsChart>
-              <PieChart
-                data={dataPie}
-                width={width - width / 2}
-                height={220}
-                chartConfig={chartConfigPie}
-                accessor="qtd"
-                backgroundColor="transparent"
-                hasLegend={false}
-                paddingLeft="0"
-                center={[50, 0]}
-                style={{
-                  borderRadius: ms(10),
-                  backgroundColor: `${theme.colors.backgroundWhite}`,
-                }}
-              />
-              <LegendStats>
-                <Legend title="Resíduo Solido Orgânico" color="#1BB471" />
-                <Legend title="Poda" color="#C92C2C" />
-                <Legend title="Entulho" color="#E2E71B" />
-                <Legend title="Catação" color="#2E71D7" />
-              </LegendStats>
-            </BackgroundStatsChart>
-          </SectionWrapper>
-        </StatisticsScroll>
-      </ContainerStatistics>
-    </>
+            <LegendStats>
+              <Legend title="Resíduo Solido Orgânico" color="#1BB471" />
+              <Legend title="Poda" color="#C92C2C" />
+              <Legend title="Entulho" color="#E2E71B" />
+              <Legend title="Catação" color="#2E71D7" />
+            </LegendStats>
+          </BackgroundStatsChart>
+        </SectionWrapper>
+      </StatisticsContent>
+    </ContainerStatistics>
   );
 }

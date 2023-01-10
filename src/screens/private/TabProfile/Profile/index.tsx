@@ -1,22 +1,24 @@
 import React, { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
-import auth from "@react-native-firebase/auth";
-import firestore from "@react-native-firebase/firestore";
+
 import RNFS from "react-native-fs";
 import { launchImageLibrary } from "react-native-image-picker";
-import { TouchableOpacity } from "react-native";
+
+import { User, useAuth } from "../../../../contexts";
+
+import { Header, ModalError } from "../../../../components";
 import { ProfileButton } from "./components/ProfileButton";
+
 import {
-  Container,
   ContainerTitle,
-  ImageProfile,
+  ProfileContainer,
   SubtitleProfile,
   TitleProfile,
 } from "./style";
-import { Header } from "../../../../components/Header";
-import { User, useAuth } from "../../../../contexts/AuthContext";
+
 import { removeStorage } from "../../../../utils";
-import { ModalError } from "../../../../components";
+import { signOut, updateFirebaseData } from "../../../../services";
+import { ProfileAvatar } from "./components/ProfileAvatar";
 
 export function Profile() {
   const { navigate } = useNavigation();
@@ -43,10 +45,9 @@ export function Profile() {
 
           modalErrorVisible && setLoadingModal(true);
 
-          firestore()
-            .collection("Users")
-            .doc(user?.userId)
-            .update({ avatar: userUpdate.avatar })
+          updateFirebaseData("Users", user?.userId, {
+            avatar: userUpdate.avatar,
+          })
             .then(() => {
               setUser(userUpdate);
             })
@@ -62,61 +63,51 @@ export function Profile() {
   }, [modalErrorVisible, setUser, user]);
 
   const handleSignOut = useCallback(() => {
-    removeStorage("@user").then(() => {
-      setUser(null);
-      auth()
-        .signOut()
-        .then(() => {
-          console.log("Deslogado com sucesso");
-        })
-        .catch(() => {
-          console.log("Não foi possivel deslogar");
-        });
-    });
+    signOut()
+      .then(() => {
+        console.log("Deslogado com sucesso");
+        setUser(null);
+        removeStorage("@user");
+      })
+      .catch(() => {
+        console.log("Não foi possivel deslogar");
+      });
   }, [setUser]);
 
   return (
-    <>
+    <ProfileContainer>
       <Header
-        // eslint-disable-next-line react/no-unstable-nested-components
-        headerLeft={() => (
-          <TouchableOpacity onPress={handleGallery}>
-            <ImageProfile
-              source={{
-                uri: user?.avatar,
-              }}
-            />
-          </TouchableOpacity>
-        )}
-        // eslint-disable-next-line react/no-unstable-nested-components
-        headerCenter={() => (
+        headerLeft={
+          <ProfileAvatar onPress={handleGallery} src={user?.avatar} />
+        }
+        headerCenter={
           <ContainerTitle>
             <TitleProfile>{user?.name}</TitleProfile>
             <SubtitleProfile>{user?.email}</SubtitleProfile>
           </ContainerTitle>
-        )}
+        }
       />
-      <Container>
-        <ProfileButton
-          title="Alterar email"
-          icon="mail"
-          onPress={() => navigate("ChangeEmail" as never)}
-        />
 
-        <ProfileButton
-          title="Alterar senha"
-          icon="lock"
-          onPress={() => navigate("ChangePassword" as never)}
-        />
+      <ProfileButton
+        title="Alterar email"
+        icon="mail"
+        onPress={() => navigate("ChangeEmail" as never)}
+      />
 
-        <ProfileButton
-          title="Sobre"
-          icon="info"
-          onPress={() => navigate("About" as never)}
-        />
+      <ProfileButton
+        title="Alterar senha"
+        icon="lock"
+        onPress={() => navigate("ChangePassword" as never)}
+      />
 
-        <ProfileButton title="Sair" icon="log-out" onPress={handleSignOut} />
-      </Container>
+      <ProfileButton
+        title="Sobre"
+        icon="info"
+        onPress={() => navigate("About" as never)}
+      />
+
+      <ProfileButton title="Sair" icon="log-out" onPress={handleSignOut} />
+
       <ModalError
         title="Falha ao alterar imagem"
         text="Não foi possível enviar a imagem, tente novamente mais tarde."
@@ -126,6 +117,6 @@ export function Profile() {
         transparent
         onConfirm={handleGallery}
       />
-    </>
+    </ProfileContainer>
   );
 }
