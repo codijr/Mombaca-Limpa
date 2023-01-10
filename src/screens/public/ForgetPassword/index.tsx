@@ -3,12 +3,12 @@ import React, { useCallback, useState } from "react";
 import { CentralizeView } from "../../../global/styles/theme";
 import {
   ContainerForgetPassword,
-  ForgotPasswordContainer,
   PasswordIcon,
   Title,
   TextDescription,
   Content,
   PasswordIconWrapper,
+  ForgotPasswordContainer,
 } from "./styles";
 import { ButtonSubmit, Header, Input, ModalAlert } from "../../../components";
 
@@ -26,32 +26,30 @@ export function ForgetPassword() {
   }, [setModalVisible, navigate]);
 
   return (
-    <>
+    <ContainerForgetPassword>
       <Header type="goback" />
-      <ContainerForgetPassword>
+      <Content>
         <ForgotPasswordContainer>
-          <Content>
-            <CentralizeView>
-              <PasswordIconWrapper>
-                <PasswordIcon />
-              </PasswordIconWrapper>
-              <Title>Esqueci minha senha</Title>
-              <TextDescription>
-                Digite seu email e enviaremos um código para redefinir sua senha
-              </TextDescription>
-            </CentralizeView>
+          <CentralizeView>
+            <PasswordIconWrapper>
+              <PasswordIcon />
+            </PasswordIconWrapper>
+            <Title>Esqueci minha senha</Title>
+            <TextDescription>
+              Digite seu email e enviaremos um código para redefinir sua senha
+            </TextDescription>
+          </CentralizeView>
 
-            <Input title="Email" placeholder="Ex: pedroaugusto@gmail.com" />
+          <Input title="Email" placeholder="Ex: pedroaugusto@gmail.com" />
 
-            <CentralizeView>
-              <ButtonSubmit
-                title="Enviar Email"
-                onPress={() => setModalVisible(!modalVisible)}
-              />
-            </CentralizeView>
-          </Content>
+          <CentralizeView>
+            <ButtonSubmit
+              title="Enviar Email"
+              onPress={() => setModalVisible(!modalVisible)}
+            />
+          </CentralizeView>
         </ForgotPasswordContainer>
-      </ContainerForgetPassword>
+      </Content>
       <ModalAlert
         title="Email enviado!"
         text="Enviamos um link de redefinição de senha para o seu email"
@@ -59,6 +57,6 @@ export function ForgetPassword() {
         transparent
         onConfirm={handleNavigateToLogin}
       />
-    </>
+    </ContainerForgetPassword>
   );
 }

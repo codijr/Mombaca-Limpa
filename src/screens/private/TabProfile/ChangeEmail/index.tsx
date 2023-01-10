@@ -9,7 +9,7 @@ import {
   ModalAlert,
 } from "../../../../components";
 
-import { ContainerChangeEmail, ChangeEmailContent, Content } from "./styles";
+import { ChangeEmailContainer, ChangeEmailContent, Content } from "./styles";
 
 import { User, useAuth } from "../../../../contexts";
 
@@ -100,39 +100,39 @@ export function ChangeEmail() {
   }, [checkErrors, modalVisible, password, newEmail, user, setUser]);
 
   return (
-    <>
+    <ChangeEmailContainer>
       <Header title="Alterar email" type="goback" />
-      <ContainerChangeEmail>
-        <ChangeEmailContent>
-          <Content>
-            <Input
-              title="Novo email"
-              placeholder="Ex: pedroaugusto@gmail.com"
-              type="green"
-              keyboardType="email-address"
-              value={newEmail}
-              onChangeText={(value) => setNewEmail(value)}
-              error={error[0]}
+
+      <ChangeEmailContent>
+        <Content>
+          <Input
+            title="Novo email"
+            placeholder="Ex: pedroaugusto@gmail.com"
+            type="green"
+            keyboardType="email-address"
+            value={newEmail}
+            onChangeText={(value) => setNewEmail(value)}
+            error={error[0]}
+          />
+          <Input
+            title="Senha"
+            placeholder="************"
+            isPassword
+            type="green"
+            value={password}
+            onChangeText={(value) => setPassword(value)}
+            error={error[1]}
+          />
+          <CentralizeView>
+            <ButtonSubmit
+              title="Confirmar novo email"
+              onPress={handleChangeEmail}
+              loading={loading}
             />
-            <Input
-              title="Senha"
-              placeholder="************"
-              isPassword
-              type="green"
-              value={password}
-              onChangeText={(value) => setPassword(value)}
-              error={error[1]}
-            />
-            <CentralizeView>
-              <ButtonSubmit
-                title="Confirmar novo email"
-                onPress={handleChangeEmail}
-                loading={loading}
-              />
-            </CentralizeView>
-          </Content>
-        </ChangeEmailContent>
-      </ContainerChangeEmail>
+          </CentralizeView>
+        </Content>
+      </ChangeEmailContent>
+
       <ModalError
         title={modalTitleError}
         text={modalTextError}
@@ -149,6 +149,6 @@ export function ChangeEmail() {
         transparent
         onConfirm={() => navigate("Profile" as never)}
       />
-    </>
+    </ChangeEmailContainer>
   );
 }

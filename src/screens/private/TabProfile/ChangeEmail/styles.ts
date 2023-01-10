@@ -1,17 +1,18 @@
-import { Dimensions, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import styled from "styled-components";
 import { ms } from "react-native-size-matters";
 import { Container } from "../../../../global/styles/theme";
 
-export const ContainerChangeEmail = styled(Container)`
+export const ChangeEmailContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.background};
+  flex: 1;
 `;
 
 export const ChangeEmailContent = styled(ScrollView)`
   flex: 1;
 `;
 
-export const Content = styled(View)`
+export const Content = styled(Container)`
   padding-top: ${ms(20)}px;
   padding-bottom: ${ms(20)}px;
   flex-direction: column;

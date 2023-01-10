@@ -10,15 +10,15 @@ import { useAuth } from "../../../contexts";
 import { ButtonSubmit, Input, ModalError } from "../../../components";
 
 import {
-  ContainerLogin,
   IconBackground,
   LogoIcon,
   Title,
-  LoginContent,
   TopContent,
   SignUpText,
   SignUpTextBold,
   Content,
+  ContainerSignUp,
+  SignUpContent,
 } from "./styles";
 
 import {
@@ -100,10 +100,10 @@ export function SignUp() {
   }, [checkErrors, modalErrorVisible, email, password, name, setUser]);
 
   return (
-    <ContainerLogin>
+    <ContainerSignUp>
       <IconBackground />
 
-      <LoginContent>
+      <SignUpContent>
         <Content>
           <TopContent>
             <CentralizeView>
@@ -166,7 +166,7 @@ export function SignUp() {
             </SignUpText>
           </CentralizeView>
         </Content>
-      </LoginContent>
+      </SignUpContent>
       <ModalError
         title="Erro ao criar conta"
         text="Ocorreu um erro ao criar sua conta, tente novamente mais tarde"
@@ -176,6 +176,6 @@ export function SignUp() {
         transparent
         onConfirm={handleSignUp}
       />
-    </ContainerLogin>
+    </ContainerSignUp>
   );
 }

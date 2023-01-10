@@ -1,5 +1,4 @@
 import React, { useCallback } from "react";
-import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import RNFS from "react-native-fs";
@@ -11,15 +10,15 @@ import { Header, ModalError } from "../../../../components";
 import { ProfileButton } from "./components/ProfileButton";
 
 import {
-  Container,
   ContainerTitle,
-  ImageProfile,
+  ProfileContainer,
   SubtitleProfile,
   TitleProfile,
 } from "./style";
 
 import { removeStorage } from "../../../../utils";
 import { signOut, updateFirebaseData } from "../../../../services";
+import { ProfileAvatar } from "./components/ProfileAvatar";
 
 export function Profile() {
   const { navigate } = useNavigation();
@@ -76,47 +75,39 @@ export function Profile() {
   }, [setUser]);
 
   return (
-    <>
+    <ProfileContainer>
       <Header
-        // eslint-disable-next-line react/no-unstable-nested-components
-        headerLeft={() => (
-          <TouchableOpacity onPress={handleGallery}>
-            <ImageProfile
-              source={{
-                uri: user?.avatar,
-              }}
-            />
-          </TouchableOpacity>
-        )}
-        // eslint-disable-next-line react/no-unstable-nested-components
-        headerCenter={() => (
+        headerLeft={
+          <ProfileAvatar onPress={handleGallery} src={user?.avatar} />
+        }
+        headerCenter={
           <ContainerTitle>
             <TitleProfile>{user?.name}</TitleProfile>
             <SubtitleProfile>{user?.email}</SubtitleProfile>
           </ContainerTitle>
-        )}
+        }
       />
-      <Container>
-        <ProfileButton
-          title="Alterar email"
-          icon="mail"
-          onPress={() => navigate("ChangeEmail" as never)}
-        />
 
-        <ProfileButton
-          title="Alterar senha"
-          icon="lock"
-          onPress={() => navigate("ChangePassword" as never)}
-        />
+      <ProfileButton
+        title="Alterar email"
+        icon="mail"
+        onPress={() => navigate("ChangeEmail" as never)}
+      />
 
-        <ProfileButton
-          title="Sobre"
-          icon="info"
-          onPress={() => navigate("About" as never)}
-        />
+      <ProfileButton
+        title="Alterar senha"
+        icon="lock"
+        onPress={() => navigate("ChangePassword" as never)}
+      />
 
-        <ProfileButton title="Sair" icon="log-out" onPress={handleSignOut} />
-      </Container>
+      <ProfileButton
+        title="Sobre"
+        icon="info"
+        onPress={() => navigate("About" as never)}
+      />
+
+      <ProfileButton title="Sair" icon="log-out" onPress={handleSignOut} />
+
       <ModalError
         title="Falha ao alterar imagem"
         text="Não foi possível enviar a imagem, tente novamente mais tarde."
@@ -126,6 +117,6 @@ export function Profile() {
         transparent
         onConfirm={handleGallery}
       />
-    </>
+    </ProfileContainer>
   );
 }

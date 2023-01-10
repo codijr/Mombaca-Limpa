@@ -1,17 +1,15 @@
-import { Dimensions, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import styled from "styled-components";
 import { RFValue } from "react-native-responsive-fontsize";
 import { ms } from "react-native-size-matters";
-import { Container } from "../../../../global/styles/theme";
 
-const { width } = Dimensions.get("window");
-
-export const ContainerStatistics = styled(Container)`
+export const ContainerStatistics = styled(View)`
   flex: 1;
 `;
 
-export const StatisticsScroll = styled(ScrollView)`
-  padding: ${ms(20)}px 0;
+export const StatisticsContent = styled(ScrollView)`
+  padding: ${ms(20)}px ${ms(20)}px;
+  flex: 1;
 `;
 
 export const SectionWrapper = styled(View)`

@@ -7,14 +7,13 @@ import { Container } from "../../../global/styles/theme";
 
 Icon.loadFont();
 
-export const ContainerForgetPassword = styled(Container)`
+export const ContainerForgetPassword = styled(View)`
   background-color: ${({ theme }) => theme.colors.backgroundPrimary};
+  flex: 1;
 `;
 
-export const Content = styled(View)`
-  padding-top: ${ms(20)}px;
+export const Content = styled(Container)`
   padding-bottom: ${ms(20)}px;
-  flex: 1;
 `;
 
 export const ForgotPasswordContainer = styled(ScrollView)`
@@ -50,10 +49,4 @@ export const TextDescription = styled(Text)`
   color: ${({ theme }) => theme.colors.textWhite};
   margin-bottom: ${ms(30)}px;
   text-align: center;
-`;
-
-export const SignUpTextBold = styled(Text)`
-  font-size: ${RFValue(13)}px;
-  font-family: ${({ theme }) => theme.fonts.text700};
-  color: ${({ theme }) => theme.colors.textWhite};
 `;
