@@ -37,3 +37,12 @@ export async function changeEmail(newEmail: string, password: string) {
     }
   });
 }
+
+export async function changePassword(newPassword: string, oldPassword: string) {
+  reauthenticateWithCredential(oldPassword).then(() => {
+    if (actualUser !== null) {
+      const value = actualUser.updatePassword(newPassword);
+      return value;
+    }
+  });
+}
