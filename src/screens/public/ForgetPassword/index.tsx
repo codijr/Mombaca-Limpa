@@ -1,6 +1,14 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
-import { CentralizeView } from "../../../global/styles/theme";
+import { useNavigation } from "@react-navigation/native";
+
+import {
+  ButtonSubmit,
+  Header,
+  Input,
+  ModalAlert,
+  ModalError,
+} from "../../../components";
+
 import {
   ContainerForgetPassword,
   PasswordIcon,
@@ -10,15 +18,12 @@ import {
   PasswordIconWrapper,
   ForgotPasswordContainer,
 } from "./styles";
-import {
-  ButtonSubmit,
-  Header,
-  Input,
-  ModalAlert,
-  ModalError,
-} from "../../../components";
+
 import { validateInputEmail } from "../../../utils";
+
 import { forgetPassword } from "../../../services";
+
+import { CentralizeView } from "../../../global/styles/theme";
 
 export function ForgetPassword() {
   const { navigate } = useNavigation();
@@ -42,13 +47,10 @@ export function ForgetPassword() {
     modalErrorVisible ? setLoadingModal(true) : setLoading(true);
 
     forgetPassword(email)
-      .then((value) => {
-        console.log(value);
-
+      .then(() => {
         setModalVisible(true);
       })
       .catch((err) => {
-        console.log(err);
         if (err.code === "auth/user-not-found")
           setError(["O email não está cadastrado"]);
         else if (err.code === "auth/invalid-email")
