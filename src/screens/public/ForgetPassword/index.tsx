@@ -10,15 +10,56 @@ import {
   PasswordIconWrapper,
   ForgotPasswordContainer,
 } from "./styles";
-import { ButtonSubmit, Header, Input, ModalAlert } from "../../../components";
+import {
+  ButtonSubmit,
+  Header,
+  Input,
+  ModalAlert,
+  ModalError,
+} from "../../../components";
+import { validateInputEmail } from "../../../utils";
+import { forgetPassword } from "../../../services";
 
 export function ForgetPassword() {
   const { navigate } = useNavigation();
+
+  const [email, setEmail] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [error, setError] = React.useState<string[]>([]);
+  const [loading, setLoading] = React.useState(false);
+  const [loadingModal, setLoadingModal] = React.useState(false);
+  const [modalErrorVisible, setModalErrorVisible] = React.useState(false);
+
+  const checkErrors = useCallback(() => {
+    if (!validateInputEmail(email)) return true;
+
+    setError([validateInputEmail(email)]);
+  }, [email]);
 
   const handleForgetPassword = useCallback(() => {
-    // add forget password rule
-  }, []);
+    if (!checkErrors()) return;
+
+    modalErrorVisible ? setLoadingModal(true) : setLoading(true);
+
+    forgetPassword(email)
+      .then((value) => {
+        console.log(value);
+
+        setModalVisible(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.code === "auth/user-not-found")
+          setError(["O email não está cadastrado"]);
+        else if (err.code === "auth/invalid-email")
+          setError(["Email inválido."]);
+        else setModalErrorVisible(true);
+      })
+      .finally(() => {
+        setLoadingModal(false);
+        setLoading(false);
+      });
+  }, [checkErrors, email, modalErrorVisible]);
 
   const handleNavigateToLogin = useCallback(() => {
     setModalVisible(false);
@@ -40,12 +81,18 @@ export function ForgetPassword() {
             </TextDescription>
           </CentralizeView>
 
-          <Input title="Email" placeholder="Ex: pedroaugusto@gmail.com" />
+          <Input
+            title="Email"
+            placeholder="Ex: pedroaugusto@gmail.com"
+            onChangeText={(value) => setEmail(value)}
+            error={error[0]}
+          />
 
           <CentralizeView>
             <ButtonSubmit
               title="Enviar Email"
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={handleForgetPassword}
+              loading={loading}
             />
           </CentralizeView>
         </ForgotPasswordContainer>
@@ -56,6 +103,15 @@ export function ForgetPassword() {
         isVisible={modalVisible}
         transparent
         onConfirm={handleNavigateToLogin}
+      />
+      <ModalError
+        title="Erro ao redefinir senha"
+        text="Ocorreu um erro ao redefinir sua senha, tente novamente mais tarde"
+        isVisible={modalErrorVisible}
+        isLoading={loadingModal}
+        onClose={() => setModalErrorVisible(false)}
+        transparent
+        onConfirm={handleForgetPassword}
       />
     </ContainerForgetPassword>
   );
