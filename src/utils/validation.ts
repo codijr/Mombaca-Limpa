@@ -10,7 +10,7 @@ export function validateInputEmail(email: string): string {
     return "Email é obrigatório";
   }
   if (!email.includes("@")) {
-    return "Email inválido";
+    return "Inclua um @ no email.";
   }
   return "";
 }

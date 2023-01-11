@@ -10,6 +10,11 @@ export async function login(email: string, password: string) {
   return value;
 }
 
+export async function forgetPassword(email: string) {
+  const value = await auth().sendPasswordResetEmail(email);
+  return value;
+}
+
 export async function signOut() {
   const value = await auth().signOut();
   return value;
