@@ -62,7 +62,7 @@ export function ChangeEmail() {
 
     reauthenticateWithCredential(password)
       .then(() => {
-        changeEmail(newEmail, password)
+        changeEmail(newEmail)
           .then(() => {
             updateFirebaseData("Users", user?.userId, { email: newEmail })
               .then(() => {
@@ -71,7 +71,9 @@ export function ChangeEmail() {
                 setUser(newUser);
                 setModalConfirmationVisible(true);
               })
-              .catch(() => {
+              .catch((err) => {
+                console.log(err);
+
                 setModalTitleError("Erro ao alterar email");
                 setModalTextError(
                   "Ocorreu um erro ao alterar o email, tente novamente mais tarde"
@@ -80,6 +82,8 @@ export function ChangeEmail() {
               });
           })
           .catch((err) => {
+            console.log(err);
+
             if (err.code === "auth/invalid-email") {
               setError([
                 "Email inválido, por favor digite um email válido",
@@ -89,8 +93,22 @@ export function ChangeEmail() {
           });
       })
       .catch((err) => {
+        console.log(err);
+
         if (err.code === "auth/wrong-password") {
           setError(["", "Senha incorreta, por favor digite a senha correta"]);
+        } else if (err.code === "auth/too-many-requests") {
+          setModalTitleError("Erro ao alterar o email");
+          setModalTextError(
+            "Você realizou muitas tentativas de alterar o email, tente novamente mais tarde"
+          );
+          setModalVisible(true);
+        } else {
+          setModalTitleError("Erro ao alterar o email");
+          setModalTextError(
+            "Ocorreu um erro ao alterar o email, tente novamente mais tarde"
+          );
+          setModalVisible(true);
         }
       })
       .finally(() => {

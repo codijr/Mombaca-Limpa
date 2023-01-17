@@ -34,13 +34,11 @@ export async function reauthenticateWithCredential(password: string) {
   }
 }
 
-export async function changeEmail(newEmail: string, password: string) {
-  reauthenticateWithCredential(password).then(() => {
-    if (actualUser !== null) {
-      const value = actualUser.updateEmail(newEmail);
-      return value;
-    }
-  });
+export async function changeEmail(newEmail: string) {
+  if (actualUser !== null) {
+    const value = actualUser.updateEmail(newEmail);
+    return value;
+  }
 }
 
 export async function changePassword(newPassword: string) {
