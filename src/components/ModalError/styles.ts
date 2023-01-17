@@ -34,7 +34,7 @@ export const WrongIcon = styled(Icon).attrs({
 `;
 
 export const TitleModal = styled(Text)`
-  font-size: ${RFValue(22)}px;
+  font-size: ${RFValue(18)}px;
   font-family: ${({ theme }) => theme.fonts.title600};
   color: ${({ theme }) => theme.colors.alert};
   text-align: center;

@@ -6,7 +6,7 @@ import {
   Header,
   Input,
   ModalAlert,
-  ModalError
+  ModalError,
 } from "../../../../components";
 
 import {
@@ -15,20 +15,17 @@ import {
   Content,
 } from "./styles";
 
-import { CentralizeView } from "../../../../global/styles/theme";
-
 import { User, useAuth } from "../../../../contexts";
 
-import {
-  updateStorage,
-  validateInputPassword,
-} from "../../../../utils";
+import { updateStorage, validateInputPassword } from "../../../../utils";
 
 import {
   changePassword,
   reauthenticateWithCredential,
   updateFirebaseData,
 } from "../../../../services";
+
+import { CentralizeView } from "../../../../global/styles/theme";
 
 export function ChangePassword() {
   const { user, setUser } = useAuth();
@@ -48,14 +45,20 @@ export function ChangePassword() {
   const { navigate } = useNavigation();
 
   const checkErrors = useCallback(() => {
+    setError(["", "", ""]);
+
     if (
+      !validateInputPassword(oldPassword, oldPassword) &&
       !validateInputPassword(newPassword, confirmNewPassword)
     )
       return true;
+
     setError([
+      validateInputPassword(oldPassword, oldPassword),
       validateInputPassword(newPassword, confirmNewPassword),
+      validateInputPassword(confirmNewPassword, newPassword),
     ]);
-  }, [newPassword, confirmNewPassword]);
+  }, [oldPassword, newPassword, confirmNewPassword]);
 
   const handleChangePassword = useCallback(() => {
     if (!checkErrors()) return;
@@ -64,7 +67,7 @@ export function ChangePassword() {
 
     reauthenticateWithCredential(oldPassword)
       .then(() => {
-        changePassword(newPassword, oldPassword)
+        changePassword(newPassword)
           .then(() => {
             updateFirebaseData("Users", user?.userId, { password: newPassword })
               .then(() => {
@@ -73,7 +76,9 @@ export function ChangePassword() {
                 setUser(newUser);
                 setModalConfirmationVisible(true);
               })
-              .catch(() => {
+              .catch((err) => {
+                console.log(err);
+
                 setModalTitleError("Erro ao alterar a senha");
                 setModalTextError(
                   "Ocorreu um erro ao alterar a senha, tente novamente mais tarde"
@@ -91,8 +96,26 @@ export function ChangePassword() {
           });
       })
       .catch((err) => {
+        console.log(err);
+
         if (err.code === "auth/wrong-password") {
-          setError(["", "Senha incorreta, por favor digite a senha correta"]);
+          setError([
+            "Senha incorreta, por favor digite a senha correta",
+            "",
+            "",
+          ]);
+        } else if (err.code === "auth/too-many-requests") {
+          setModalTitleError("Erro ao alterar a senha");
+          setModalTextError(
+            "Você realizou muitas tentativas de alterar senha, tente novamente mais tarde"
+          );
+          setModalVisible(true);
+        } else {
+          setModalTitleError("Erro ao alterar a senha");
+          setModalTextError(
+            "Ocorreu um erro ao alterar a senha, tente novamente mais tarde"
+          );
+          setModalVisible(true);
         }
       })
       .finally(() => {
@@ -142,7 +165,6 @@ export function ChangePassword() {
               title="Confirmar alteração de senha"
               onPress={handleChangePassword}
               loading={loading}
-              
             />
           </CentralizeView>
         </Content>
