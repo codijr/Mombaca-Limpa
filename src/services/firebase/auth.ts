@@ -42,3 +42,10 @@ export async function changeEmail(newEmail: string, password: string) {
     }
   });
 }
+
+export async function changePassword(newPassword: string) {
+  if (actualUser !== null) {
+    const value = actualUser.updatePassword(newPassword);
+    return value;
+  }
+}

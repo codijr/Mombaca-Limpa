@@ -143,8 +143,8 @@ export function Login() {
       </LoginContent>
 
       <ModalError
-        title="Erro ao criar conta"
-        text="Ocorreu um erro ao criar sua conta, tente novamente mais tarde"
+        title="Erro ao logar"
+        text="Ocorreu um erro ao logar sua conta, tente novamente mais tarde"
         isVisible={modalErrorVisible}
         isLoading={loadingModal}
         onClose={() => setModalErrorVisible(false)}
