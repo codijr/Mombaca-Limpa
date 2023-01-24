@@ -102,7 +102,6 @@ export function Map() {
       >
         <Marker coordinate={currentRegion} icon={LocationIcon} />
       </MapContent>
-      <SearchBar />
       <IconsView>
         <Button onPress={() => navigate("Complaint" as never)}>
           <ComplaintIcon />
@@ -114,6 +113,7 @@ export function Map() {
           />
         </Button>
       </IconsView>
+      <SearchBar />
     </MapContainer>
   );
 }
