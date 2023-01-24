@@ -78,11 +78,15 @@ export function Map() {
         longitudeDelta,
       });
     },
-    [region]
+    []
   );
 
   const handleMoveToCurrentPosition = useCallback(() => {
-    setRegion(currentRegion);
+    setRegion((prevRegion) => ({
+      ...prevRegion,
+      latitude: currentRegion.latitude,
+      longitude: currentRegion.longitude,
+    }));
     setIsActualPosition(true);
   }, [currentRegion]);
 
