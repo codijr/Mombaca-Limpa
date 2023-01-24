@@ -33,7 +33,6 @@ export const ComplaintIcon = styled(FeatherIcon).attrs({
 })``;
 
 export const GeolocationIcon = styled(MaterialIcon).attrs({
-  name: "crosshairs-gps",
   size: ms(25),
   color: "#1BB471",
 })``;
