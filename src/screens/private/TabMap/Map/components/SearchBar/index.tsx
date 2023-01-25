@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, FlatList } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import {
   AddressButton,
   AddressContainer,
@@ -15,12 +16,16 @@ import {
 } from "./styles";
 import { AddressComponentProps, AddressProps } from "../../../../../../@types";
 import { searchAddress } from "../../../../../../services";
+import { RootState } from "../../../../../../redux/createStore";
+import { setAddress } from "../../../../../../redux/modules/geocoding/reducer";
 
 export function SearchBar() {
   const [isFocused, setIsFocused] = useState(false);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState<AddressProps[]>([]);
   const [loading, setLoading] = useState(false);
+  const addressSelected = useSelector((state: RootState) => state.geocoding);
+  const dispatch = useDispatch();
 
   const handleSearchAddress = useCallback(async (address: string) => {
     setLoading(true);
@@ -49,37 +54,66 @@ export function SearchBar() {
 
   const handleConcatTitle = useCallback(
     (address_components: AddressComponentProps[]) => {
-      return address_components.map((value, index) => {
-        const title: string[] = [];
+      const title = {
+        route: "",
+        street_number: "S/N",
+        sublocality: "",
+      };
 
-        value.types.includes("route") && title.push(value.long_name);
-        value.types.includes("street_number") && title.push(value.long_name);
-        value.types.includes("sublocality_level_1") &&
-          title.push(value.long_name);
-
-        return `${title[0]}, ${title[1]} - ${title[2]}`;
+      address_components.forEach((value, index) => {
+        value.types.includes("route") && (title.route = value.long_name);
+        value.types.includes("street_number") &&
+          (title.street_number = value.long_name);
+        value.types.includes("administrative_area_level_4") ||
+          (value.types.includes("sublocality") &&
+            (title.sublocality = value.long_name));
       });
+
+      return `${title.route}, ${title.street_number} - ${title.sublocality}`;
     },
     []
   );
 
   const handleConcatDescription = useCallback(
     (address_components: AddressComponentProps[]) => {
-      return address_components.map((value) => {
-        const description: string[] = [];
+      const description = {
+        city: "",
+        state: "",
+      };
 
+      address_components.forEach((value) => {
         value.types.includes("administrative_area_level_2") &&
-          description.push(value.long_name);
+          (description.city = value.long_name);
         value.types.includes("administrative_area_level_1") &&
-          description.push(value.long_name);
-        value.types.includes("postal_code") &&
-          description.push(value.long_name);
-
-        return `${description[0]} - ${description[1]}, ${description[2]}`;
+          (description.state = value.short_name);
       });
+
+      return `${description.city} - ${description.state}`;
     },
     []
   );
+
+  const handleSelectAddress = useCallback(
+    (item: AddressProps) => {
+      const { address_components, formatted_address, geometry, place_id } =
+        item;
+
+      dispatch(
+        setAddress({
+          address_components,
+          formatted_address,
+          geometry,
+          place_id,
+        })
+      );
+      setIsFocused(false);
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    console.log(addressSelected.place_id);
+  }, [addressSelected]);
 
   return (
     <>
@@ -88,9 +122,8 @@ export function SearchBar() {
         <SearchView>
           <SearchInput
             placeholder="Buscar por endereço"
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
             onChangeText={(text) => setSearch(text)}
+            onFocus={() => setIsFocused(true)}
             blurOnSubmit={false}
             onSubmitEditing={() => handleSearchAddress(search)}
           />
@@ -108,7 +141,7 @@ export function SearchBar() {
             keyExtractor={(item) => item.place_id}
             renderItem={({ item, index }) => (
               <>
-                <AddressButton>
+                <AddressButton onPress={() => handleSelectAddress(item)}>
                   <AddressTitle>
                     {handleConcatTitle(item.address_components)}
                   </AddressTitle>

@@ -3,6 +3,7 @@ import { Platform, StatusBar } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Geolocation from "@react-native-community/geolocation";
 import { Marker } from "react-native-maps";
+import { useSelector } from "react-redux";
 import {
   ComplaintIcon,
   GeolocationIcon,
@@ -14,6 +15,8 @@ import { SearchBar } from "./components/SearchBar";
 import { Button } from "./components/Button";
 
 import LocationIcon from "../../../../assets/icons/gps.png";
+import PointerIcon from "../../../../assets/icons/pointer.png";
+import { RootState } from "../../../../redux/createStore";
 
 type Region = {
   latitude: number;
@@ -27,9 +30,11 @@ const { getCurrentPosition } = Geolocation;
 export function Map() {
   const navigation = useNavigation();
   const { navigate } = useNavigation();
+  const addressSelected = useSelector((state: RootState) => state.geocoding);
 
   const [currentRegion, setCurrentRegion] = useState({} as Region);
   const [region, setRegion] = useState({} as Region);
+  const [selectedAddress, setSelectedAddress] = useState({} as Region);
   const [isActualPosition, setIsActualPosition] = useState(true);
 
   useEffect(() => {
@@ -90,6 +95,22 @@ export function Map() {
     setIsActualPosition(true);
   }, [currentRegion]);
 
+  useEffect(() => {
+    handleGestureChangeRegion({
+      latitude: addressSelected.geometry.location.lat,
+      longitude: addressSelected.geometry.location.lng,
+      latitudeDelta: 0.0143,
+      longitudeDelta: 0.0134,
+    });
+
+    setSelectedAddress({
+      latitude: addressSelected.geometry.location.lat,
+      longitude: addressSelected.geometry.location.lng,
+      latitudeDelta: 0.0143,
+      longitudeDelta: 0.0134,
+    });
+  }, [addressSelected]);
+
   return (
     <MapContainer>
       <MapContent
@@ -101,6 +122,9 @@ export function Map() {
         }
       >
         <Marker coordinate={currentRegion} icon={LocationIcon} />
+        {addressSelected.place_id && (
+          <Marker coordinate={selectedAddress} icon={PointerIcon} />
+        )}
       </MapContent>
       <IconsView>
         <Button onPress={() => navigate("Complaint" as never)}>
