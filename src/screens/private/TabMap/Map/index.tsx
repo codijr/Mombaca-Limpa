@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Platform, StatusBar } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Geolocation from "@react-native-community/geolocation";
-import { Marker } from "react-native-maps";
-import { useSelector } from "react-redux";
+import { LatLng, Marker } from "react-native-maps";
+import { useDispatch, useSelector } from "react-redux";
 import {
   ComplaintIcon,
   GeolocationIcon,
@@ -17,6 +17,8 @@ import { Button } from "./components/Button";
 import LocationIcon from "../../../../assets/icons/gps.png";
 import PointerIcon from "../../../../assets/icons/pointer.png";
 import { RootState } from "../../../../redux/createStore";
+import { searchAddressReverse } from "../../../../services";
+import { setAddress } from "../../../../redux/modules/geocoding/reducer";
 
 type Region = {
   latitude: number;
@@ -31,6 +33,7 @@ export function Map() {
   const navigation = useNavigation();
   const { navigate } = useNavigation();
   const addressSelected = useSelector((state: RootState) => state.geocoding);
+  const dispatch = useDispatch();
 
   const [currentRegion, setCurrentRegion] = useState({} as Region);
   const [region, setRegion] = useState({} as Region);
@@ -111,11 +114,26 @@ export function Map() {
     });
   }, [addressSelected]);
 
+  const handleRegionChange = useCallback(
+    async (pointer: LatLng) => {
+      const { latitude, longitude } = pointer;
+
+      await searchAddressReverse(latitude, longitude).then((res) => {
+        const { results } = res;
+        dispatch(setAddress(results[0]));
+      });
+    },
+    [dispatch]
+  );
+
   return (
     <MapContainer>
       <MapContent
         initialRegion={region}
         region={region}
+        onLongPress={(value) =>
+          handleRegionChange(value.nativeEvent.coordinate)
+        }
         onRegionChange={() => setIsActualPosition(false)}
         onRegionChangeComplete={(value) =>
           handleGestureChangeRegion(value as Region)

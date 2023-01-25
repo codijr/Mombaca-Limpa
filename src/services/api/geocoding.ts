@@ -23,3 +23,19 @@ export async function searchAddress(
 
   return response.data;
 }
+
+export async function searchAddressReverse(
+  lat: number,
+  lng: number
+): Promise<ResponseSearchAddress> {
+  const latlng = `${lat},${lng}`;
+
+  const response = await geocoding.get("", {
+    params: {
+      latlng,
+      key: Config.GOOGLE_MAPS_API_KEY,
+    },
+  });
+
+  return response.data;
+}
