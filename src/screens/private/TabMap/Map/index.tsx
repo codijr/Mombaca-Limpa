@@ -4,10 +4,16 @@ import { useNavigation } from "@react-navigation/native";
 import Geolocation from "@react-native-community/geolocation";
 import { LatLng, Marker } from "react-native-maps";
 import { useDispatch, useSelector } from "react-redux";
+import { ms } from "react-native-size-matters";
 import {
+  ButtonComplaint,
+  ButtonComplaintText,
   ComplaintIcon,
   GeolocationIcon,
   IconsView,
+  InfoText,
+  InfoTitle,
+  InfoView,
   MapContainer,
   MapContent,
 } from "./styles";
@@ -19,6 +25,8 @@ import PointerIcon from "../../../../assets/icons/pointer.png";
 import { RootState } from "../../../../redux/createStore";
 import { searchAddressReverse } from "../../../../services";
 import { setAddress } from "../../../../redux/modules/geocoding/reducer";
+import { CentralizeView } from "../../../../global/styles/theme";
+import { AddressComponentProps } from "../../../../@types";
 
 type Region = {
   latitude: number;
@@ -99,13 +107,6 @@ export function Map() {
   }, [currentRegion]);
 
   useEffect(() => {
-    handleGestureChangeRegion({
-      latitude: addressSelected.geometry.location.lat,
-      longitude: addressSelected.geometry.location.lng,
-      latitudeDelta: 0.0143,
-      longitudeDelta: 0.0134,
-    });
-
     setSelectedAddress({
       latitude: addressSelected.geometry.location.lat,
       longitude: addressSelected.geometry.location.lng,
@@ -126,6 +127,51 @@ export function Map() {
     [dispatch]
   );
 
+  const handleConcatTitle = useCallback(
+    (address_components: AddressComponentProps[]) => {
+      const title = {
+        route: "",
+        street_number: "S/N",
+        sublocality: "",
+      };
+
+      address_components.forEach((value, index) => {
+        value.types.includes("route") && (title.route = value.long_name);
+        value.types.includes("street_number") &&
+          (title.street_number = value.long_name);
+        value.types.includes("administrative_area_level_4") ||
+          (value.types.includes("sublocality") &&
+            (title.sublocality = value.long_name));
+      });
+
+      return `${title.route}, ${title.street_number} - ${title.sublocality}`;
+    },
+    []
+  );
+
+  const handleConcatDescription = useCallback(
+    (address_components: AddressComponentProps[]) => {
+      const description = {
+        city: "",
+        state: "",
+      };
+
+      address_components.forEach((value) => {
+        value.types.includes("administrative_area_level_2") &&
+          (description.city = value.long_name);
+        value.types.includes("administrative_area_level_1") &&
+          (description.state = value.short_name);
+      });
+
+      return `${description.city} - ${description.state}`;
+    },
+    []
+  );
+
+  const handleNavigateToComplaint = useCallback(() => {
+    navigate("Complaint" as never);
+  }, []);
+
   return (
     <MapContainer>
       <MapContent
@@ -145,15 +191,39 @@ export function Map() {
         )}
       </MapContent>
       <IconsView>
-        <Button onPress={() => navigate("Complaint" as never)}>
+        <Button
+          onPress={() => navigate("Complaint" as never)}
+          style={{
+            marginBottom: ms(20),
+          }}
+        >
           <ComplaintIcon />
         </Button>
 
-        <Button onPress={handleMoveToCurrentPosition}>
+        <Button
+          onPress={handleMoveToCurrentPosition}
+          style={{
+            marginBottom: ms(20),
+          }}
+        >
           <GeolocationIcon
             name={isActualPosition ? "crosshairs-gps" : "crosshairs"}
           />
         </Button>
+
+        <CentralizeView>
+          <InfoView>
+            <InfoTitle>
+              {handleConcatTitle(addressSelected.address_components)}
+            </InfoTitle>
+            <InfoText>
+              {handleConcatDescription(addressSelected.address_components)}
+            </InfoText>
+            <ButtonComplaint>
+              <ButtonComplaintText>Denunciar</ButtonComplaintText>
+            </ButtonComplaint>
+          </InfoView>
+        </CentralizeView>
       </IconsView>
       <SearchBar />
     </MapContainer>
