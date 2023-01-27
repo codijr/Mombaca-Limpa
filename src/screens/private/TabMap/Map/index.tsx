@@ -26,7 +26,8 @@ import { RootState } from "../../../../redux/createStore";
 import { searchAddressReverse } from "../../../../services";
 import { setAddress } from "../../../../redux/modules/geocoding/reducer";
 import { CentralizeView } from "../../../../global/styles/theme";
-import { AddressComponentProps } from "../../../../@types";
+import { AddressComponentProps, AddressProps } from "../../../../@types";
+import { setCurrentAddress } from "../../../../redux/modules/geolocation/reducer";
 
 type Region = {
   latitude: number;
@@ -35,13 +36,12 @@ type Region = {
   longitudeDelta: number;
 };
 
-const { getCurrentPosition } = Geolocation;
-
 export function Map() {
   const navigation = useNavigation();
   const { navigate } = useNavigation();
   const addressSelected = useSelector((state: RootState) => state.geocoding);
   const dispatch = useDispatch();
+  const currentAddress = useSelector((state: RootState) => state.geolocation);
 
   const [currentRegion, setCurrentRegion] = useState({} as Region);
   const [region, setRegion] = useState({} as Region);
@@ -49,7 +49,7 @@ export function Map() {
   const [isActualPosition, setIsActualPosition] = useState(true);
 
   useEffect(() => {
-    getCurrentPosition((position) => {
+    Geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
 
       setCurrentRegion({
@@ -84,6 +84,20 @@ export function Map() {
       }
     });
   }, [navigation]);
+
+  useEffect(() => {
+    setInterval(async () => {
+      Geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+
+        await searchAddressReverse(latitude, longitude).then((res) => {
+          const { results } = res;
+          dispatch(setCurrentAddress(results[0]));
+        });
+      });
+      console.log(currentAddress.place_id);
+    }, 6000);
+  }, []);
 
   const handleGestureChangeRegion = useCallback(
     ({ latitude, longitude, latitudeDelta, longitudeDelta }: Region) => {
@@ -168,9 +182,12 @@ export function Map() {
     []
   );
 
-  const handleNavigateToComplaint = useCallback(() => {
-    navigate("Complaint" as never);
-  }, []);
+  const handleNavigateToComplaint = useCallback(
+    (address: AddressProps) => {
+      navigate("Complaint" as never, address as never);
+    },
+    [navigate]
+  );
 
   return (
     <MapContainer>
@@ -219,7 +236,9 @@ export function Map() {
             <InfoText>
               {handleConcatDescription(addressSelected.address_components)}
             </InfoText>
-            <ButtonComplaint>
+            <ButtonComplaint
+              onPress={() => handleNavigateToComplaint(addressSelected)}
+            >
               <ButtonComplaintText>Denunciar</ButtonComplaintText>
             </ButtonComplaint>
           </InfoView>
