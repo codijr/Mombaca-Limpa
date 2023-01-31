@@ -5,6 +5,7 @@ import { Platform, StatusBar } from "react-native";
 import { theme } from "./global/styles/theme";
 import { Routes } from "./routes";
 import { Context } from "./contexts";
+import { ReduxProvider } from "./redux";
 
 export default function App() {
   useEffect(() => {
@@ -18,9 +19,11 @@ export default function App() {
 
   return (
     <Context>
-      <ThemeProvider theme={theme}>
-        <Routes />
-      </ThemeProvider>
+      <ReduxProvider>
+        <ThemeProvider theme={theme}>
+          <Routes />
+        </ThemeProvider>
+      </ReduxProvider>
     </Context>
   );
 }
