@@ -52,7 +52,7 @@ export const WrapperSearchIcon = styled(View)`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 15%;
+  width: 10%;
 `;
 
 export const LogoIcon = styled(Logo).attrs({

@@ -30,28 +30,32 @@ export function SearchBar() {
   const dispatch = useDispatch();
 
   const handleSearchAddress = useCallback(async (address: string) => {
-    setLoading(true);
+    setSearch(address);
 
-    await searchAddress(address)
-      .then((res) => {
-        const { results } = res;
-        const notFoundResult: AddressProps[] = [
-          {
-            ...results[0],
-            place_id: "0",
-          },
-        ];
+    setTimeout(async () => {
+      setLoading(true);
 
-        return results
-          ? setSearchResult(results)
-          : setSearchResult(notFoundResult);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      await searchAddress(address)
+        .then((res) => {
+          const { results } = res;
+          const notFoundResult: AddressProps[] = [
+            {
+              ...results[0],
+              place_id: "0",
+            },
+          ];
+
+          return results
+            ? setSearchResult(results)
+            : setSearchResult(notFoundResult);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }, 1000);
   }, []);
 
   const handleConcatTitle = useCallback(
@@ -138,7 +142,7 @@ export function SearchBar() {
           </WrapperSearchIcon>
           <SearchInput
             placeholder="Buscar por endereço"
-            onChangeText={(text) => setSearch(text)}
+            onChangeText={(text) => handleSearchAddress(text)}
             onFocus={() => setIsFocused(true)}
             blurOnSubmit={false}
             onSubmitEditing={() => handleSearchAddress(search)}
@@ -149,23 +153,27 @@ export function SearchBar() {
             display: isFocused ? "flex" : "none",
           }}
         >
-          <FlatList
-            data={searchResult}
-            keyExtractor={(item) => item.place_id}
-            renderItem={({ item, index }) => (
-              <>
-                <AddressButton onPress={() => handleSelectAddress(item)}>
-                  <AddressTitle>
-                    {handleConcatTitle(item.address_components)}
-                  </AddressTitle>
-                  <AddressDescription>
-                    {handleConcatDescription(item.address_components)}
-                  </AddressDescription>
-                </AddressButton>
-                {index !== searchResult.length - 1 && <Divider />}
-              </>
-            )}
-          />
+          {loading ? (
+            <ActivityIndicator size="large" color="#000" />
+          ) : (
+            <FlatList
+              data={searchResult}
+              keyExtractor={(item) => item.place_id}
+              renderItem={({ item, index }) => (
+                <>
+                  <AddressButton onPress={() => handleSelectAddress(item)}>
+                    <AddressTitle>
+                      {handleConcatTitle(item.address_components)}
+                    </AddressTitle>
+                    <AddressDescription>
+                      {handleConcatDescription(item.address_components)}
+                    </AddressDescription>
+                  </AddressButton>
+                  {index !== searchResult.length - 1 && <Divider />}
+                </>
+              )}
+            />
+          )}
         </AddressContainer>
       </SearchContainer>
     </>
