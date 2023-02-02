@@ -9,6 +9,7 @@ import {
 import { ms } from "react-native-size-matters";
 import Icon from "react-native-vector-icons/Feather";
 import styled from "styled-components";
+import Logo from "../../../../../../assets/icons/icon.svg";
 
 export const SearchContainer = styled(View)`
   position: absolute;
@@ -51,16 +52,22 @@ export const WrapperSearchIcon = styled(View)`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20%;
+  width: 15%;
 `;
 
-export const SearchIcon = styled(Icon).attrs({
-  name: "search",
+export const LogoIcon = styled(Logo).attrs({
+  width: ms(30),
+  height: ms(30),
+  fill: "#1BB471",
+})``;
+
+export const ButtonReturn = styled(TouchableOpacity)``;
+
+export const ReturnIcon = styled(Icon).attrs({
+  name: "arrow-left",
   size: ms(25),
   color: "#1BB471",
-})`
-  margin: 0 ${ms(10)}px;
-`;
+})``;
 
 export const Divider = styled(View)`
   border-bottom-color: ${({ theme }) => theme.colors.textGray};

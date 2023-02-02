@@ -1,15 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { ActivityIndicator, FlatList } from "react-native";
+import { ActivityIndicator, FlatList, Keyboard } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
   AddressButton,
   AddressContainer,
   AddressDescription,
   AddressTitle,
+  ButtonReturn,
   Divider,
   FocusView,
+  LogoIcon,
+  ReturnIcon,
   SearchContainer,
-  SearchIcon,
   SearchInput,
   SearchView,
   WrapperSearchIcon,
@@ -120,6 +122,20 @@ export function SearchBar() {
       {isFocused && <FocusView />}
       <SearchContainer>
         <SearchView>
+          <WrapperSearchIcon>
+            {isFocused ? (
+              <ButtonReturn
+                onPress={() => {
+                  setIsFocused(false);
+                  Keyboard.dismiss();
+                }}
+              >
+                <ReturnIcon />
+              </ButtonReturn>
+            ) : (
+              <LogoIcon />
+            )}
+          </WrapperSearchIcon>
           <SearchInput
             placeholder="Buscar por endereço"
             onChangeText={(text) => setSearch(text)}
@@ -127,9 +143,6 @@ export function SearchBar() {
             blurOnSubmit={false}
             onSubmitEditing={() => handleSearchAddress(search)}
           />
-          <WrapperSearchIcon>
-            {loading ? <ActivityIndicator color="#1BB471" /> : <SearchIcon />}
-          </WrapperSearchIcon>
         </SearchView>
         <AddressContainer
           style={{
