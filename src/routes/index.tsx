@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 
 import { NavigationContainer } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 import { PrivateRoutes } from "./private.routes";
 import { PublicRoutes } from "./public.routes";
 import { useAuth } from "../contexts/AuthContext";
@@ -9,19 +10,6 @@ import { reauthenticateWithCredential } from "../services";
 
 export function Routes() {
   const { user, setUser } = useAuth();
-
-  useEffect(() => {
-    (async () => {
-      await getStorage("@user").then((response) => {
-        if (response) {
-          reauthenticateWithCredential(response.password).then(() => {
-            setUser(response);
-          });
-        }
-        response ? setUser(response) : setUser(null);
-      });
-    })();
-  }, [setUser]);
 
   return (
     <NavigationContainer>

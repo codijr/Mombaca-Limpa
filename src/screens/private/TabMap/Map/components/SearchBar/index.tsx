@@ -1,55 +1,59 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { ActivityIndicator, FlatList } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { ActivityIndicator, FlatList, Keyboard } from "react-native";
 import {
   AddressButton,
   AddressContainer,
   AddressDescription,
   AddressTitle,
+  ButtonReturn,
   Divider,
   FocusView,
+  LogoIcon,
+  ReturnIcon,
   SearchContainer,
-  SearchIcon,
   SearchInput,
   SearchView,
   WrapperSearchIcon,
 } from "./styles";
 import { AddressComponentProps, AddressProps } from "../../../../../../@types";
 import { searchAddress } from "../../../../../../services";
-import { RootState } from "../../../../../../redux/createStore";
-import { setAddress } from "../../../../../../redux/modules/geocoding/reducer";
+import { useMap } from "../../../../../../contexts";
 
 export function SearchBar() {
+  const { setSelectedAddress } = useMap();
+
   const [isFocused, setIsFocused] = useState(false);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState<AddressProps[]>([]);
   const [loading, setLoading] = useState(false);
-  const addressSelected = useSelector((state: RootState) => state.geocoding);
-  const dispatch = useDispatch();
 
   const handleSearchAddress = useCallback(async (address: string) => {
-    setLoading(true);
+    setSearch(address);
 
-    await searchAddress(address)
-      .then((res) => {
-        const { results } = res;
-        const notFoundResult: AddressProps[] = [
-          {
-            ...results[0],
-            place_id: "0",
-          },
-        ];
+    setTimeout(async () => {
+      setLoading(true);
 
-        return results
-          ? setSearchResult(results)
-          : setSearchResult(notFoundResult);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      await searchAddress(address)
+        .then((res) => {
+          const { results } = res;
+          const notFoundResult: AddressProps[] = [
+            {
+              ...results[0],
+              place_id: "0",
+            },
+          ];
+
+          return results
+            ? setSearchResult(results)
+            : setSearchResult(notFoundResult);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }, 1000);
   }, []);
 
   const handleConcatTitle = useCallback(
@@ -98,61 +102,71 @@ export function SearchBar() {
       const { address_components, formatted_address, geometry, place_id } =
         item;
 
-      dispatch(
-        setAddress({
-          address_components,
-          formatted_address,
-          geometry,
-          place_id,
-        })
-      );
+      setSelectedAddress({
+        address_components,
+        formatted_address,
+        geometry,
+        place_id,
+      });
+
       setIsFocused(false);
     },
-    [dispatch]
+    [setSelectedAddress]
   );
-
-  useEffect(() => {
-    console.log(addressSelected.place_id);
-  }, [addressSelected]);
 
   return (
     <>
       {isFocused && <FocusView />}
       <SearchContainer>
         <SearchView>
+          <WrapperSearchIcon>
+            {isFocused ? (
+              <ButtonReturn
+                onPress={() => {
+                  setIsFocused(false);
+                  Keyboard.dismiss();
+                }}
+              >
+                <ReturnIcon />
+              </ButtonReturn>
+            ) : (
+              <LogoIcon />
+            )}
+          </WrapperSearchIcon>
           <SearchInput
             placeholder="Buscar por endereço"
-            onChangeText={(text) => setSearch(text)}
+            onChangeText={(text) => handleSearchAddress(text)}
             onFocus={() => setIsFocused(true)}
             blurOnSubmit={false}
             onSubmitEditing={() => handleSearchAddress(search)}
           />
-          <WrapperSearchIcon>
-            {loading ? <ActivityIndicator color="#1BB471" /> : <SearchIcon />}
-          </WrapperSearchIcon>
         </SearchView>
         <AddressContainer
           style={{
             display: isFocused ? "flex" : "none",
           }}
         >
-          <FlatList
-            data={searchResult}
-            keyExtractor={(item) => item.place_id}
-            renderItem={({ item, index }) => (
-              <>
-                <AddressButton onPress={() => handleSelectAddress(item)}>
-                  <AddressTitle>
-                    {handleConcatTitle(item.address_components)}
-                  </AddressTitle>
-                  <AddressDescription>
-                    {handleConcatDescription(item.address_components)}
-                  </AddressDescription>
-                </AddressButton>
-                {index !== searchResult.length - 1 && <Divider />}
-              </>
-            )}
-          />
+          {loading ? (
+            <ActivityIndicator size="large" color="#000" />
+          ) : (
+            <FlatList
+              data={searchResult}
+              keyExtractor={(item) => item.place_id}
+              renderItem={({ item, index }) => (
+                <>
+                  <AddressButton onPress={() => handleSelectAddress(item)}>
+                    <AddressTitle>
+                      {handleConcatTitle(item.address_components)}
+                    </AddressTitle>
+                    <AddressDescription>
+                      {handleConcatDescription(item.address_components)}
+                    </AddressDescription>
+                  </AddressButton>
+                  {index !== searchResult.length - 1 && <Divider />}
+                </>
+              )}
+            />
+          )}
         </AddressContainer>
       </SearchContainer>
     </>
