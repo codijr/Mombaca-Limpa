@@ -18,10 +18,6 @@ export const MapContainer = styled(View)`
   flex: 1;
 `;
 
-export const MapContent = styled(MapView)`
-  height: ${height}px;
-`;
-
 export const IconsView = styled(View)`
   position: absolute;
   bottom: 0;

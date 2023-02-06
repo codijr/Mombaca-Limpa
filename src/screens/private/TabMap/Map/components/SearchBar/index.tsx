@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, Keyboard } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
 import {
   AddressButton,
   AddressContainer,
@@ -18,16 +17,15 @@ import {
 } from "./styles";
 import { AddressComponentProps, AddressProps } from "../../../../../../@types";
 import { searchAddress } from "../../../../../../services";
-import { RootState } from "../../../../../../redux/createStore";
-import { setAddress } from "../../../../../../redux/modules/geocoding/reducer";
+import { useMap } from "../../../../../../contexts";
 
 export function SearchBar() {
+  const { setSelectedAddress } = useMap();
+
   const [isFocused, setIsFocused] = useState(false);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState<AddressProps[]>([]);
   const [loading, setLoading] = useState(false);
-  const addressSelected = useSelector((state: RootState) => state.geocoding);
-  const dispatch = useDispatch();
 
   const handleSearchAddress = useCallback(async (address: string) => {
     setSearch(address);
@@ -104,22 +102,17 @@ export function SearchBar() {
       const { address_components, formatted_address, geometry, place_id } =
         item;
 
-      dispatch(
-        setAddress({
-          address_components,
-          formatted_address,
-          geometry,
-          place_id,
-        })
-      );
+      setSelectedAddress({
+        address_components,
+        formatted_address,
+        geometry,
+        place_id,
+      });
+
       setIsFocused(false);
     },
-    [dispatch]
+    [setSelectedAddress]
   );
-
-  useEffect(() => {
-    console.log(addressSelected.place_id);
-  }, [addressSelected]);
 
   return (
     <>
