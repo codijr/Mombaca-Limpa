@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Platform, StatusBar } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MapView, { LatLng, Marker, Region } from "react-native-maps";
 import { ms } from "react-native-size-matters";
 import Config from "react-native-config";
 import MapViewDirections from "react-native-maps-directions";
+import { getRhumbLineBearing } from "geolib";
 import {
   ButtonComplaint,
   ButtonComplaintText,
@@ -26,18 +27,26 @@ import { searchAddressReverse } from "../../../../services";
 import { CentralizeView } from "../../../../global/styles/theme";
 import { concatAddressSubtitle, concatAddressTitle } from "../../../../utils";
 import { useMap } from "../../../../contexts";
+import { trashcarWaypoints } from "./constants/trashcarWaypoints";
 
 export function Map() {
   const { navigate, addListener } = useNavigation();
   const { geolocation, selectedAddress, setSelectedAddress } = useMap();
 
   const [currentRegion, setCurrentRegion] = useState<Region>(geolocation);
+  const [trashCarRegion, setTrashCarRegion] = useState<Region>({
+    ...currentRegion,
+    latitude: -3.741983070538444,
+    longitude: -38.58619126305692,
+  });
   const [selectedAddressRegion, setSelectedAddressRegion] = useState<Region>({
     ...currentRegion,
     latitude: selectedAddress?.geometry.location.lat,
     longitude: selectedAddress?.geometry.location.lng,
   });
   const [isActualPosition, setIsActualPosition] = useState(true);
+
+  const mapRef = useRef<MapView>(null);
 
   useEffect(() => {
     addListener("focus", () => {
@@ -104,6 +113,31 @@ export function Map() {
         {selectedAddress.place_id && (
           <Marker coordinate={selectedAddressRegion} icon={PointerIcon} />
         )}
+        <MapViewDirections
+          origin={trashCarRegion}
+          destination={{
+            latitude: -3.7253965692161852,
+            longitude: -38.59056959632487,
+          }}
+          apikey={Config.GOOGLE_MAPS_API_KEY as string}
+          strokeWidth={4}
+          strokeColor="#1BB471"
+          waypoints={trashcarWaypoints}
+        />
+        <Marker
+          coordinate={trashCarRegion}
+          icon={TrashCardIcon}
+          rotation={getRhumbLineBearing(
+            {
+              latitude: geolocation.latitude,
+              longitude: geolocation.longitude,
+            },
+            {
+              latitude: trashcarWaypoints[0].latitude,
+              longitude: trashcarWaypoints[0].longitude,
+            }
+          )}
+        />
       </MapView>
       <IconsView>
         <Button
