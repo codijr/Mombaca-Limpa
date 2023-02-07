@@ -8,9 +8,12 @@ import {
   ComplaintDescription,
 } from "./styles";
 import { ButtonSubmit, Header, ModalAlert } from "../../../../components";
+import { concatAddressSubtitle, concatAddressTitle } from "../../../../utils";
+import { useMap } from "../../../../contexts";
 
 export function Complaint() {
   const [modalVisible, setModalVisible] = useState(false);
+  const {selectedAddress} = useMap();
 
   return (
     <ComplaintContainer>
@@ -18,7 +21,10 @@ export function Complaint() {
 
       <ComplaintContent>
         <Content>
-          <ComplaintLocation />
+          <ComplaintLocation
+          //value={selectedAddress.formatted_address}
+          value={`${concatAddressTitle(selectedAddress.address_components)}, ${concatAddressSubtitle(selectedAddress.address_components)}`}
+          />
           <ComplaintDescription />
           <CentralizeView>
             <ButtonSubmit

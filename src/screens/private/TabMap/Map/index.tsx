@@ -139,7 +139,7 @@ export function Map() {
                 onPress={() =>
                   navigate(
                     "Complaint" as never,
-                    selectedAddress.formatted_address as never
+                    selectedAddress.formatted_address as never,
                   )
                 }
               >
