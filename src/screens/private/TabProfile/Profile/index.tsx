@@ -4,8 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import RNFS from "react-native-fs";
 import { launchImageLibrary } from "react-native-image-picker";
 
-import { User, useAuth } from "../../../../contexts";
-
+import { useDispatch, useSelector } from "react-redux";
 import { Header, ModalError } from "../../../../components";
 import { ProfileButton } from "./components/ProfileButton";
 
@@ -16,13 +15,17 @@ import {
   TitleProfile,
 } from "./style";
 
-import { removeStorage } from "../../../../utils";
+import { removeStorage, updateStorage } from "../../../../utils";
 import { signOut, updateFirebaseData } from "../../../../services";
 import { ProfileAvatar } from "./components/ProfileAvatar";
+import { RootState } from "../../../../redux/createStore";
+import { User } from "../../../../@types";
+import { initialState, setLogin } from "../../../../redux/modules/auth/reducer";
 
 export function Profile() {
+  const auth = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
   const { navigate } = useNavigation();
-  const { user, setUser } = useAuth();
 
   const [modalErrorVisible, setModalErrorVisible] = React.useState(false);
   const [loadingModal, setLoadingModal] = React.useState(false);
@@ -39,17 +42,18 @@ export function Profile() {
       if (result?.assets && result?.assets[0]?.uri) {
         await RNFS.readFile(result.assets[0]?.uri, "base64").then((data) => {
           const userUpdate = {
-            ...user,
+            ...auth,
             avatar: `data:image/png;base64,${data}`,
           } as User;
 
           modalErrorVisible && setLoadingModal(true);
 
-          updateFirebaseData("Users", user?.userId, {
+          updateFirebaseData("Users", auth.userId, {
             avatar: userUpdate.avatar,
           })
             .then(() => {
-              setUser(userUpdate);
+              updateStorage("@user", userUpdate);
+              dispatch(setLogin(userUpdate));
             })
             .catch(() => {
               setModalErrorVisible(true);
@@ -60,30 +64,28 @@ export function Profile() {
         });
       }
     });
-  }, [modalErrorVisible, setUser, user]);
+  }, [auth, dispatch, modalErrorVisible]);
 
   const handleSignOut = useCallback(() => {
     signOut()
       .then(() => {
         console.log("Deslogado com sucesso");
-        setUser(null);
+        dispatch(setLogin(initialState));
         removeStorage("@user");
       })
       .catch(() => {
         console.log("Não foi possivel deslogar");
       });
-  }, [setUser]);
+  }, [dispatch]);
 
   return (
     <ProfileContainer>
       <Header
-        headerLeft={
-          <ProfileAvatar onPress={handleGallery} src={user?.avatar} />
-        }
+        headerLeft={<ProfileAvatar onPress={handleGallery} src={auth.avatar} />}
         headerCenter={
           <ContainerTitle>
-            <TitleProfile>{user?.name}</TitleProfile>
-            <SubtitleProfile>{user?.email}</SubtitleProfile>
+            <TitleProfile>{auth.name}</TitleProfile>
+            <SubtitleProfile>{auth.email}</SubtitleProfile>
           </ContainerTitle>
         }
       />

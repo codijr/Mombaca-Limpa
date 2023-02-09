@@ -18,12 +18,12 @@ export default function App() {
   });
 
   return (
-    <Context>
-      <ReduxProvider>
+    <ReduxProvider>
+      <Context>
         <ThemeProvider theme={theme}>
           <Routes />
         </ThemeProvider>
-      </ReduxProvider>
-    </Context>
+      </Context>
+    </ReduxProvider>
   );
 }

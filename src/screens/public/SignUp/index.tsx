@@ -5,8 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { ms } from "react-native-size-matters";
 
-import { useAuth } from "../../../contexts";
-
+import { useDispatch } from "react-redux";
 import { ButtonSubmit, Input, ModalError } from "../../../components";
 
 import {
@@ -32,10 +31,11 @@ import { setFirebaseData, signUp } from "../../../services";
 
 import { profileTemplate } from "../../../assets/icons/profile-template";
 import { CentralizeView } from "../../../global/styles/theme";
+import { setLogin } from "../../../redux/modules/auth/reducer";
 
 export function SignUp() {
   const { navigate } = useNavigation();
-  const { setUser } = useAuth();
+  const dispatch = useDispatch();
 
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -80,7 +80,7 @@ export function SignUp() {
 
         setFirebaseData("Users", user.userId, user).then(() => {
           setStorage("@user", user);
-          setUser(user);
+          dispatch(setLogin(user));
         });
       })
       .catch((err) => {
@@ -97,7 +97,7 @@ export function SignUp() {
         setLoadingModal(false);
         setLoading(false);
       });
-  }, [checkErrors, modalErrorVisible, email, password, name, setUser]);
+  }, [checkErrors, modalErrorVisible, email, password, name, dispatch]);
 
   return (
     <ContainerSignUp>
