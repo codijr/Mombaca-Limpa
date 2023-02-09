@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { CentralizeView } from "../../../../global/styles/theme";
 import {
   ComplaintContainer,
@@ -8,12 +9,14 @@ import {
   ComplaintDescription,
 } from "./styles";
 import { ButtonSubmit, Header, ModalAlert } from "../../../../components";
-import { concatAddressSubtitle, concatAddressTitle } from "../../../../utils";
-import { useMap } from "../../../../contexts";
+import { AddressProps } from "../../../../@types";
+
+type PropsParams = RouteProp<{ params: AddressProps }, "params">;
 
 export function Complaint() {
   const [modalVisible, setModalVisible] = useState(false);
-  const {selectedAddress} = useMap();
+  const { params } = useRoute<PropsParams>();
+  const { formatted_address } = params;
 
   return (
     <ComplaintContainer>
@@ -21,10 +24,7 @@ export function Complaint() {
 
       <ComplaintContent>
         <Content>
-          <ComplaintLocation
-          //value={selectedAddress.formatted_address}
-          value={`${concatAddressTitle(selectedAddress.address_components)}, ${concatAddressSubtitle(selectedAddress.address_components)}`}
-          />
+          <ComplaintLocation value={formatted_address} />
           <ComplaintDescription />
           <CentralizeView>
             <ButtonSubmit

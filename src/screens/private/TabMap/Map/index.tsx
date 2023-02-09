@@ -171,10 +171,7 @@ export function Map() {
               </InfoText>
               <ButtonComplaint
                 onPress={() =>
-                  navigate(
-                    "Complaint" as never,
-                    selectedAddress.formatted_address as never,
-                  )
+                  navigate("Complaint" as never, selectedAddress as never)
                 }
               >
                 <ButtonComplaintText>Denunciar</ButtonComplaintText>
