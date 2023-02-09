@@ -32,14 +32,8 @@ export async function removeStorage(name: string) {
     });
 }
 
-export async function updateStorage(name: string, value: any) {
-  const item = await getStorage(name);
-  Object.keys(item).forEach((key) => {
-    if (value[key]) {
-      item[key] = value[key];
-    }
-  });
+export async function updateStorage(name: string, value: object) {
   await removeStorage(name).then(() => {
-    setStorage(name, item);
+    setStorage(name, value);
   });
 }

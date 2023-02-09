@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 
+import { useDispatch, useSelector } from "react-redux";
 import {
   ButtonSubmit,
   Header,
@@ -10,8 +11,6 @@ import {
 } from "../../../../components";
 
 import { ChangeEmailContainer, ChangeEmailContent, Content } from "./styles";
-
-import { User, useAuth } from "../../../../contexts";
 
 import {
   updateStorage,
@@ -26,9 +25,13 @@ import {
 } from "../../../../services";
 
 import { CentralizeView } from "../../../../global/styles/theme";
+import { RootState } from "../../../../redux/createStore";
+import { User } from "../../../../@types";
+import { setLogin } from "../../../../redux/modules/auth/reducer";
 
 export function ChangeEmail() {
-  const { user, setUser } = useAuth();
+  const auth = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
   const [newEmail, setNewEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -64,11 +67,11 @@ export function ChangeEmail() {
       .then(() => {
         changeEmail(newEmail)
           .then(() => {
-            updateFirebaseData("Users", user?.userId, { email: newEmail })
+            updateFirebaseData("Users", auth.userId, { email: newEmail })
               .then(() => {
-                const newUser = { ...user, email: newEmail } as User;
+                const newUser = { ...auth, email: newEmail } as User;
                 updateStorage("@user", { email: newEmail });
-                setUser(newUser);
+                dispatch(setLogin(newUser));
                 setModalConfirmationVisible(true);
               })
               .catch((err) => {
@@ -115,7 +118,7 @@ export function ChangeEmail() {
         setLoading(false);
         setLoadingModal(false);
       });
-  }, [checkErrors, modalVisible, password, newEmail, user, setUser]);
+  }, [checkErrors, modalVisible, password, newEmail, auth, dispatch]);
 
   return (
     <ChangeEmailContainer>

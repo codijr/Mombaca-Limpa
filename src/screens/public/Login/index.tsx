@@ -5,8 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ms } from "react-native-size-matters";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
-import { User, useAuth } from "../../../contexts";
-
+import { useDispatch } from "react-redux";
 import { ButtonSubmit, Input, ModalError } from "../../../components";
 
 import {
@@ -32,10 +31,12 @@ import {
 import { getFirebaseData, login } from "../../../services";
 
 import { CentralizeView } from "../../../global/styles/theme";
+import { User } from "../../../@types";
+import { setLogin } from "../../../redux/modules/auth/reducer";
 
 export function Login() {
   const { navigate } = useNavigation();
-  const { setUser } = useAuth();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -68,7 +69,7 @@ export function Login() {
           if (doc.exists) {
             const user: User = doc.data() as User;
             setStorage("@user", user);
-            setUser(user);
+            dispatch(setLogin(user));
           }
         });
       })
@@ -79,7 +80,7 @@ export function Login() {
         setLoadingModal(false);
         setLoading(false);
       });
-  }, [checkErrors, email, modalErrorVisible, password, setUser]);
+  }, [checkErrors, dispatch, email, modalErrorVisible, password]);
 
   return (
     <ContainerLogin>

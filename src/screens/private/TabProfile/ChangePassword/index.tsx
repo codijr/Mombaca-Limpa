@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 
+import { useDispatch, useSelector } from "react-redux";
 import {
   ButtonSubmit,
   Header,
@@ -15,8 +16,6 @@ import {
   Content,
 } from "./styles";
 
-import { User, useAuth } from "../../../../contexts";
-
 import { updateStorage, validateInputPassword } from "../../../../utils";
 
 import {
@@ -26,9 +25,13 @@ import {
 } from "../../../../services";
 
 import { CentralizeView } from "../../../../global/styles/theme";
+import { RootState } from "../../../../redux/createStore";
+import { setLogin } from "../../../../redux/modules/auth/reducer";
+import { User } from "../../../../@types";
 
 export function ChangePassword() {
-  const { user, setUser } = useAuth();
+  const auth = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -69,11 +72,11 @@ export function ChangePassword() {
       .then(() => {
         changePassword(newPassword)
           .then(() => {
-            updateFirebaseData("Users", user?.userId, { password: newPassword })
+            updateFirebaseData("Users", auth.userId, { password: newPassword })
               .then(() => {
-                const newUser = { ...user, password: newPassword } as User;
+                const newUser = { ...auth, password: newPassword } as User;
                 updateStorage("@user", { password: newPassword });
-                setUser(newUser);
+                dispatch(setLogin(newUser));
                 setModalConfirmationVisible(true);
               })
               .catch((err) => {
@@ -122,7 +125,7 @@ export function ChangePassword() {
         setLoading(false);
         setLoadingModal(false);
       });
-  }, [checkErrors, modalVisible, oldPassword, newPassword, user, setUser]);
+  }, [checkErrors, modalVisible, oldPassword, newPassword, auth, dispatch]);
 
   return (
     <ContainerChangePassword>
